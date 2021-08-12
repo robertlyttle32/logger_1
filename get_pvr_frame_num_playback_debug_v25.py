@@ -419,11 +419,13 @@ class Auditor:
 		#video_file = askopenfilename(filetypes=[("Files", "*.mp4"), ("All Files", "*.*")])
 		#video_file = camera
 		global cap
-		cap = cv2.VideoCapture(camera)
+		cap = cv2.VideoCapture(video_file)
 		x,y,w,h = 990,0,290,15
 		#cap = cv2.VideoCapture(0) # Capture images from main camera
 		# Define the codec and create VideoWriter object
-		fourcc = cv2.VideoWriter_fourcc(*'MP4V') #(*'XVID')     #####debug video format
+		#fourcc = cv2.VideoWriter_fourcc(*'MPEG')
+		fourcc = cv2.VideoWriter_fourcc(*'MP4V')
+		#fourcc = cv2.VideoWriter_fourcc(*'XVID') #(*'MP4V') #(XVID*'')     #####debug video format
 		#fourcc = cv2.VideoWriter_fourcc(*'XVID')
 		#Add Text
 		#------------------------------------------------------------------------
