@@ -397,7 +397,7 @@ class Auditor:
 			if record_bkmark == True:
 				PVR_LINE = line
 				if frame_number == frame_num:
-					cv2.imwrite('/media/bob/ssd128/Recordings2/'+'bookmark_'+str(PVR_LINE)+EXT1, frame)
+					cv2.imwrite(record_directory+'bookmark_'+str(PVR_LINE)+EXT1, frame)
 					#out.write(frame)
 
 
@@ -535,7 +535,8 @@ class Auditor:
 			#cv2.putText(frame,'Lane_2 _____________',(10,20),font,0.4,(BLUE,GREEN,RED),1)
 			#cv2.putText(frame,'Lane_1 _____________',(180,20),font,0.4,(BLUE,GREEN,RED),1)
 
-			#cv2.imwrite('/media/bob/ssd128/Recordings2/'+'bookmark_'+str(PVR_LINE)+EXT1, frame)
+			PVR_LINE = pvr_line_number
+			cv2.imwrite(record_directory+'bookmark_'+str(PVR_LINE)+EXT1, frame)
 
 			cv2.imshow('frame', frame)
 			#print('new_frame_numer: ', new_frame)
