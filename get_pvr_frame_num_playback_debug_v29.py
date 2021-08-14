@@ -91,7 +91,7 @@ back = False
 count1 = 0
 count = 0
 record_directory = ''
-record_bkmark = ''
+record_bkmark = False
 PVR_LINE = 0
 
 #w = int(((w/width)*100)*width)
@@ -332,6 +332,7 @@ class Auditor:
 
 	def play_video():
 		#sync_data()
+		record_bkmark == True
 		i = 0
 		line = count #pvr_count - pvr_count
 		fps = cap.get(cv2.CAP_PROP_FPS)
@@ -536,7 +537,7 @@ class Auditor:
 			#cv2.putText(frame,'Lane_1 _____________',(180,20),font,0.4,(BLUE,GREEN,RED),1)
 
 			PVR_LINE = pvr_line_number
-			cv2.imwrite(record_directory+'bookmark_'+str(PVR_LINE)+EXT1, frame)
+			#cv2.imwrite(record_directory+'bookmark_'+str(PVR_LINE)+EXT1, frame)
 
 			cv2.imshow('frame', frame)
 			#print('new_frame_numer: ', new_frame)
@@ -777,14 +778,18 @@ def record():
 	thread2.start()
 	#audit.record_live_video()
 
+
+def add_bkdir():
+	global record_directory
+	record_directory = filedialog.askdirectory()
+	record_directory = '{}/'.format(record_directory)
+
+
 def record_bookmark():
 	global record_bkmark
-	global record_directory
-	#record_directory = filedialog.askdirectory()
-	record_directory = '/media/bob/ssd128/Recordings2/'
-	record_directory = '{}/'.format(record_directory)
-	record_bkmark = True
+	record_bkmark = not record_bkmark
 	print(record_bkmark)
+
 
 def add_camera():
 	global camera
@@ -846,7 +851,7 @@ def set_date():
 	calendar.title('Audit date')
 
 	# Add Calender
-	cal = Calendar(calendar, selectmode = 'day', year = 2020, month = 5, day = 22)
+	cal = Calendar(calendar, selectmode = 'day', year = 2021, month = 5, day = 22)
 	cal.pack(pady = 20)
 	#date.config(text = "Selected Date is: " + cal.get_date())
 	def grad_date():
@@ -855,7 +860,7 @@ def set_date():
 		video_date = cal.get_date()
 		month, day, year = video_date.split('/')
 		global VIDEO_DATE
-		VIDEO_DATE  = '0{}/0{}/{}'.format(day, month, year)
+		VIDEO_DATE  = '{}/{}/{}'.format(day.zfill(2), month.zfill(2), year)
 		w_1_entry0_0_1.delete(0, END)
 		w_1_entry0_0_1.insert(END, VIDEO_DATE)
 		print('Date: ', VIDEO_DATE)
@@ -925,14 +930,15 @@ w_1_btn_pause_2_0 = Button(window, text="Pause", command=pause)
 w_1_btn_tracker_5_0 = Button(window, text="Tracker", command=skip)
 w_1_btn_back_3_0 = Button(window, text="<<", command=back)
 w_1_btn_forward_4_0 = Button(window, text=">>", command=forward)
-w_1_btn_bookmark_11_0 = Button(window, text="Record", command=record)
-w_1_btn_record_6_0 = Button(window, text="Record Bookmark", command=record_bookmark)
+w_1_btn_bkdir_11_0 = Button(window, text="Add Bookmark Dir", command=add_bkdir)
+w_1_btn_bookmark_12_0 = Button(window, text="Record", command=record)
+w_1_btn_record_13_0 = Button(window, text="Record Bookmark", command=record_bookmark)
 w_1_btn_stop_7_0 = Button(window, text="Stop", command=stop)
 #btn_set_date = tk.Button(fr_buttons, text = "Set Date", command = set_date)
 w_1_btn_set_date_8_0 = Button(window, text = "Select Date", command = set_date) #.pack(pady = 20)
 w_1_btn_pvrfile_9_0 = Button(window, text="Import PVR file", command=pvr_file)
 w_1_btn_add_camera_10_0 = Button(window, text="Add Camera", command=add_camera)
-w_1_btn_exit_12_0 = Button(window, text="Exit", command=exit)
+w_1_btn_exit_14_0 = Button(window, text="Exit", command=exit)
 #text_box = tk.Text()
 #entry = tk.Entry()
 
@@ -944,13 +950,15 @@ w_1_btn_pause_2_0.grid(row=2, column=0, sticky="ew", padx=5)
 w_1_btn_back_3_0.grid(row=3, column=0, sticky="ew", padx=5)
 w_1_btn_forward_4_0.grid(row=4, column=0, sticky="ew", padx=5)
 w_1_btn_tracker_5_0.grid(row=5, column=0, sticky="ew", padx=5)
-w_1_btn_bookmark_11_0.grid(row=6, column=0, sticky="ew", padx=5)
+w_1_btn_bookmark_12_0.grid(row=6, column=0, sticky="ew", padx=5)
 w_1_btn_stop_7_0.grid(row=7, column=0, sticky="ew", padx=5)
 w_1_btn_set_date_8_0.grid(row=8, column=0, sticky="ew", padx=5)
 w_1_btn_pvrfile_9_0.grid(row=9, column=0, sticky="ew", padx=5)
 w_1_btn_add_camera_10_0.grid(row=10, column=0, sticky="ew", padx=5)
-w_1_btn_record_6_0.grid(row=11, column=0, sticky='ew', padx=5)
-w_1_btn_exit_12_0.grid(row=12, column=0, sticky="ew", padx=5)
+w_1_btn_bkdir_11_0.grid(row=11, column=0, sticky="ew", padx=5)
+w_1_btn_bookmark_12_0.grid(row=12, column=0, sticky='ew', padx=5)
+w_1_btn_record_13_0.grid(row=13, column=0, sticky='ew', padx=5)
+w_1_btn_exit_14_0.grid(row=14, column=0, sticky="ew", padx=5)
 
 #entry box
 w_1_entry0_0_1.grid(row=0, column=1, sticky="nw", padx=5)
