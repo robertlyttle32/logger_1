@@ -385,7 +385,7 @@ class Auditor:
 
 			if record_bkmark == True:
 				PVR_LINE = line
-				if frame_number == frame_num:
+				if frame_number == pvr_line_number:
 					cv2.imwrite(record_directory+'bookmark_'+str(PVR_LINE)+EXT1, frame)
 					#out.write(frame)
 
