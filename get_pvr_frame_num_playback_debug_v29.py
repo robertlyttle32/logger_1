@@ -847,12 +847,12 @@ def set_date():
 	calendar = Tk()
 
 	# Set geometry
-	calendar.geometry("400x400")
+	calendar.geometry("800x400")
 	calendar.title('Audit date')
 
 	# Add Calender
 	cal = Calendar(calendar, selectmode = 'day', year = 2021, month = 5, day = 22)
-	cal.pack(pady = 20)
+	cal.grid(row=0, column=0, sticky='enw', padx=20, pady=20)
 	#date.config(text = "Selected Date is: " + cal.get_date())
 	def grad_date():
 		date.config(text = 'Selected date is: ' + cal.get_date())
@@ -868,10 +868,48 @@ def set_date():
 
 	# Add Button and Label
 	calendar_btn_sel = Button(calendar, text = "Set Date", command = grad_date)
-	calendar_btn_sel.pack(pady = 20)
+	calendar_btn_sel.grid(row=2, column=0, sticky='enw', padx=20, pady=2)
 
 	date = Label(calendar, text = "")
-	date.pack(pady = 20)
+	date.grid(row=3, column=0, sticky='enw', padx=20, pady=2)
+
+	time_entries = []
+	def set_time():
+		width = 0
+		entry_list = ' '
+		for entries in time_entries:
+			entry_list = entry_list + str(entries.get()) + '\n'
+			cal_label.config(text=entry_list)
+
+		print(time_entries[0].get()) #to return a value from a specific column
+		global HOUR
+		global MINUTE
+		global SECONDS
+		global MILISECONDS
+
+		HOUR = time_entries[0].get()
+		MINUTE = time_entries[1].get()
+		SECONDS = time_entries[2].get()
+		MILISECONDS = time_entries[3].get()
+
+
+	time_list = ['H', 'M', 'S', 'Milisec']
+
+	for x in range(4):
+
+		cal_label_header = Label(calendar, text=time_list[x])
+		cal_label_header.grid(row=5, column=x, sticky='enw', padx=20, pady=2)
+
+		spinbox = Spinbox(calendar, width=2, from_=0, to=999)
+		spinbox.grid(row=7, column=x, sticky='enw', padx=1, pady=2)
+		time_entries.append(spinbox)
+
+	cal_btn = Button(calendar, text='Set time', command=set_time)
+	cal_btn.grid(row=8, column=0, sticky='enw', padx=20, pady=2)
+
+	cal_label = Label(calendar, text=' ')
+	cal_label.grid(row=9, column=0, sticky='enw', padx=20, pady=2)
+
 
 	# Excecute Tkinter
 	calendar.mainloop()
