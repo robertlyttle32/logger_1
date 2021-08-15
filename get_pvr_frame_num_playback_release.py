@@ -52,15 +52,6 @@ FRAME_NUMBER = 0
 TIME_DELTA = 0
 EXT = '.mp4'
 EXT1 = '.jpg'
-#VIDEO_TIME = '10:22:00.771'
-#----VIDEO_TIME = '10:11:37.020'
-#VIDEO_TIME = '10:19:38.639'  # 09/03/21
-#VIDEO_TIME ='08:43:16.884'
-#VIDEO_DATE = '09/03/21'
-#---VIDEO_TIME = '08:59:44.325'
-#VIDEO_DATE = '10/03/21'
-#VIDEO_DATE = ' '
-#VIDEO_FILE = 0
 line = 2
 pvr_time = 0
 video_time = 0
@@ -231,8 +222,6 @@ class Auditor:
 		DATE2 = PVR_DATA[0]
 		TIME = PVR_DATA[1]
 		#print('time: {} | time1: {}'.format(TIME,TIME1))
-		#print('DATE: ', DATE2) #debug
-		#print('VIDEO DATE: ', VIDEO_DATE)
 		frame_time = converter(TIME)
 		#print('offset: ', offset)
 		#print('frame time: {} | frame time1: {}'.format(frame_time, frame_time1))
@@ -242,14 +231,13 @@ class Auditor:
 		TIME_DELTA = ((frame_time + (offset + .99)) - pvr_time) # offset adjustment
 		TIME_DELTA1 = ((frame_time - frame_time1 + (offset + .99))) # offset adjustment
 		#print('pvr_time: {} frame_time: {} | frame_time1: {} | offset: {}'.format(pvr_time, frame_time, frame_time1, offset))
-		#print('Time delta: ', TIME_DELTA)
-		#print('Time delta1: ', TIME_DELTA1)
+	
 		global frame_num
 		frame_num = (fps*TIME_DELTA)
 		frame_num = int(frame_num)
 		next_frame = frame_num+next_frame
-		w_1_entry2_12_1.delete(0, END)
-		w_1_entry2_12_1.insert(END, next_frame)
+		w_1_entry2_13_2.delete(0, END)
+		w_1_entry2_13_2.insert(END, next_frame)
 		#print('frame_num: {} | next_frame: {}'.format(frame_num, next_frame))
 		pvr.close()
 		return frame_num, BANNER
@@ -312,22 +300,22 @@ class Auditor:
 		banner_speed = float(banner_speed)
 		banner_speed = banner_speed*2.23694
 		banner_speed = int(banner_speed)
-		w_1_entry0_0_1.delete(0, END)
-		w_1_entry0_0_1.insert(END, BANNER[0])
-		w_1_entry5_5_1.delete(0, END)
-		w_1_entry5_5_1.insert(END, BANNER[3])
-		w_1_entry6_6_1.delete(0, END)
-		w_1_entry6_6_1.insert(END, banner_speed)
-		w_1_entry7_7_1.delete(0, END)
-		w_1_entry7_7_1.insert(END, BANNER[5])
-		w_1_entry8_8_1.delete(0, END)
-		w_1_entry8_8_1.insert(END, BANNER[10])
-		w_1_entry9_9_1.delete(0, END)
-		w_1_entry9_9_1.insert(END, BANNER[11])
-		w_1_entry10_10_1.delete(0, END)
-		w_1_entry10_10_1.insert(END, BANNER[6])
-		w_1_entry11_11_1.delete(0, END)
-		w_1_entry11_11_1.insert(END, BANNER[12])
+		w_1_entry0_10_2.delete(0, END)
+		w_1_entry0_10_2.insert(END, BANNER[0])
+		w_1_entry5_16_2.delete(0, END)
+		w_1_entry5_16_2.insert(END, BANNER[3])
+		w_1_entry6_17_2.delete(0, END)
+		w_1_entry6_17_2.insert(END, banner_speed)
+		w_1_entry7_18_2.delete(0, END)
+		w_1_entry7_18_2.insert(END, BANNER[5])
+		w_1_entry8_19_2.delete(0, END)
+		w_1_entry8_19_2.insert(END, BANNER[10])
+		w_1_entry9_20_2.delete(0, END)
+		w_1_entry9_20_2.insert(END, BANNER[11])
+		w_1_entry10_21_2.delete(0, END)
+		w_1_entry10_21_2.insert(END, BANNER[6])
+		w_1_entry11_22_2.delete(0, END)
+		w_1_entry11_22_2.insert(END, BANNER[12])
 		return banner_date,banner_time,banner_lane,banner_dir,banner_length,banner_speed,banner_class,banner_axle,banner_note
 
 	def play_video():
@@ -409,13 +397,13 @@ class Auditor:
 			get_frame = frame
 			#print('playback fps: ', fps)
 			#print('pvr line: ',line)
-			w_1_entry4_4_1.delete(0, END)
-			w_1_entry4_4_1.insert(END, line)
+			w_1_entry4_15_2.delete(0, END)
+			w_1_entry4_15_2.insert(END, line)
 			#print('playback pvr count: ', pvr_count)
 			#print('playback get_pvr frame number: ', frame_num)
 			#print('playback video frame number: ',frame_number)
-			w_1_entry3_3_1.delete(0, END)
-			w_1_entry3_3_1.insert(END, frame_number)
+			w_1_entry3_14_2.delete(0, END)
+			w_1_entry3_14_2.insert(END, frame_number)
 			frame_number = frame_number + 1
 			if cv2.waitKey(1) & 0xFF == ord('q'):
 				break
@@ -625,8 +613,8 @@ def pvr_file():
 	"""Open a file for editing."""
 	global PVR_FILE
 	PVR_FILE = askopenfilename(filetypes=[("Files", "*.pvr"), ("All Files", "*.*")])
-	w_1_entry12_2_1.delete(0, END)
-	w_1_entry12_2_1.insert(END, PVR_FILE)
+	w_1_entry12_12_2.delete(0, END)
+	w_1_entry12_12_2.insert(END, PVR_FILE)
 	print('Pvr file: ', PVR_FILE)
 
 #converter
@@ -643,20 +631,9 @@ def pvr_video():
 	global video_file
 	video_file = askopenfilename(filetypes=[("Files", "*.mp4"), ("All Files", "*.*")])
 	print('AVC AUDITOR')
-	w_1_entry1_1_1.delete(0, END)
-	w_1_entry1_1_1.insert(END, video_file)
+	w_1_entry1_11_2.delete(0, END)
+	w_1_entry1_11_2.insert(END, video_file)
 	print()
-	global VIDEO_TIME
-	VIDEO_TIME = video_file
-	#print('Video file name: ', VIDEO_FILE)
-	date1, time1 = VIDEO_TIME.split('_')
-	time1 = time1.strip('mp4')
-	VIDEO_TIME = time1.rstrip('.')
-	print('Video time: ', VIDEO_TIME)
-	#pvr_year, pvr_month, pvr_day = date1.split('-')
-	#global VIDEO_DATE
-	#VIDEO_DATE  = '{}/{}/{}'.format(pvr_day, pvr_month, pvr_year)
-	#print('Video search date: ', VIDEO_DATE)
 
 	#video_file = 'rtsp://calendar:AVCaudit1@10.4.0.175:554/axis-media/media.amp?videocodec=h264'
 	#video_file = '/ssd500/pvr_video_2021-03-09-10_19_38_639.mp4'
@@ -793,9 +770,9 @@ def record_bookmark():
 
 def add_camera():
 	global camera
-	camera = w_1_entry1_1_1.get()
+	camera = w_1_entry1_11_2.get()
 	print('Camera: ',camera)
-	w_1_entry1_1_1.delete(0, END)
+	w_1_entry1_11_2.delete(0, END)
 
 def stop():
 	global stop
@@ -811,16 +788,16 @@ def stop():
 	pause = False
 	stop = True
 	#entry1.delete(0, END)
-	w_1_entry2_12_1.delete(0, END)
-	w_1_entry3_3_1.delete(0, END)
-	w_1_entry4_4_1.delete(0, END)
-	w_1_entry5_5_1.delete(0, END)
-	w_1_entry6_6_1.delete(0, END)
-	w_1_entry7_7_1.delete(0, END)
-	w_1_entry8_8_1.delete(0, END)
-	w_1_entry9_9_1.delete(0, END)
-	w_1_entry10_10_1.delete(0, END)
-	w_1_entry11_11_1.delete(0, END)
+	w_1_entry2_13_2.delete(0, END)
+	w_1_entry3_14_2.delete(0, END)
+	w_1_entry4_15_2.delete(0, END)
+	w_1_entry5_16_2.delete(0, END)
+	w_1_entry6_17_2.delete(0, END)
+	w_1_entry7_18_2.delete(0, END)
+	w_1_entry8_19_2.delete(0, END)
+	w_1_entry9_20_2.delete(0, END)
+	w_1_entry10_21_2.delete(0, END)
+	w_1_entry11_22_2.delete(0, END)
 	print(stop)
 
 def exit():
@@ -836,9 +813,9 @@ def exit():
 	back = False
 	pause = False
 	stop = True
-	w_1_entry1_1_1.delete(0, END)
-	w_1_entry2_12_1.delete(0, END)
-	w_1_entry3_3_1.delete(0, END)
+	w_1_entry1_11_2.delete(0, END)
+	w_1_entry2_13_2.delete(0, END)
+	w_1_entry3_14_2.delete(0, END)
 	print(stop)
 	window.destroy()
 
@@ -861,10 +838,10 @@ def set_date():
 		month, day, year = video_date.split('/')
 		global VIDEO_DATE
 		VIDEO_DATE  = '{}/{}/{}'.format(day.zfill(2), month.zfill(2), year)
-		w_1_entry0_0_1.delete(0, END)
-		w_1_entry0_0_1.insert(END, VIDEO_DATE)
+		w_1_entry0_10_2.delete(0, END)
+		w_1_entry0_10_2.insert(END, VIDEO_DATE)
 		print('Date: ', VIDEO_DATE)
-		calendar.destroy()
+		#calendar.destroy()
 
 	# Add Button and Label
 	calendar_btn_sel = Button(calendar, text = "Set Date", command = grad_date)
@@ -876,21 +853,22 @@ def set_date():
 	time_entries = []
 	def set_time():
 		width = 0
+
 		entry_list = ' '
 		for entries in time_entries:
 			entry_list = entry_list + str(entries.get()) + '\n'
-			cal_label.config(text=entry_list)
+			#cal_label.config(text=entry_list)
 
 		print(time_entries[0].get()) #to return a value from a specific column
-		global HOUR
-		global MINUTE
-		global SECONDS
-		global MILISECONDS
-
+	
 		HOUR = time_entries[0].get()
 		MINUTE = time_entries[1].get()
 		SECONDS = time_entries[2].get()
 		MILISECONDS = time_entries[3].get()
+
+		global VIDEO_TIME
+		VIDEO_TIME = '{}:{}:{}.{}'.format(HOUR.zfill(2), MINUTE.zfill(2), SECONDS.zfill(2), MILISECONDS.zfill(3))
+		print('This is the new time: ',VIDEO_TIME)
 
 
 	time_list = ['H', 'M', 'S', 'Milisec']
@@ -907,8 +885,8 @@ def set_date():
 	cal_btn = Button(calendar, text='Set time', command=set_time)
 	cal_btn.grid(row=8, column=0, sticky='enw', padx=20, pady=2)
 
-	cal_label = Label(calendar, text=' ')
-	cal_label.grid(row=9, column=0, sticky='enw', padx=20, pady=2)
+	cal_btn_close = Button(calendar, text = "Close", command=calendar.destroy)
+	cal_btn_close.grid(row=9, column=0, sticky='enw', padx=20, pady=2)
 
 
 	# Excecute Tkinter
@@ -917,8 +895,8 @@ def set_date():
 
 window = Tk()
 window.title("AVC Audit")
-window.rowconfigure(0, minsize=800, weight=1)
-window.columnconfigure(0, minsize=800, weight=1)
+window.rowconfigure(0, minsize=110, weight=1)
+window.columnconfigure(0, minsize=110, weight=1)
 w_1_my_img1 = ImageTk.PhotoImage(Image.open('/DATA/camera_1/2020_12_06/test.png'))
 #my_img1 = ImageTk.PhotoImage(Image.open(get_frame))
 #labels
@@ -927,7 +905,20 @@ var = StringVar()
 w_1_my_label0_0_1 = Label(window, textvariable=var, relief=RAISED )
 #my_label = Label(window, text='Images')
 w_1_my_label1_0_1 = Label(window, textvariable=var)
-w_1_my_label2_3_1 = Label(window, text="PVR Line Number")
+w_1_my_label_header_1_0 =Label(window, text='AUDITOR1')
+w_1_my_label2_10_0 = Label(window, text="Date")
+w_1_my_label3_11_0 = Label(window, text="PVR Video")
+w_1_my_label4_12_0 = Label(window, text="PVR File")
+w_1_my_label5_13_0 = Label(window, text="Next PVR")
+w_1_my_label6_14_0 = Label(window, text="Frame Number")
+w_1_my_label7_15_0 = Label(window, text="PVR Line")
+w_1_my_label8_16_0 = Label(window, text="Lane Number")
+w_1_my_label9_17_0 = Label(window, text="Speed")
+w_1_my_label10_18_0 = Label(window, text="Direction")
+w_1_my_label11_19_0 = Label(window, text="Class")
+w_1_my_label12_20_0 = Label(window, text="Axle")
+w_1_my_label13_21_0 = Label(window, text="Length")
+w_1_my_label14_22_0 = Label(window, text="Note")
 #my_label.grid_forget()
 
 #Debug
@@ -945,78 +936,95 @@ w_1_my_label2_3_1 = Label(window, text="PVR Line Number")
 #txt_edit = tk.Text(window)
 
 #entry box
-window = Frame(window, relief=RAISED, bd=2)
-w_1_entry0_0_1 = Entry(window, width=10)  #Date
-w_1_entry1_1_1 = Entry(window, width=100) #camera path
-w_1_entry2_12_1 = Entry(window, width=10) #next frame
-w_1_entry3_3_1 = Entry(window, width=10) #current frame
-w_1_entry4_4_1 = Entry(window, width=10) #pvr line number
-w_1_entry5_5_1 = Entry(window, width=10) #lane number
-w_1_entry6_6_1 = Entry(window, width=10) #speed
-w_1_entry7_7_1 = Entry(window, width=10) #direction
-w_1_entry8_8_1 = Entry(window, width=10) #
-w_1_entry9_9_1 = Entry(window, width=10)
-w_1_entry10_10_1 = Entry(window, width=10)
-w_1_entry11_11_1 = Entry(window, width=10)
-w_1_entry12_2_1 = Entry(window, width=100) #PVR_FILE
+#window = Frame(window, relief=RAISED, bd=2)
+w_1_entry0_10_2 = Entry(window, width=10)  #Date
+w_1_entry1_11_2 = Entry(window, width=100) #camera path
+w_1_entry2_13_2 = Entry(window, width=10) #next frame
+w_1_entry3_14_2 = Entry(window, width=10) #current frame
+w_1_entry4_15_2 = Entry(window, width=10) #pvr line number
+w_1_entry5_16_2 = Entry(window, width=10) #lane number
+w_1_entry6_17_2 = Entry(window, width=10) #speed
+w_1_entry7_18_2 = Entry(window, width=10) #direction
+w_1_entry8_19_2 = Entry(window, width=10) #
+w_1_entry9_20_2 = Entry(window, width=10)
+w_1_entry10_21_2 = Entry(window, width=10)
+w_1_entry11_22_2 = Entry(window, width=10)
+w_1_entry12_12_2 = Entry(window, width=100) #PVR_FILE
 
 
 #buttons
-w_1_btn_open_0_0 = Button(window, text="Import video", command=pvr_video)
-w_1_btn_play_1_0 = Button(window, text="Play", command=play)
-w_1_btn_pause_2_0 = Button(window, text="Pause", command=pause)
-w_1_btn_tracker_5_0 = Button(window, text="Tracker", command=skip)
-w_1_btn_back_3_0 = Button(window, text="<<", command=back)
-w_1_btn_forward_4_0 = Button(window, text=">>", command=forward)
-w_1_btn_bkdir_11_0 = Button(window, text="Add Bookmark Dir", command=add_bkdir)
-w_1_btn_bookmark_12_0 = Button(window, text="Record", command=record)
-w_1_btn_record_13_0 = Button(window, text="Record Bookmark", command=record_bookmark)
-w_1_btn_stop_7_0 = Button(window, text="Stop", command=stop)
+w_1_btn_open_23_0 = Button(window, text="Import video", command=pvr_video)
+w_1_btn_play_24_0 = Button(window, text="Play", command=play)
+w_1_btn_pause_25_0 = Button(window, text="Pause", command=pause)
+w_1_btn_tracker_28_0 = Button(window, text="Tracker", command=skip)
+w_1_btn_back_26_0 = Button(window, text="<<", command=back)
+w_1_btn_forward_27_0 = Button(window, text=">>", command=forward)
+w_1_btn_bkdir_34_0 = Button(window, text="Add Bookmark Dir", command=add_bkdir)
+w_1_btn_bookmark_35_0 = Button(window, text="Record", command=record)
+w_1_btn_record_36_0 = Button(window, text="Record Bookmark", command=record_bookmark)
+w_1_btn_stop_30_0 = Button(window, text="Stop", command=stop)
 #btn_set_date = tk.Button(fr_buttons, text = "Set Date", command = set_date)
-w_1_btn_set_date_8_0 = Button(window, text = "Select Date", command = set_date) #.pack(pady = 20)
-w_1_btn_pvrfile_9_0 = Button(window, text="Import PVR file", command=pvr_file)
-w_1_btn_add_camera_10_0 = Button(window, text="Add Camera", command=add_camera)
-w_1_btn_exit_14_0 = Button(window, text="Exit", command=exit)
+w_1_btn_set_date_31_0 = Button(window, text = "Select Date", command = set_date) #.pack(pady = 20)
+w_1_btn_pvrfile_32_0 = Button(window, text="Import PVR file", command=pvr_file)
+w_1_btn_add_camera_33_0 = Button(window, text="Add Camera", command=add_camera)
+w_1_btn_exit_37_0 = Button(window, text="Exit", command=exit)
 #text_box = tk.Text()
 #entry = tk.Entry()
 
 #buttons
 #btn_play.grid(row=0, column=0, sticky="ew", padx=5, pady=5)
-w_1_btn_open_0_0.grid(row=0, column=0, sticky="ew", padx=5)
-w_1_btn_play_1_0.grid(row=1, column=0, sticky="ew", padx=5)
-w_1_btn_pause_2_0.grid(row=2, column=0, sticky="ew", padx=5)
-w_1_btn_back_3_0.grid(row=3, column=0, sticky="ew", padx=5)
-w_1_btn_forward_4_0.grid(row=4, column=0, sticky="ew", padx=5)
-w_1_btn_tracker_5_0.grid(row=5, column=0, sticky="ew", padx=5)
-w_1_btn_bookmark_12_0.grid(row=6, column=0, sticky="ew", padx=5)
-w_1_btn_stop_7_0.grid(row=7, column=0, sticky="ew", padx=5)
-w_1_btn_set_date_8_0.grid(row=8, column=0, sticky="ew", padx=5)
-w_1_btn_pvrfile_9_0.grid(row=9, column=0, sticky="ew", padx=5)
-w_1_btn_add_camera_10_0.grid(row=10, column=0, sticky="ew", padx=5)
-w_1_btn_bkdir_11_0.grid(row=11, column=0, sticky="ew", padx=5)
-w_1_btn_bookmark_12_0.grid(row=12, column=0, sticky='ew', padx=5)
-w_1_btn_record_13_0.grid(row=13, column=0, sticky='ew', padx=5)
-w_1_btn_exit_14_0.grid(row=14, column=0, sticky="ew", padx=5)
+w_1_btn_open_23_0.grid(row=23, column=0, sticky="wse", padx=5)
+w_1_btn_play_24_0.grid(row=24, column=0, sticky="wse", padx=5)
+w_1_btn_pause_25_0.grid(row=25, column=0, sticky="wse", padx=5)
+w_1_btn_back_26_0.grid(row=26, column=0, sticky="wse", padx=5)
+w_1_btn_forward_27_0.grid(row=27, column=0, sticky="wse", padx=5)
+w_1_btn_tracker_28_0.grid(row=28, column=0, sticky="wse", padx=5)
+w_1_btn_bookmark_35_0.grid(row=29, column=0, sticky="wse", padx=5)
+w_1_btn_stop_30_0.grid(row=30, column=0, sticky="wse", padx=5)
+w_1_btn_set_date_31_0.grid(row=31, column=0, sticky="wse", padx=5)
+w_1_btn_pvrfile_32_0.grid(row=32, column=0, sticky="wse", padx=5)
+w_1_btn_add_camera_33_0.grid(row=33, column=0, sticky="wse", padx=5)
+w_1_btn_bkdir_34_0.grid(row=34, column=0, sticky="wse", padx=5)
+w_1_btn_bookmark_35_0.grid(row=35, column=0, sticky='wse', padx=5)
+w_1_btn_record_36_0.grid(row=36, column=0, sticky='wse', padx=5)
+w_1_btn_exit_37_0.grid(row=37, column=0, sticky="wse", padx=5)
 
 #entry box
-w_1_entry0_0_1.grid(row=0, column=1, sticky="nw", padx=5)
-w_1_entry1_1_1.grid(row=1, column=1, sticky="nw", padx=5)
-w_1_entry2_12_1.grid(row=12, column=1, sticky="nw", padx=5)
-w_1_entry3_3_1.grid(row=3, column=1, sticky="nw", padx=5)
-w_1_entry4_4_1.grid(row=4, column=1, sticky="nw", padx=5)
-w_1_entry5_5_1.grid(row=5, column=1, sticky="nw", padx=5)
-w_1_entry6_6_1.grid(row=6, column=1, sticky="nw", padx=5)
-w_1_entry7_7_1.grid(row=7, column=1, sticky="nw", padx=5)
-w_1_entry8_8_1.grid(row=8, column=1, sticky="nw", padx=5)
-w_1_entry9_9_1.grid(row=9, column=1, sticky="nw", padx=5)
-w_1_entry10_10_1.grid(row=10, column=1, sticky="nw", padx=5)
-w_1_entry11_11_1.grid(row=11, column=1, sticky="nw", padx=5)
-w_1_entry12_2_1.grid(row=2, column=1, sticky="nw", padx=5)
+w_1_entry0_10_2.grid(row=10, column=2, sticky="wn", padx=5)
+w_1_entry1_11_2.grid(row=11, column=2, sticky="wn", padx=5)
+w_1_entry12_12_2.grid(row=12, column=2, sticky="wn", padx=5)
+w_1_entry2_13_2.grid(row=13, column=2, sticky="wn", padx=5)
+w_1_entry3_14_2.grid(row=14, column=2, sticky="wn", padx=5)
+w_1_entry4_15_2.grid(row=15, column=2, sticky="wn", padx=5)
+w_1_entry5_16_2.grid(row=16, column=2, sticky="wn", padx=5)
+w_1_entry6_17_2.grid(row=17, column=2, sticky="wn", padx=5)
+w_1_entry7_18_2.grid(row=18, column=2, sticky="wn", padx=5)
+w_1_entry8_19_2.grid(row=19, column=2, sticky="wn", padx=5)
+w_1_entry9_20_2.grid(row=20, column=2, sticky="wn", padx=5)
+w_1_entry10_21_2.grid(row=21, column=2, sticky="wn", padx=5)
+w_1_entry11_22_2.grid(row=22, column=2, sticky="wn", padx=5)
+
 #labels
-w_1_my_label0_0_1.grid(row=0, column=1, sticky="ne")
-w_1_my_label1_0_1.forget()
-w_1_my_label1_0_1.grid(row=0, column=1, sticky="wn", padx=5)
-w_1_my_label2_3_1.grid(row=3, column=1, sticky="wn", padx=5)
+#  w_1_my_label0_0_1.grid(row=0, column=1, sticky="wne")
+#  w_1_my_label1_0_1.forget()
+#  w_1_my_label1_0_1.grid(row=0, column=1, sticky="wne", padx=5)
+#  w_1_my_label2_3_1.grid(row=3, column=1, sticky="wne", padx=5)
+w_1_my_label_header_1_0.grid(row=1, column=0, sticky='wn', padx=5)
+w_1_my_label2_10_0.grid(row=10, column=0, sticky='wn', padx=5)
+w_1_my_label3_11_0.grid(row=11, column=0, sticky='wn', padx=5)
+w_1_my_label4_12_0.grid(row=12, column=0, sticky='wn', padx=5)
+w_1_my_label5_13_0.grid(row=13, column=0, sticky='wn', padx=5)
+w_1_my_label6_14_0.grid(row=14, column=0, sticky='wn', padx=5)
+w_1_my_label7_15_0.grid(row=15, column=0, sticky='wn', padx=5)
+w_1_my_label8_16_0.grid(row=16, column=0, sticky='wn', padx=5)
+w_1_my_label9_17_0.grid(row=17, column=0, sticky='wn', padx=5)
+w_1_my_label10_18_0.grid(row=18, column=0, sticky='wn', padx=5)
+
+w_1_my_label11_19_0.grid(row=19, column=0, sticky='wn', padx=5)
+w_1_my_label12_20_0.grid(row=20, column=0, sticky='wn', padx=5)
+w_1_my_label13_21_0.grid(row=21, column=0, sticky='wn', padx=5)
+w_1_my_label14_22_0.grid(row=22, column=0, sticky='wn', padx=5)
+
 #text_box.grid(row=2, column=5, sticky="ew", padx=5, pady=5)
 #entry.grid(row=2, column=5, sticky="ew", padx=5, pady=5)
 #label.pack()
@@ -1027,7 +1035,7 @@ w_1_my_label2_3_1.grid(row=3, column=1, sticky="wn", padx=5)
 #btn_record.grid(row=5, column=0, sticky="ew", padx=5, pady=5)
 #btn_save.grid(row=1, column=0, sticky="ew", padx=5)
 
-window.grid(row=0, column=0, sticky="nw")
+#window.grid(row=0, column=0, sticky="nw")
 #txt_edit.grid(row=5, column=1, sticky="nsew")
 #create window
 window.mainloop()
