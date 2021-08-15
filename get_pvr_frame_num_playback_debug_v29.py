@@ -84,6 +84,7 @@ count = 0
 record_directory = ''
 record_bkmark = False
 PVR_LINE = 0
+OFFSET = 0
 
 #w = int(((w/width)*100)*width)
 #h = int(((h/height)*100)*height)
@@ -228,8 +229,8 @@ class Auditor:
 		fps = cap.get(cv2.CAP_PROP_FPS)
 		fps = float(fps)
 		#print('frame time1: ', frame_time1)
-		TIME_DELTA = ((frame_time + (offset + .99)) - pvr_time) # offset adjustment
-		TIME_DELTA1 = ((frame_time - frame_time1 + (offset + .99))) # offset adjustment
+		TIME_DELTA = ((frame_time + (offset + OFFSET)) - pvr_time) # offset adjustment
+		TIME_DELTA1 = ((frame_time - frame_time1 + (offset + OFFSET))) # offset adjustment
 		#print('pvr_time: {} frame_time: {} | frame_time1: {} | offset: {}'.format(pvr_time, frame_time, frame_time1, offset))
 	
 		global frame_num
@@ -888,9 +889,9 @@ def set_date():
 	cal_btn_close = Button(calendar, text = "Close", command=calendar.destroy)
 	cal_btn_close.grid(row=9, column=0, sticky='enw', padx=20, pady=2)
 
-
 	# Excecute Tkinter
 	calendar.mainloop()
+
 
 
 window = Tk()
@@ -935,6 +936,38 @@ w_1_my_label14_22_0 = Label(window, text="Note")
 #calendar.mainloop()
 #txt_edit = tk.Text(window)
 
+
+offset_entries = []
+def offset_trim():
+	global OFFSET
+	entry_list = ''
+	for entries in offset_entries:
+		entry_list = entry_list + str(entries.get()) + '\n'
+
+	#print(offset_entries[0].get()) #to return a value from a specific column
+	OFFSET = offset_entries[0].get()
+	OFFSET = int(OFFSET)/100
+	print('OFFSET: ', OFFSET)
+	trim_label = Label(window, text=OFFSET)
+	trim_label.grid(row=4, column=2, sticky='enw', padx=20)
+		
+for x_offset in range(1):
+	TRIM_LABEL = OFFSET
+	offset_label = Label(window, text='OFFSET TRIM')
+	offset_label.grid(row=4, column=x_offset, sticky='enw', padx=20)
+
+	offset_spinbox = Spinbox(window, width=2, from_=0, to=100)
+	offset_spinbox.grid(row=4, column=x_offset, sticky='enw', padx=1)
+	offset_entries.append(offset_spinbox)
+	
+
+offset_btn = Button(window, text='Set offset trim', command=offset_trim)
+offset_btn.grid(row=4, column=0, sticky='wn', pady=20)
+
+
+
+
+
 #entry box
 #window = Frame(window, relief=RAISED, bd=2)
 w_1_entry0_10_2 = Entry(window, width=10)  #Date
@@ -953,6 +986,7 @@ w_1_entry12_12_2 = Entry(window, width=100) #PVR_FILE
 
 
 #buttons
+
 w_1_btn_open_23_0 = Button(window, text="Import video", command=pvr_video)
 w_1_btn_play_24_0 = Button(window, text="Play", command=play)
 w_1_btn_pause_25_0 = Button(window, text="Pause", command=pause)
