@@ -365,7 +365,7 @@ class Auditor:
 
 				if banner_lane == '2':
 					i = 0
-
+				
 				next_line = int(line + 1)
 				frame_num, PLAY_BANNER = Auditor.get_pvr_frame(next_line)
 
@@ -395,7 +395,7 @@ class Auditor:
 
 			if record_bkmark == True:
 				PVR_LINE = line
-				if PVR_LINE == pvr_line_number:
+				if frame_number == frame_num:
 					cv2.imwrite(record_directory+'bookmark_'+str(PVR_LINE)+EXT1, frame)
 
 			cv2.imshow('frame', frame)
