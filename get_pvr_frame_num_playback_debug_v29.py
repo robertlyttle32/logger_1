@@ -85,6 +85,7 @@ record_directory = ''
 record_bkmark = False
 PVR_LINE = 0
 OFFSET = 0
+TRACKER_FRAME = ''
 
 #w = int(((w/width)*100)*width)
 #h = int(((h/height)*100)*height)
@@ -320,13 +321,18 @@ class Auditor:
 		return banner_date,banner_time,banner_lane,banner_dir,banner_length,banner_speed,banner_class,banner_axle,banner_note
 
 	def play_video():
+		global PLAY_FRAME
 		#sync_data()
 		record_bkmark == True
 		i = 0
 		line = count #pvr_count - pvr_count
 		fps = cap.get(cv2.CAP_PROP_FPS)
 		fps = int(fps)
+
+		frame_number = TRACKER_FRAME
+
 		frame_number, PLAY_BANNER = Auditor.get_pvr_frame(line)
+
 		#print('first line number is: ', line)
 		cap.set(cv2.CAP_PROP_POS_FRAMES, frame_number)
 		fourcc = cv2.VideoWriter_fourcc(*'MP4V')
@@ -340,26 +346,28 @@ class Auditor:
 			banner_date,banner_time,banner_lane,banner_dir,banner_length,banner_speed,banner_class,banner_axle,banner_note = Auditor.banner_info(line)
 			#cap.set(cv2.CAP_PROP_POS_FRAMES, FRAME_NUMBER)
 
+				#out.write(frame)
+
 			ret, frame = cap.read()
 			frame = cv2.resize(frame, (width, height))
 			cv2.rectangle(frame, (x, y), (x + w, y + h), (0,0,0), -1)
     			#gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
 			font = cv2.FONT_HERSHEY_SIMPLEX
+
 			if frame_num - (fps*2) < frame_number:
 				pvr_line_number = pvr_count + line
 
 				#modified 7/4/21
 				#global DISPLAY_BANNER1
 				DISPLAY_BANNER1 = Auditor.banner_label2(banner_date,banner_time,banner_lane,banner_dir,banner_length,banner_speed,banner_class,banner_axle,banner_note,pvr_line_number,frame,font,i)
-			if banner_lane == '1':
-				i = 0 #180
+				if banner_lane == '1':
+					i = 0 #180
 
-			elif banner_lane == '2':
-				i = 0
+				if banner_lane == '2':
+					i = 0
 
-			next_line = int(line + 1)
-			frame_num, PLAY_BANNER = Auditor.get_pvr_frame(next_line)
-
+				next_line = int(line + 1)
+				frame_num, PLAY_BANNER = Auditor.get_pvr_frame(next_line)
 
 			if frame_num >= frame_number - (fps):
 				DISPLAY_BANNER2 = Auditor.banner_label2(banner_date,banner_time,banner_lane,banner_dir,banner_length,banner_speed,banner_class,banner_axle,banner_note,pvr_line_number,frame,font,i)
@@ -379,6 +387,7 @@ class Auditor:
 
 			if frame_number > frame_num + (fps):
 				line = int(line + 1)
+
 			cv2.putText(frame,DISPLAY_BANNER1,(100,680),font,0.4,(BLUE,GREEN,RED),1) #BGR
 			cv2.putText(frame,DISPLAY_BANNER2,(100,680),font,0.4,(BLUE,GREEN,RED),1) #BGR
 			#cv2.putText(frame,'Lane_2 _____________',(10,20),font,0.4,(BLUE,GREEN,RED),1)
@@ -386,10 +395,8 @@ class Auditor:
 
 			if record_bkmark == True:
 				PVR_LINE = line
-				if frame_number == frame_num:
+				if PVR_LINE == pvr_line_number:
 					cv2.imwrite(record_directory+'bookmark_'+str(PVR_LINE)+EXT1, frame)
-					#out.write(frame)
-
 
 			cv2.imshow('frame', frame)
 
@@ -501,6 +508,9 @@ class Auditor:
 			banner_speed = banner_speed*2.23694
 			banner_speed = int(banner_speed)
 
+			global TRACKER_FRAME
+			PLAY_FRAME = new_frame
+
 			new_frame = float(new_frame)
 			cap.set(cv2.CAP_PROP_POS_FRAMES, new_frame)
 			fourcc = cv2.VideoWriter_fourcc(*'MP4V')
@@ -562,6 +572,12 @@ class Auditor:
 				break
 				cap.release()
 				cv2.destroyAllWindows()
+
+			if pause == False:
+				break
+				cap.release()
+				cv2.destroyAllWindows()
+
 
 			# get current positions of four trackbars
 			FRAME_NUMBER1 = cv2.getTrackbarPos('Tracking','avc_audit')
@@ -678,12 +694,12 @@ def open_file():
 
 def play():
 	global play
+	global cap
 	global back
 	global pause
 	global stop
 	global record
 	global forward
-	global video_file
 	global button_state
 	forward = False
 	record = False
@@ -692,6 +708,7 @@ def play():
 	back = False
 	play = True
 	button_state = False
+	cap = cv2.VideoCapture(video_file)
 	#Button(window, text="Play", state=DISABLED)
 	def run1():
 		Button(window, text="Play", state=DISABLED)
@@ -708,11 +725,13 @@ def pause():
 
 def skip():
 	global skip
+	global cap
 	#global stop
 	#stop = True
 	#time.sleep(2)
 	print('processing ....')
 	skip = True
+	cap = cv2.VideoCapture(video_file)
 	def run():
 		Auditor.sync_data()
 		Auditor.tracker()
