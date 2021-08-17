@@ -72,6 +72,7 @@ record_bkmark = False
 PVR_LINE = 0
 OFFSET = 0
 TRACKER_FRAME = ''
+FRAME_OUTPUT = 0
 
 #get files
 class Auditor:
@@ -269,7 +270,11 @@ class Auditor:
 		w_1_entry11_22_2.insert(END, BANNER[12])
 		return banner_date,banner_time,banner_lane,banner_dir,banner_length,banner_speed,banner_class,banner_axle,banner_note
 
+
+
+
 	def play_video():
+		
 		global PLAY_FRAME
 		#sync_data()
 		record_bkmark == False
@@ -280,12 +285,11 @@ class Auditor:
 		frame_number = TRACKER_FRAME
 		frame_number, PLAY_BANNER = Auditor.get_pvr_frame(line)
 		cap.set(cv2.CAP_PROP_POS_FRAMES, frame_number)
-		fourcc = cv2.VideoWriter_fourcc(*'MP4V')
-		out = cv2.VideoWriter(record_directory+Auditor.get_video_name()+EXT,fourcc, 20.0, (1280,720))
 		while play == True: #(cap.isOpened()):
 			while pause == True:
 				Auditor.tracker()
 			frame_num, PLAY_BANNER = Auditor.get_pvr_frame(line)
+			frame_num = FRAME_OUTPUT
 			banner_date,banner_time,banner_lane,banner_dir,banner_length,banner_speed,banner_class,banner_axle,banner_note = Auditor.banner_info(line)
 			ret, frame = cap.read()
 			frame = cv2.resize(frame, (width, height))
@@ -321,14 +325,6 @@ class Auditor:
 
 			cv2.putText(frame,DISPLAY_BANNER1,(100,680),font,0.4,(BLUE,GREEN,RED),1) #BGR
 			cv2.putText(frame,DISPLAY_BANNER2,(100,680),font,0.4,(BLUE,GREEN,RED),1) #BGR
-
-			if record_bkmark == True:
-				#PVR_LINE = line
-				#if frame_number == frame_num:
-				#cv2.imwrite(record_directory+'bookmark_'+str(PVR_LINE)+EXT1, frame)
-				#out = cv2.VideoWriter(record_directory+'bookmark_'+str(PVR_LINE)+EXT1, fourcc, 20.0, (1280,720))
-				out.write(frame)
-
 			cv2.imshow('frame', frame)
 
 			#global get_frame
@@ -624,7 +620,33 @@ def add_bkdir():
 def record_bookmark():
 	global record_bkmark
 	record_bkmark = not record_bkmark
+	record_frames()
 	print(record_bkmark)
+
+
+
+def record_frames():
+	global record
+	global stop
+	global back
+	global pause
+	global play
+	global forward
+	forward = False
+	play = False
+	pause = False
+	back = False
+	record = True
+	print('processing....')
+	def run3():
+		Auditor.sync_data()
+		recordings_bookmark(FRAME_OUTPUT) #frame_number
+		#Auditor.record_live_video()
+		print(record)
+	thread3 = threading.Thread(target=run3)
+	thread3.start()
+
+
 
 def add_camera():
 	global camera
@@ -735,6 +757,89 @@ def set_date():
 
 	# Excecute Tkinter
 	calendar.mainloop()
+
+
+
+def recordings_bookmark(frame_number):
+    #global PLAY_FRAME
+	#sync_data()
+	record_bkmark == False
+	i = 0
+	line = count #pvr_count - pvr_count
+	fps = cap.get(cv2.CAP_PROP_FPS)
+	fps = int(fps)
+	frame_number = TRACKER_FRAME
+	frame_number, PLAY_BANNER = Auditor.get_pvr_frame(line)
+	cap.set(cv2.CAP_PROP_POS_FRAMES, frame_number)
+	fourcc = cv2.VideoWriter_fourcc(*'MP4V')
+	out = cv2.VideoWriter(record_directory+Auditor.get_video_name()+EXT,fourcc, 20.0, (1280,720))
+	while record_bkmark == True: #(cap.isOpened()):
+	
+		frame_num, PLAY_BANNER = Auditor.get_pvr_frame(line)
+		banner_date,banner_time,banner_lane,banner_dir,banner_length,banner_speed,banner_class,banner_axle,banner_note = Auditor.banner_info(line)
+		ret, frame = cap.read()
+		frame = cv2.resize(frame, (width, height))
+		cv2.rectangle(frame, (x, y), (x + w, y + h), (0,0,0), -1)
+		font = cv2.FONT_HERSHEY_SIMPLEX
+
+		if frame_num - (fps*2) < frame_number:
+			pvr_line_number = pvr_count + line
+
+			#global DISPLAY_BANNER1
+			DISPLAY_BANNER1 = Auditor.banner_label2(banner_date,banner_time,banner_lane,banner_dir,banner_length,banner_speed,banner_class,banner_axle,banner_note,pvr_line_number,frame,font,i)
+			if banner_lane == '1':
+				i = 0 #180
+
+			if banner_lane == '2':
+				i = 0
+				
+			next_line = int(line + 1)
+			frame_num, PLAY_BANNER = Auditor.get_pvr_frame(next_line)
+		if frame_num >= frame_number - (fps):
+			DISPLAY_BANNER2 = Auditor.banner_label2(banner_date,banner_time,banner_lane,banner_dir,banner_length,banner_speed,banner_class,banner_axle,banner_note,pvr_line_number,frame,font,i)
+			if banner_lane == '1':
+				i = 0 #180
+
+			if banner_lane == '2':
+					i = 0
+
+			if frame_number > frame_num + (fps):
+				line = int(line + 1)
+
+		if frame_number > frame_num + (fps):
+			line = int(line + 1)
+
+		cv2.putText(frame,DISPLAY_BANNER1,(100,680),font,0.4,(BLUE,GREEN,RED),1) #BGR
+		cv2.putText(frame,DISPLAY_BANNER2,(100,680),font,0.4,(BLUE,GREEN,RED),1) #BGR
+
+		#if record_bkmark == True:
+			#PVR_LINE = line
+			#if frame_number == frame_num:
+			#cv2.imwrite(record_directory+'bookmark_'+str(PVR_LINE)+EXT1, frame)
+			#out = cv2.VideoWriter(record_directory+'bookmark_'+str(PVR_LINE)+EXT1, fourcc, 20.0, (1280,720))
+		out.write(frame)
+		cv2.imshow('frame', frame)
+
+		#global get_frame
+		get_frame = frame
+
+		w_1_entry4_15_2.delete(0, END)
+		w_1_entry4_15_2.insert(END, line)
+		w_1_entry3_14_2.delete(0, END)
+		w_1_entry3_14_2.insert(END, frame_number)
+		frame_number = frame_number + 1
+		if cv2.waitKey(1) & 0xFF == ord('q'):
+			break
+
+		if stop == True:
+			break
+			cap.release()
+			cv2.destroyAllWindows()
+
+	cap.release()
+	cv2.destroyAllWindows()
+
+
 
 window = Tk()
 window.title("AVC Audit")
