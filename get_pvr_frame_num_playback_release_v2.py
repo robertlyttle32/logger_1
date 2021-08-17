@@ -626,18 +626,12 @@ def record_bookmark():
 
 
 def record_frames():
-	global record
 	global stop
-	global back
-	global pause
 	global play
-	global forward
 	forward = False
 	play = False
-	pause = False
-	back = False
-	record = True
 	print('processing....')
+	cap = cv2.VideoCapture(video_file)
 	def run3():
 		Auditor.sync_data()
 		recordings_bookmark(FRAME_OUTPUT) #frame_number
