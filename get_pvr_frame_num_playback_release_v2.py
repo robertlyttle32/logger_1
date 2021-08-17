@@ -272,7 +272,7 @@ class Auditor:
 	def play_video():
 		global PLAY_FRAME
 		#sync_data()
-		record_bkmark == True
+		record_bkmark == False
 		i = 0
 		line = count #pvr_count - pvr_count
 		fps = cap.get(cv2.CAP_PROP_FPS)
@@ -281,8 +281,8 @@ class Auditor:
 		frame_number, PLAY_BANNER = Auditor.get_pvr_frame(line)
 		cap.set(cv2.CAP_PROP_POS_FRAMES, frame_number)
 		fourcc = cv2.VideoWriter_fourcc(*'MP4V')
-
-		while (cap.isOpened()):
+		out = cv2.VideoWriter(record_directory+Auditor.get_video_name()+EXT,fourcc, 20.0, (1280,720))
+		while play == True: #(cap.isOpened()):
 			while pause == True:
 				Auditor.tracker()
 			frame_num, PLAY_BANNER = Auditor.get_pvr_frame(line)
@@ -321,10 +321,13 @@ class Auditor:
 
 			cv2.putText(frame,DISPLAY_BANNER1,(100,680),font,0.4,(BLUE,GREEN,RED),1) #BGR
 			cv2.putText(frame,DISPLAY_BANNER2,(100,680),font,0.4,(BLUE,GREEN,RED),1) #BGR
+
 			if record_bkmark == True:
-				PVR_LINE = line
-				if frame_number == frame_num:
-					cv2.imwrite(record_directory+'bookmark_'+str(PVR_LINE)+EXT1, frame)
+				#PVR_LINE = line
+				#if frame_number == frame_num:
+				#cv2.imwrite(record_directory+'bookmark_'+str(PVR_LINE)+EXT1, frame)
+				#out = cv2.VideoWriter(record_directory+'bookmark_'+str(PVR_LINE)+EXT1, fourcc, 20.0, (1280,720))
+				out.write(frame)
 
 			cv2.imshow('frame', frame)
 
@@ -384,6 +387,7 @@ class Auditor:
 	def tracker():
 		frame = 0
 		output = 0
+		play = True
 		def nothing(FRAME_NUMBER):
 			i = 0
 			new_frame, BANNER = Auditor.get_pvr_frame(FRAME_NUMBER)
@@ -443,6 +447,13 @@ class Auditor:
 				break
 				cap.release()
 				cv2.destroyAllWindows()
+
+
+			if play == False:
+				break
+				cap.release()
+				cv2.destroyAllWindows()
+
 
 			# get current positions of four trackbars
 			FRAME_NUMBER1 = cv2.getTrackbarPos('Tracking','avc_audit')
@@ -538,9 +549,11 @@ def play():
 	stop = False
 	pause = False
 	back = False
-	play = True
+	#play = True
 	button_state = False
+	play = not play
 	cap = cv2.VideoCapture(video_file)
+	print(play)
 
 	def run1():
 		Button(window, text="Play", state=DISABLED)
