@@ -288,6 +288,7 @@ class Auditor:
 		while play == True: #(cap.isOpened()):
 			while pause == True:
 				Auditor.tracker()
+				recordings_bookmark(frame_number)
 			frame_num, PLAY_BANNER = Auditor.get_pvr_frame(line)
 			frame_num = FRAME_OUTPUT
 			banner_date,banner_time,banner_lane,banner_dir,banner_length,banner_speed,banner_class,banner_axle,banner_note = Auditor.banner_info(line)
@@ -438,17 +439,12 @@ class Auditor:
 				break
 				cap.release()
 				cv2.destroyAllWindows()
-
+				
 			if pause == False:
 				break
 				cap.release()
 				cv2.destroyAllWindows()
 
-
-			if play == False:
-				break
-				cap.release()
-				cv2.destroyAllWindows()
 
 
 			# get current positions of four trackbars
@@ -534,17 +530,13 @@ def open_file():
 def play():
 	global play
 	global cap
-	global back
 	global pause
 	global stop
 	global record
-	global forward
 	global button_state
-	forward = False
 	record = False
 	stop = False
 	pause = False
-	back = False
 	#play = True
 	button_state = False
 	play = not play
@@ -576,6 +568,8 @@ def skip():
 	thread1 = threading.Thread(target=run)
 	thread1.start()
 	print(skip)
+	thread1.kill()
+	thread1.join()
 
 def back():
 	global back
@@ -611,6 +605,8 @@ def record():
 		print(record)
 	thread2 = threading.Thread(target=run2)
 	thread2.start()
+	thread2.kill()
+	thread2.join()
 
 def add_bkdir():
 	global record_directory
@@ -620,16 +616,19 @@ def add_bkdir():
 def record_bookmark():
 	global record_bkmark
 	record_bkmark = not record_bkmark
+	#if record_bkmark == True:
 	record_frames()
 	print(record_bkmark)
 
 
 
 def record_frames():
+	global cap
 	global stop
 	global play
-	forward = False
+	#global pause
 	play = False
+	pause = False
 	print('processing....')
 	cap = cv2.VideoCapture(video_file)
 	def run3():
@@ -639,6 +638,8 @@ def record_frames():
 		print(record)
 	thread3 = threading.Thread(target=run3)
 	thread3.start()
+	thread3.kill()
+	thread3.join()
 
 
 
@@ -757,9 +758,10 @@ def set_date():
 def recordings_bookmark(frame_number):
     #global PLAY_FRAME
 	#sync_data()
-	record_bkmark == False
+	record_bkmark == True
 	i = 0
 	line = count #pvr_count - pvr_count
+	cap = cv2.VideoCapture(video_file)
 	fps = cap.get(cv2.CAP_PROP_FPS)
 	fps = int(fps)
 	frame_number = TRACKER_FRAME
@@ -768,7 +770,8 @@ def recordings_bookmark(frame_number):
 	fourcc = cv2.VideoWriter_fourcc(*'MP4V')
 	out = cv2.VideoWriter(record_directory+Auditor.get_video_name()+EXT,fourcc, 20.0, (1280,720))
 	while record_bkmark == True: #(cap.isOpened()):
-	
+		#while pause == True:
+			#Auditor.tracker()
 		frame_num, PLAY_BANNER = Auditor.get_pvr_frame(line)
 		banner_date,banner_time,banner_lane,banner_dir,banner_length,banner_speed,banner_class,banner_axle,banner_note = Auditor.banner_info(line)
 		ret, frame = cap.read()
@@ -837,8 +840,9 @@ def recordings_bookmark(frame_number):
 
 window = Tk()
 window.title("AVC Audit")
-window.rowconfigure(0, minsize=110, weight=1)
-window.columnconfigure(0, minsize=110, weight=1)
+window.geometry('600x800')
+#window.rowconfigure(0, minsize=110, weight=1)
+#window.columnconfigure(0, minsize=110, weight=1)
 w_1_my_img1 = ImageTk.PhotoImage(Image.open('/DATA/camera_1/2020_12_06/test.png'))
 
 var = StringVar()
