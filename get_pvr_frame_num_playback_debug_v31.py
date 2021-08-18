@@ -285,7 +285,7 @@ class Auditor:
 		frame_number = TRACKER_FRAME
 		frame_number, PLAY_BANNER = Auditor.get_pvr_frame(line)
 		cap.set(cv2.CAP_PROP_POS_FRAMES, frame_number)
-		while play == True: #(cap.isOpened()):
+		while True: #(cap.isOpened()):
 			while pause == True:
 				Auditor.tracker()
 				
@@ -537,9 +537,9 @@ def play():
 	record = False
 	stop = False
 	pause = False
-	#play = True
+	play = True
 	button_state = False
-	play = not play
+	#play = not play
 	cap = cv2.VideoCapture(video_file)
 	print(play)
 
@@ -776,8 +776,8 @@ def recordings_bookmark(frame_number):
 	fourcc = cv2.VideoWriter_fourcc(*'MP4V')
 	out = cv2.VideoWriter(record_directory+Auditor.get_video_name()+EXT,fourcc, 20.0, (1280,720))
 	while record_bkmark == True: #(cap.isOpened()):
-		#while pause == True:
-			#Auditor.tracker()
+		while pause == True:
+			Auditor.tracker()
 		frame_num, PLAY_BANNER = Auditor.get_pvr_frame(line)
 		banner_date,banner_time,banner_lane,banner_dir,banner_length,banner_speed,banner_class,banner_axle,banner_note = Auditor.banner_info(line)
 		ret, frame = cap.read()
