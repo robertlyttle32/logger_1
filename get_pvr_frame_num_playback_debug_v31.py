@@ -288,7 +288,7 @@ class Auditor:
 		while play == True: #(cap.isOpened()):
 			while pause == True:
 				Auditor.tracker()
-				recordings_bookmark(frame_number)
+				
 			frame_num, PLAY_BANNER = Auditor.get_pvr_frame(line)
 			frame_num = FRAME_OUTPUT
 			banner_date,banner_time,banner_lane,banner_dir,banner_length,banner_speed,banner_class,banner_axle,banner_note = Auditor.banner_info(line)
@@ -616,8 +616,8 @@ def add_bkdir():
 def record_bookmark():
 	global record_bkmark
 	record_bkmark = not record_bkmark
-	#if record_bkmark == True:
-	record_frames()
+	if record_bkmark == True:
+		record_frames()
 	print(record_bkmark)
 
 
@@ -629,6 +629,12 @@ def record_frames():
 	#global pause
 	play = False
 	pause = False
+
+	#record = False
+	stop = False
+	#pause = False
+	#play = True
+	button_state = False
 	print('processing....')
 	cap = cv2.VideoCapture(video_file)
 	def run3():
