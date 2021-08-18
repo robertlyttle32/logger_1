@@ -696,7 +696,6 @@ def show_screen():
 
 
 
-
 def add_camera():
 	global camera
 	camera = w_1_entry1_11_2.get()
@@ -813,7 +812,6 @@ def set_date():
 	calendar.mainloop()
 
 
-
 def recordings_bookmark(frame_number):
     #global PLAY_FRAME
 	#sync_data()
@@ -897,12 +895,20 @@ def recordings_bookmark(frame_number):
 
 
 
+
+
 window = Tk()
 window.title("AVC Audit")
 window.geometry('600x800')
 #window.rowconfigure(0, minsize=110, weight=1)
 #window.columnconfigure(0, minsize=110, weight=1)
-w_1_my_img1 = ImageTk.PhotoImage(Image.open('/DATA/camera_1/2020_12_06/test.png'))
+#w_1_my_img1 = ImageTk.PhotoImage(Image.open('/DATA/camera_1/2020_12_06/test.png'))
+w_1_my_img2 = ImageTk.PhotoImage(Image.open('/DATA/camera_1/2020_12_06/test.png'))
+
+
+
+
+
 
 var = StringVar()
 w_1_my_label0_0_1 = Label(window, textvariable=var, relief=RAISED )
@@ -921,6 +927,9 @@ w_1_my_label11_19_0 = Label(window, text="Class")
 w_1_my_label12_20_0 = Label(window, text="Axle")
 w_1_my_label13_21_0 = Label(window, text="Length")
 w_1_my_label14_22_0 = Label(window, text="Note")
+
+
+
 
 offset_entries = []
 def offset_trim():
@@ -948,6 +957,9 @@ for x_offset in range(1):
 offset_btn = Button(window, text='Set offset trim', command=offset_trim)
 offset_btn.grid(row=4, column=0, sticky='wn', pady=20)
 
+
+
+
 #entry box
 #window = Frame(window, relief=RAISED, bd=2)
 w_1_entry0_10_2 = Entry(window, width=10)  #Date
@@ -963,6 +975,8 @@ w_1_entry9_20_2 = Entry(window, width=10)
 w_1_entry10_21_2 = Entry(window, width=10)
 w_1_entry11_22_2 = Entry(window, width=10)
 w_1_entry12_12_2 = Entry(window, width=100) #PVR_FILE
+
+
 
 #buttons
 w_1_btn_showscreen_5_0 = Button(window, text='Show/Hide Screen', command=show_screen)
@@ -980,6 +994,8 @@ w_1_btn_set_date_31_0 = Button(window, text = "Select Date", command = set_date)
 w_1_btn_pvrfile_32_0 = Button(window, text="Import PVR file", command=pvr_file)
 w_1_btn_add_camera_33_0 = Button(window, text="Add Camera", command=add_camera)
 w_1_btn_exit_37_0 = Button(window, text="Exit", command=exit)
+
+
 
 #buttons
 #btn_play.grid(row=0, column=0, sticky="ew", padx=5, pady=5)
@@ -1000,6 +1016,8 @@ w_1_btn_bookmark_35_0.grid(row=35, column=0, sticky='wse', padx=5)
 w_1_btn_record_36_0.grid(row=36, column=0, sticky='wse', padx=5)
 w_1_btn_exit_37_0.grid(row=37, column=0, sticky="wse", padx=5)
 
+
+
 #entry box
 w_1_entry0_10_2.grid(row=10, column=2, sticky="wn", padx=5)
 w_1_entry1_11_2.grid(row=11, column=2, sticky="wn", padx=5)
@@ -1015,6 +1033,8 @@ w_1_entry9_20_2.grid(row=20, column=2, sticky="wn", padx=5)
 w_1_entry10_21_2.grid(row=21, column=2, sticky="wn", padx=5)
 w_1_entry11_22_2.grid(row=22, column=2, sticky="wn", padx=5)
 
+
+
 #labels
 w_1_my_label_header_1_0.grid(row=1, column=0, sticky='wn', padx=5)
 w_1_my_label2_10_0.grid(row=10, column=0, sticky='wn', padx=5)
@@ -1027,10 +1047,15 @@ w_1_my_label8_16_0.grid(row=16, column=0, sticky='wn', padx=5)
 w_1_my_label9_17_0.grid(row=17, column=0, sticky='wn', padx=5)
 w_1_my_label10_18_0.grid(row=18, column=0, sticky='wn', padx=5)
 
+
+
 w_1_my_label11_19_0.grid(row=19, column=0, sticky='wn', padx=5)
 w_1_my_label12_20_0.grid(row=20, column=0, sticky='wn', padx=5)
 w_1_my_label13_21_0.grid(row=21, column=0, sticky='wn', padx=5)
 w_1_my_label14_22_0.grid(row=22, column=0, sticky='wn', padx=5)
+
+#Images
+#w_1_my_img2.grid(row=12, column=3, sticky='we')
 
 #create window
 window.mainloop()
