@@ -1,0 +1,31 @@
+	time_entries = []
+	def set_time():
+		width = 0
+
+		entry_list = ' '
+		for entries in time_entries:
+			entry_list = entry_list + str(entries.get()) + '\n'
+			#cal_label.config(text=entry_list)
+		print(time_entries[0].get()) #to return a value from a specific column
+		HOUR = time_entries[0].get()
+		MINUTE = time_entries[1].get()
+		SECONDS = time_entries[2].get()
+		MILISECONDS = time_entries[3].get()
+		global VIDEO_TIME
+		VIDEO_TIME = '{}:{}:{}.{}'.format(HOUR.zfill(2), MINUTE.zfill(2), SECONDS.zfill(2), MILISECONDS.zfill(3))
+		print('This is the new time: ',VIDEO_TIME)
+
+
+	time_list = ['H', 'M', 'S', 'Milisec']
+
+	for x in range(4):
+		cal_label_header = Label(calendar, text=time_list[x])
+		cal_label_header.grid(row=5, column=x, sticky='enw', padx=20, pady=2)
+		spinbox = Spinbox(calendar, width=2, from_=0, to=999)
+		spinbox.grid(row=7, column=x, sticky='enw', padx=1, pady=2)
+		time_entries.append(spinbox)
+	cal_btn = Button(calendar, text='Set time', command=set_time)
+	cal_btn.grid(row=8, column=0, sticky='enw', padx=20, pady=2)
+	cal_btn_close = Button(calendar, text = "Close", command=calendar.destroy)
+	cal_btn_close.grid(row=9, column=0, sticky='enw', padx=20, pady=2)
+
