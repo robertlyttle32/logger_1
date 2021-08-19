@@ -2,7 +2,8 @@
 
 sudo apt-get update
 apt-get install python-pip3
+pip3 install opencv-python
 pip3 install rq
 pip3 install tkcalendar
 pip3 install pillow
-pip3 install urill3
+pip3 install urll3
