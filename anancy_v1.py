@@ -83,7 +83,6 @@ class Auditor:
 		self.PVR_FILE = PVR_FILE
 
 
-
 	#data synchronization
 	def sync_data():
 		try:
@@ -147,7 +146,6 @@ class Auditor:
 			time.sleep(20)
 
 
-
 	#file namer
 	def get_video_name():
 		get_image_time = datetime.datetime.now()
@@ -156,7 +154,6 @@ class Auditor:
 		video_name = get_image_time.strftime("%y-%m-%d_%H:%M:%S")
 		video_name = '{}.{}'.format(video_name,microsec)
 		return video_name
-
 
 
 	def get_pvr_frame(line):
@@ -203,7 +200,6 @@ class Auditor:
 		return frame_num, BANNER
 
 
-
 	def play_video1(FRAME_NUMBER):
 		cap.set(cv2.CAP_PROP_POS_FRAMES, START_FRAME_NUMBER)
 		ret, frame = cap.read()
@@ -216,7 +212,6 @@ class Auditor:
 		if cv2.waitKey(1) & 0xFF == ord('q'):
 			#break
 			pass
-
 
 
 	def banner_label(a,b,c,d,e,f,g,h,j,k,frame,font,i):
@@ -234,7 +229,6 @@ class Auditor:
 		cv2.putText(frame,'Axle: {} {}'.format(h, j),(10+i,215),font,font_size,(BLUE,GREEN,RED),1)
 
 
-
 	def banner_label2(a,b,c,d,e,f,g,h,j,k,frame,font,i):
         	#i sets postion of banner on screen
 		i = int(i)
@@ -244,12 +238,10 @@ class Auditor:
 		cv2.putText(frame,'Lane: {} | Direction: {} | Length: {} | Speed: {}  mph  | Class: {} | Axle: {} {}'.format(c,d,e,f,g,h,j),(10+i,700),font,font_size,(BLUE,GREEN,RED),1)
 
 
-
 	def banner_label3(frame,font):
 		font_size = 0.4
 		i = 985
 		cv2.putText(frame,'Date/Time: {}'.format(Auditor.get_video_name()),(10+i,10),font,font_size,(BLUE,GREEN,RED),1)
-
 
 
 	def banner_info(line):
@@ -288,8 +280,6 @@ class Auditor:
 		return banner_date,banner_time,banner_lane,banner_dir,banner_length,banner_speed,banner_class,banner_axle,banner_note
 
 
-
-
 	def play_video():
 		global PLAY_FRAME
 		#sync_data()
@@ -307,6 +297,7 @@ class Auditor:
 				Auditor.tracker()
 				
 			frame_num, PLAY_BANNER = Auditor.get_pvr_frame(line)
+			
 			frame_num = FRAME_OUTPUT
 			banner_date,banner_time,banner_lane,banner_dir,banner_length,banner_speed,banner_class,banner_axle,banner_note = Auditor.banner_info(line)
 			ret, frame = cap.read()
@@ -324,7 +315,7 @@ class Auditor:
 
 				if banner_lane == '2':
 					i = 0
-				
+
 				next_line = int(line + 1)
 				frame_num, PLAY_BANNER = Auditor.get_pvr_frame(next_line)
 			if frame_num >= frame_number - (fps):
@@ -399,8 +390,6 @@ class Auditor:
 		cv2.destroyAllWindows()
 
 
-
-
 	def tracker():
 		frame = 0
 		output = 0
@@ -466,7 +455,6 @@ class Auditor:
 				cv2.destroyAllWindows()
 
 
-
 			# get current positions of four trackbars
 			FRAME_NUMBER1 = cv2.getTrackbarPos('Tracking','avc_audit')
 
@@ -511,7 +499,6 @@ def pvr_file():
 	print('Pvr file: ', PVR_FILE)
 
 
-
 #converter
 def converter(converter):
 	t = converter
@@ -519,7 +506,6 @@ def converter(converter):
 	#convert time to seconds
 	convert = float(datetime.timedelta(hours=float(h),minutes=float(m),seconds=float(s)).total_seconds())
 	return convert
-
 
 
 #get video files
@@ -544,7 +530,6 @@ def pvr_video():
 	print('total_num_frames: ', totalframecount)
 
 
-
 os.system('clear')
 def open_file():
 	"""Open a file for editing."""
@@ -552,7 +537,6 @@ def open_file():
 	audit.file_select(filepath)
 	print('Selected file: ', filepath)
 	audit.file_select(filepath)
-
 
 
 def play():
@@ -580,12 +564,10 @@ def play():
 	print(play)
 
 
-
 def pause():
 	global pause
 	pause = not pause
 	print('Pause again: ', pause)
-
 
 
 def skip():
@@ -604,7 +586,6 @@ def skip():
 	thread1.join()
 
 
-
 def back():
 	global back
 	global count1
@@ -612,7 +593,7 @@ def back():
 	count1 = count1 - 1
 	#back = not back
 	print('Back: ', count1)
-
+	display_pvr(56)
 
 
 def forward():
@@ -622,7 +603,6 @@ def forward():
 	count1 = count1 + 1
 	#forward = not forward
 	print('Forward: ' , count1)
-
 
 
 def record():
@@ -647,12 +627,10 @@ def record():
 	thread2.join()
 
 
-
 def add_bkdir():
 	global record_directory
 	record_directory = filedialog.askdirectory()
 	record_directory = '{}/'.format(record_directory)
-
 
 
 def record_bookmark():
@@ -661,7 +639,6 @@ def record_bookmark():
 	if record_bkmark == True:
 		record_frames()
 	print(record_bkmark)
-
 
 
 def record_frames():
@@ -689,11 +666,9 @@ def record_frames():
 	thread3.join()
 
 
-
 def show_screen():
 	global SHOWSCREEN
 	SHOWSCREEN = not SHOWSCREEN
-
 
 
 def add_camera():
@@ -701,7 +676,6 @@ def add_camera():
 	camera = w_1_entry1_11_2.get()
 	print('Camera: ',camera)
 	w_1_entry1_11_2.delete(0, END)
-
 
 
 def stop():
@@ -728,7 +702,6 @@ def stop():
 	w_1_entry10_21_2.delete(0, END)
 	w_1_entry11_22_2.delete(0, END)
 	print(stop)
-
 
 
 def exit():
@@ -901,59 +874,23 @@ def display_pvr(line):
 		for entries in banner_list:
 			entry_list = entry_list + str(entries.get()) + '\n'
 			#cal_label.config(text=entry_list)
+		#print(banner_list[0].get()) #to return a value from a specific column
 
-		print(time_entries[0].get()) #to return a value from a specific column
-		HOUR = time_entries[0].get()
-		MINUTE = time_entries[1].get()
-		SECONDS = time_entries[2].get()
-		MILISECONDS = time_entries[3].get()
-		global VIDEO_TIME
-		VIDEO_TIME = '{}:{}:{}.{}'.format(HOUR.zfill(2), MINUTE.zfill(2), SECONDS.zfill(2), MILISECONDS.zfill(3))
-		print('This is the new time: ',VIDEO_TIME)
+	banner_list_label = ['Date','Time','unknown','Lane#',
+	'Unkown','Direction','Length','Speed',
+	'unkown','unkown','Class','Axle','Note']
+	frame_num, banner_list = Auditor.get_pvr_frame(line)
+	banner_list = banner_list.split(',')
+	for x in range(13):
+		cal_label_header = Label(window, text=banner_list_label[x])
+		cal_label_header.grid(row=10, column=x, sticky='w', padx=5, pady=1)
+		spinbox = Spinbox(window, width=10, from_=0, to=999)
+		#spinbox = Entry(window, width=10)
+		spinbox.grid(row=11, column=x, sticky='w', padx=5, pady=1)
+		#banner_list.append(spinbox)
+		spinbox.delete(0, END)
+		spinbox.insert(END, banner_list[x])
 
-	banner_label_list = ['H', 'M', 'S', 'Milisec']
-	banner_list = Auditor.get_pvr_frame(line)
-	for x in range(4):
-		cal_label_header = Label(window, text=banner_label_list[x])
-		cal_label_header.grid(row=5, column=x, sticky='enw', padx=20, pady=2)
-		spinbox = Spinbox(window, width=2, from_=0, to=999)
-		spinbox.grid(row=7, column=x, sticky='enw', padx=1, pady=2)
-		time_entries.append(spinbox)
-
-
-	def banner_info(line):
-		frame_num, BANNER = Auditor.get_pvr_frame(line)
-		BANNER = BANNER.strip()
-#		var.set(BANNER)
-		BANNER = BANNER.split(',')
-		banner_date = BANNER[0]
-		banner_time = BANNER[1]
-		banner_lane = BANNER[3]
-		banner_dir = BANNER[5]
-		banner_length = BANNER[6]
-		banner_speed = BANNER[7]
-		banner_class = BANNER[10]
-		banner_axle = BANNER[11]
-		banner_note = BANNER[12]
-		banner_speed = float(banner_speed)
-		banner_speed = banner_speed*2.23694
-		banner_speed = int(banner_speed)
-		w_1_entry0_10_2.delete(0, END)
-		w_1_entry0_10_2.insert(END, BANNER[0])
-		w_1_entry5_16_2.delete(0, END)
-		w_1_entry5_16_2.insert(END, BANNER[3])
-		w_1_entry6_17_2.delete(0, END)
-		w_1_entry6_17_2.insert(END, banner_speed)
-		w_1_entry7_18_2.delete(0, END)
-		w_1_entry7_18_2.insert(END, BANNER[5])
-		w_1_entry8_19_2.delete(0, END)
-		w_1_entry8_19_2.insert(END, BANNER[10])
-		w_1_entry9_20_2.delete(0, END)
-		w_1_entry9_20_2.insert(END, BANNER[11])
-		w_1_entry10_21_2.delete(0, END)
-		w_1_entry10_21_2.insert(END, BANNER[6])
-		w_1_entry11_22_2.delete(0, END)
-		w_1_entry11_22_2.insert(END, BANNER[12])
 
 window = Tk()
 window.title("Lyttle Systems")
@@ -966,13 +903,11 @@ w_1_my_img2 = ImageTk.PhotoImage(Image.open('my_logo.png'))
 w_1_neology_logo = Label(image = w_1_my_img2)
 
 
-
 #image = PIL.Image.open(r"C:\Users\Hamid\Desktop\asdasd\2.jpeg")
 #image = PIL.Image.open(r"C:\Users\Hamid\Desktop\asdasd\2.jpeg")
 #img = ImageTk.PhotoImage(image)
 #l = Label(image=img)
 #l.pack()
-
 
 
 var = StringVar()
@@ -992,9 +927,6 @@ w_1_my_label11_19_0 = Label(window, text="Class")
 w_1_my_label12_20_0 = Label(window, text="Axle")
 w_1_my_label13_21_0 = Label(window, text="Length")
 w_1_my_label14_22_0 = Label(window, text="Note")
-
-
-#display_pvr(56)
 
 
 offset_entries = []
@@ -1024,11 +956,10 @@ offset_btn = Button(window, text='Set offset trim', command=offset_trim)
 offset_btn.grid(row=4, column=0, sticky='wn', pady=20)
 
 
-
 #entry box
 #window = Frame(window, relief=RAISED, bd=2)
 w_1_entry0_10_2 = Entry(window, width=10)  #Date
-w_1_entry1_11_2 = Entry(window, width=100) #camera path
+w_1_entry1_11_2 = Entry(window, width=80) #camera path width=100
 w_1_entry2_13_2 = Entry(window, width=10) #next frame
 w_1_entry3_14_2 = Entry(window, width=10) #current frame
 w_1_entry4_15_2 = Entry(window, width=10) #pvr line number
@@ -1039,8 +970,7 @@ w_1_entry8_19_2 = Entry(window, width=10) #
 w_1_entry9_20_2 = Entry(window, width=10)
 w_1_entry10_21_2 = Entry(window, width=10)
 w_1_entry11_22_2 = Entry(window, width=10)
-w_1_entry12_12_2 = Entry(window, width=100) #PVR_FILE
-
+w_1_entry12_12_2 = Entry(window, width=80) #PVR_FILE width=100
 
 
 #buttons
@@ -1059,7 +989,6 @@ w_1_btn_set_date_31_0 = Button(window, text = "Select Date", command = set_date)
 w_1_btn_pvrfile_32_0 = Button(window, text="Import PVR file", command=pvr_file)
 w_1_btn_add_camera_33_0 = Button(window, text="Add Camera", command=add_camera)
 w_1_btn_exit_37_0 = Button(window, text="Exit", command=exit)
-
 
 
 #buttons
@@ -1082,7 +1011,6 @@ w_1_btn_record_36_0.grid(row=36, column=0, sticky='wse', padx=5)
 w_1_btn_exit_37_0.grid(row=37, column=0, sticky="wse", padx=5)
 
 
-
 #entry box
 w_1_entry0_10_2.grid(row=10, column=2, sticky="wn", padx=5)
 w_1_entry1_11_2.grid(row=11, column=2, sticky="wn", padx=5)
@@ -1099,7 +1027,6 @@ w_1_entry10_21_2.grid(row=21, column=2, sticky="wn", padx=5)
 w_1_entry11_22_2.grid(row=22, column=2, sticky="wn", padx=5)
 
 
-
 #labels
 w_1_my_label_header_1_0.grid(row=1, column=0, sticky='wn', padx=5)
 w_1_my_label2_10_0.grid(row=10, column=0, sticky='wn', padx=5)
@@ -1111,7 +1038,6 @@ w_1_my_label7_15_0.grid(row=15, column=0, sticky='wn', padx=5)
 w_1_my_label8_16_0.grid(row=16, column=0, sticky='wn', padx=5)
 w_1_my_label9_17_0.grid(row=17, column=0, sticky='wn', padx=5)
 w_1_my_label10_18_0.grid(row=18, column=0, sticky='wn', padx=5)
-
 
 
 w_1_my_label11_19_0.grid(row=19, column=0, sticky='wn', padx=5)
