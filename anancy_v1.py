@@ -261,22 +261,22 @@ class Auditor:
 		banner_speed = float(banner_speed)
 		banner_speed = banner_speed*2.23694
 		banner_speed = int(banner_speed)
-		w_1_entry0_10_2.delete(0, END)
-		w_1_entry0_10_2.insert(END, BANNER[0])
-		w_1_entry5_16_2.delete(0, END)
-		w_1_entry5_16_2.insert(END, BANNER[3])
-		w_1_entry6_17_2.delete(0, END)
-		w_1_entry6_17_2.insert(END, banner_speed)
-		w_1_entry7_18_2.delete(0, END)
-		w_1_entry7_18_2.insert(END, BANNER[5])
-		w_1_entry8_19_2.delete(0, END)
-		w_1_entry8_19_2.insert(END, BANNER[10])
-		w_1_entry9_20_2.delete(0, END)
-		w_1_entry9_20_2.insert(END, BANNER[11])
-		w_1_entry10_21_2.delete(0, END)
-		w_1_entry10_21_2.insert(END, BANNER[6])
-		w_1_entry11_22_2.delete(0, END)
-		w_1_entry11_22_2.insert(END, BANNER[12])
+		#w_1_entry0_10_2.delete(0, END)
+		#w_1_entry0_10_2.insert(END, BANNER[0])
+		#w_1_entry5_16_2.delete(0, END)
+		#w_1_entry5_16_2.insert(END, BANNER[3])
+		#w_1_entry6_17_2.delete(0, END)
+		#w_1_entry6_17_2.insert(END, banner_speed)
+		#w_1_entry7_18_2.delete(0, END)
+		#w_1_entry7_18_2.insert(END, BANNER[5])
+		#w_1_entry8_19_2.delete(0, END)
+		#w_1_entry8_19_2.insert(END, BANNER[10])
+		#w_1_entry9_20_2.delete(0, END)
+		#w_1_entry9_20_2.insert(END, BANNER[11])
+		#w_1_entry10_21_2.delete(0, END)
+		#w_1_entry10_21_2.insert(END, BANNER[6])
+		#w_1_entry11_22_2.delete(0, END)
+		#w_1_entry11_22_2.insert(END, BANNER[12])
 		return banner_date,banner_time,banner_lane,banner_dir,banner_length,banner_speed,banner_class,banner_axle,banner_note
 
 
@@ -291,6 +291,7 @@ class Auditor:
 		fps = int(fps)
 		frame_number = TRACKER_FRAME
 		frame_number, PLAY_BANNER = Auditor.get_pvr_frame(line)
+		
 		cap.set(cv2.CAP_PROP_POS_FRAMES, frame_number)
 		while True: #(cap.isOpened()):
 			while pause == True:
@@ -331,11 +332,13 @@ class Auditor:
 
 			if frame_number > frame_num + (fps):
 				line = int(line + 1)
+				display_pvr(line)
 
 			cv2.putText(frame,DISPLAY_BANNER1,(100,680),font,0.4,(BLUE,GREEN,RED),1) #BGR
 			cv2.putText(frame,DISPLAY_BANNER2,(100,680),font,0.4,(BLUE,GREEN,RED),1) #BGR
 			#if SHOWSCREEN == True:
 			cv2.imshow('frame', frame)
+	
 
 			#global get_frame
 			get_frame = frame
@@ -430,7 +433,8 @@ class Auditor:
 			font = cv2.FONT_HERSHEY_SIMPLEX
 			BANNER = Auditor.banner_label2(banner_date,banner_time,banner_lane,banner_dir,banner_length,banner_speed,banner_class,banner_axle,banner_note,pvr_line_number,frame,font,i)
 			cv2.putText(frame,BANNER,(100,680),font,0.5,(255,0,0),2) #BGR
-			PVR_LINE = pvr_line_number
+			#PVR_LINE = pvr_line_number
+			display_pvr(FRAME_NUMBER)
 			cv2.imshow('frame', frame)
 
 		gui = np.zeros((150,512,1), np.uint8)
@@ -868,14 +872,6 @@ def recordings_bookmark(frame_number):
 
 
 def display_pvr(line):
-	def get_pvr(line):
-		entry_list = ''
-		banner_label_list = ''
-		for entries in banner_list:
-			entry_list = entry_list + str(entries.get()) + '\n'
-			#cal_label.config(text=entry_list)
-		#print(banner_list[0].get()) #to return a value from a specific column
-
 	banner_list_label = ['Date','Time','unknown','Lane#',
 	'Unkown','Direction','Length','Speed',
 	'unkown','unkown','Class','Axle','Note']
@@ -883,10 +879,10 @@ def display_pvr(line):
 	banner_list = banner_list.split(',')
 	for x in range(13):
 		cal_label_header = Label(window, text=banner_list_label[x])
-		cal_label_header.grid(row=10, column=x, sticky='w', padx=5, pady=1)
-		spinbox = Spinbox(window, width=10, from_=0, to=999)
+		cal_label_header.grid(row=16, column=x, sticky='w', padx=5, pady=1)
+		spinbox = Spinbox(window, width=12, from_=0, to=999)
 		#spinbox = Entry(window, width=10)
-		spinbox.grid(row=11, column=x, sticky='w', padx=5, pady=1)
+		spinbox.grid(row=17, column=x, sticky='w', padx=5, pady=1)
 		#banner_list.append(spinbox)
 		spinbox.delete(0, END)
 		spinbox.insert(END, banner_list[x])
@@ -900,7 +896,7 @@ window.geometry('2000x2000')
 #window.geometry('600x800')
 #w_1_my_img1 = ImageTk.PhotoImage(Image.open('/DATA/camera_1/2020_12_06/test.png'))
 w_1_my_img2 = ImageTk.PhotoImage(Image.open('my_logo.png'))
-w_1_neology_logo = Label(image = w_1_my_img2)
+w_1_my_logo = Label(image = w_1_my_img2)
 
 
 #image = PIL.Image.open(r"C:\Users\Hamid\Desktop\asdasd\2.jpeg")
@@ -959,7 +955,7 @@ offset_btn.grid(row=4, column=0, sticky='wn', pady=20)
 #entry box
 #window = Frame(window, relief=RAISED, bd=2)
 w_1_entry0_10_2 = Entry(window, width=10)  #Date
-w_1_entry1_11_2 = Entry(window, width=80) #camera path width=100
+w_1_entry1_11_2 = Entry(window, width=10) #camera path width=100
 w_1_entry2_13_2 = Entry(window, width=10) #next frame
 w_1_entry3_14_2 = Entry(window, width=10) #current frame
 w_1_entry4_15_2 = Entry(window, width=10) #pvr line number
@@ -970,7 +966,7 @@ w_1_entry8_19_2 = Entry(window, width=10) #
 w_1_entry9_20_2 = Entry(window, width=10)
 w_1_entry10_21_2 = Entry(window, width=10)
 w_1_entry11_22_2 = Entry(window, width=10)
-w_1_entry12_12_2 = Entry(window, width=80) #PVR_FILE width=100
+w_1_entry12_12_2 = Entry(window, width=10) #PVR_FILE width=100
 
 
 #buttons
@@ -1018,35 +1014,35 @@ w_1_entry12_12_2.grid(row=12, column=2, sticky="wn", padx=5)
 w_1_entry2_13_2.grid(row=13, column=2, sticky="wn", padx=5)
 w_1_entry3_14_2.grid(row=14, column=2, sticky="wn", padx=5)
 w_1_entry4_15_2.grid(row=15, column=2, sticky="wn", padx=5)
-w_1_entry5_16_2.grid(row=16, column=2, sticky="wn", padx=5)
-w_1_entry6_17_2.grid(row=17, column=2, sticky="wn", padx=5)
-w_1_entry7_18_2.grid(row=18, column=2, sticky="wn", padx=5)
-w_1_entry8_19_2.grid(row=19, column=2, sticky="wn", padx=5)
-w_1_entry9_20_2.grid(row=20, column=2, sticky="wn", padx=5)
-w_1_entry10_21_2.grid(row=21, column=2, sticky="wn", padx=5)
-w_1_entry11_22_2.grid(row=22, column=2, sticky="wn", padx=5)
+#w_1_entry5_16_2.grid(row=16, column=2, sticky="wn", padx=5)
+#w_1_entry6_17_2.grid(row=17, column=2, sticky="wn", padx=5)
+#w_1_entry7_18_2.grid(row=18, column=2, sticky="wn", padx=5)
+#w_1_entry8_19_2.grid(row=19, column=2, sticky="wn", padx=5)
+#w_1_entry9_20_2.grid(row=20, column=2, sticky="wn", padx=5)
+#w_1_entry10_21_2.grid(row=21, column=2, sticky="wn", padx=5)
+#w_1_entry11_22_2.grid(row=22, column=2, sticky="wn", padx=5)
 
 
 #labels
-w_1_my_label_header_1_0.grid(row=1, column=0, sticky='wn', padx=5)
-w_1_my_label2_10_0.grid(row=10, column=0, sticky='wn', padx=5)
-w_1_my_label3_11_0.grid(row=11, column=0, sticky='wn', padx=5)
-w_1_my_label4_12_0.grid(row=12, column=0, sticky='wn', padx=5)
-w_1_my_label5_13_0.grid(row=13, column=0, sticky='wn', padx=5)
-w_1_my_label6_14_0.grid(row=14, column=0, sticky='wn', padx=5)
-w_1_my_label7_15_0.grid(row=15, column=0, sticky='wn', padx=5)
-w_1_my_label8_16_0.grid(row=16, column=0, sticky='wn', padx=5)
-w_1_my_label9_17_0.grid(row=17, column=0, sticky='wn', padx=5)
-w_1_my_label10_18_0.grid(row=18, column=0, sticky='wn', padx=5)
+w_1_my_label_header_1_0.grid(row=1, column=0, sticky='w', padx=5)
+w_1_my_label2_10_0.grid(row=10, column=0, sticky='w', padx=5)
+w_1_my_label3_11_0.grid(row=11, column=0, sticky='w', padx=5)
+w_1_my_label4_12_0.grid(row=12, column=0, sticky='w', padx=5)
+w_1_my_label5_13_0.grid(row=13, column=0, sticky='w', padx=5)
+#w_1_my_label6_14_0.grid(row=14, column=0, sticky='wn', padx=5)
+#w_1_my_label7_15_0.grid(row=15, column=0, sticky='wn', padx=5)
+#w_1_my_label8_16_0.grid(row=16, column=0, sticky='wn', padx=5)
+#w_1_my_label9_17_0.grid(row=17, column=0, sticky='wn', padx=5)
+#w_1_my_label10_18_0.grid(row=18, column=0, sticky='wn', padx=5)
 
 
-w_1_my_label11_19_0.grid(row=19, column=0, sticky='wn', padx=5)
-w_1_my_label12_20_0.grid(row=20, column=0, sticky='wn', padx=5)
-w_1_my_label13_21_0.grid(row=21, column=0, sticky='wn', padx=5)
-w_1_my_label14_22_0.grid(row=22, column=0, sticky='wn', padx=5)
+#w_1_my_label11_19_0.grid(row=19, column=0, sticky='wn', padx=5)
+#w_1_my_label12_20_0.grid(row=20, column=0, sticky='wn', padx=5)
+#w_1_my_label13_21_0.grid(row=21, column=0, sticky='wn', padx=5)
+#w_1_my_label14_22_0.grid(row=22, column=0, sticky='wn', padx=5)
 
 #Images
-w_1_neology_logo.grid(row=0, column=0, sticky='w')
+w_1_my_logo.grid(row=0, column=0, sticky='w')
 
 #create window
 window.mainloop()
