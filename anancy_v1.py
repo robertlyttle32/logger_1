@@ -126,6 +126,7 @@ class Auditor:
 						print('line_number: ', count)
 						global offset
 						global pvr_count
+						pvr_count = count
 						global pvr_date
 						offset = pvr_time - video_start_time - trim
 						pvr_date = DATE
@@ -438,8 +439,8 @@ class Auditor:
 		def nothing(line):
 			global tracker_count
 			i = 0
-			line = line+int(pvr_count)	
-			LAST_FRAME_NUM, BANNER = Auditor.get_pvr_frame(line)
+			#line = line+int(pvr_count)	
+			LAST_FRAME_NUM, BANNER = Auditor.get_pvr_frame(line+int(pvr_count))
 			BANNER = BANNER.strip()
 			BANNER = BANNER.split(',')
 			banner_date = BANNER[0]
@@ -470,7 +471,7 @@ class Auditor:
 			if banner_lane == '2':
 				i = 0
 			global pvr_line_number
-			pvr_line_number = line
+			pvr_line_number = line + pvr_count
 			font = cv2.FONT_HERSHEY_SIMPLEX
 			BANNER = Auditor.banner_label2(banner_date,banner_time,banner_lane,banner_dir,banner_length,banner_speed,banner_class,banner_axle,banner_note,pvr_line_number,frame,font,i)
 			cv2.putText(frame,BANNER,(100,680),font,0.5,(255,0,0),2) #BGR
@@ -484,7 +485,7 @@ class Auditor:
 	
 		
 		# create trackbars for color change
-		cv2.createTrackbar('Tracking','avc_audit',line,totalframecount,nothing)
+		cv2.createTrackbar('Tracking','avc_audit',line+int(pvr_count),totalframecount,nothing)
 		#nothing(count1)
 		while(1):
 			cv2.imshow('avc_audit', gui)
