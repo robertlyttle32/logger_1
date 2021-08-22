@@ -429,16 +429,13 @@ class Auditor:
 
 
 	def tracker(line, LAST_FRAME_NUM):
-		#global LAST_FRAME_NUM
 		frame = 0
 		output = 0
 		play = True
-		def nothing(LAST_FRAME_NUM):
+		def nothing(line):
 			i = 0
-			global line
-			count1 = line	
-			new_frame, BANNER = Auditor.get_pvr_frame(line+pvr_count)
-			LAST_FRAME_NUM = new_frame
+			count1 = line+pvr_count	
+			LAST_FRAME_NUM, BANNER = Auditor.get_pvr_frame(count1)
 			BANNER = BANNER.strip()
 			BANNER = BANNER.split(',')
 			banner_date = BANNER[0]
@@ -458,8 +455,7 @@ class Auditor:
 			PLAY_FRAME = LAST_FRAME_NUM #new_frame
 			global tracking_line
 
-			new_frame = float(LAST_FRAME_NUM)
-			LAST_FRAME_NUM = new_frame
+			LAST_FRAME_NUM = float(LAST_FRAME_NUM)
 			cap.set(cv2.CAP_PROP_POS_FRAMES, LAST_FRAME_NUM)
 			fourcc = cv2.VideoWriter_fourcc(*'MP4V')
 			ret, frame = cap.read()
@@ -471,7 +467,7 @@ class Auditor:
 			if banner_lane == '2':
 				i = 0
 			global pvr_line_number
-			pvr_line_number = FRAME_NUMBER + count1
+			pvr_line_number = count1
 			font = cv2.FONT_HERSHEY_SIMPLEX
 			BANNER = Auditor.banner_label2(banner_date,banner_time,banner_lane,banner_dir,banner_length,banner_speed,banner_class,banner_axle,banner_note,pvr_line_number,frame,font,i)
 			cv2.putText(frame,BANNER,(100,680),font,0.5,(255,0,0),2) #BGR
@@ -481,11 +477,11 @@ class Auditor:
 
 		gui = np.zeros((150,512,1), np.uint8)
 		cv2.namedWindow('avc_audit')
-		line = line+int(offset)
+	
 		
 		# create trackbars for color change
 		cv2.createTrackbar('Tracking','avc_audit',line,totalframecount,nothing)
-		display_pvr(LAST_FRAME_NUM)
+		display_pvr(line)
 		#nothing(count1)
 		while(1):
 			cv2.imshow('avc_audit', gui)
@@ -496,13 +492,14 @@ class Auditor:
 				break
 
 			if stop == True:
-				LAST_FRAME_NUM = new_frame
+				LAST_FRAME_NUM, BANNER = Auditor.get_pvr_frame(line)
+				LAST_FRAME_NUM
 				break
 				cap.release()
 				cv2.destroyAllWindows()
 				
 			if pause == False:
-				LAST_FRAME_NUM = new_frame
+				LAST_FRAME_NUM, BANNER = Auditor.get_pvr_frame(line)
 				break
 				cap.release()
 				cv2.destroyAllWindows()
