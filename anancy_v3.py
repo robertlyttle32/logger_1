@@ -173,7 +173,7 @@ class Auditor:
 			pvr_data = pvr.readlines()
 			PVR_DATA = pvr_data[new_line]
 			if new_line > start_line:
-				PVR_DATA1 = pvr_data[new_line-1]
+				PVR_DATA1 = pvr_data[new_line]
 				PVR_DATA1 = PVR_DATA1.rstrip()
 				PVR_DATA1 = PVR_DATA1.split(',')
 				TIME1 = PVR_DATA1[1]
@@ -301,12 +301,12 @@ class Auditor:
 		#global LAST_FRAME_NUM
 		global PLAY_FRAME
 		global player_count
-		line = pvr_count
 		#sync_data()
 		record_bkmark == False
 		SHOWSCREEN = False
 		play = True
 		i = 0
+		line = (pvr_count)
 		#video_file = w_1_entry1_11_2.get()
 		#cap = cv2.VideoCapture(video_file)
 		DISPLAY_BANNER1 = ''
@@ -370,6 +370,7 @@ class Auditor:
 
 			if frame_number > frame_num + (fps):
 				line = int(line + 1)
+
 				display_pvr(line)
 				global LINE
 				
@@ -436,15 +437,15 @@ class Auditor:
 
 
 	def tracker(line, LAST_FRAME_NUM):
+		#line = (pvr_count)
 		frame = 0
 		output = 0
 		play = True
-		line = line + pvr_count
 		def nothing(line):
 			global tracker_count
 			i = 0
 			#line = line+pvr_count	
-			LAST_FRAME_NUM, BANNER = Auditor.get_pvr_frame(line)
+			LAST_FRAME_NUM, BANNER = Auditor.get_pvr_frame(line+int(pvr_count))
 			BANNER = BANNER.strip()
 			BANNER = BANNER.split(',')
 			banner_date = BANNER[0]
@@ -475,7 +476,7 @@ class Auditor:
 			if banner_lane == '2':
 				i = 0
 			global pvr_line_number
-			pvr_line_number = pvr_count -1
+			pvr_line_number = line
 			font = cv2.FONT_HERSHEY_SIMPLEX
 			BANNER = Auditor.banner_label2(banner_date,banner_time,banner_lane,banner_dir,banner_length,banner_speed,banner_class,banner_axle,banner_note,pvr_line_number,frame,font,i)
 			cv2.putText(frame,BANNER,(100,680),font,0.5,(255,0,0),2) #BGR
