@@ -1,3 +1,4 @@
+
 #Date: 6/20/2021
 #Author: Robert Lyttle
 
@@ -73,9 +74,9 @@ SHOWSCREEN = False
 PVR_LINE = 0
 OFFSET = 0
 TRACKER_FRAME = ''
-FRAME_OUTPUT = 0
 stop = False
 LAST_FRAME_NUM = 0
+global FRAME_OUTPUT
 
 
 #get files
@@ -317,6 +318,7 @@ class Auditor:
 		fps = cap.get(cv2.CAP_PROP_FPS)
 		fps = int(fps)
 		frame_number = TRACKER_FRAME
+		FRAME_OUTPUT = line
 		frame_number, PLAY_BANNER = Auditor.get_pvr_frame(line)
 		LAST_FRAME_NUM = frame_number
 		cap.set(cv2.CAP_PROP_POS_FRAMES, LAST_FRAME_NUM)
@@ -333,10 +335,9 @@ class Auditor:
 					#stop = True
 					#continue
 				if pause == False:
-    			 		line = line
-				
-			frame_num, PLAY_BANNER = Auditor.get_pvr_frame(line)
-			
+    			 		line = FRAME_OUTPUT
+
+			frame_num, PLAY_BANNER = Auditor.get_pvr_frame(FRAME_OUTPUT)
 			frame_num = FRAME_OUTPUT
 			banner_date,banner_time,banner_lane,banner_dir,banner_length,banner_speed,banner_class,banner_axle,banner_note = Auditor.banner_info(line)
 			ret, frame = cap.read()
@@ -483,6 +484,10 @@ class Auditor:
 			#PVR_LINE = pvr_line_number
 			#display_pvr(FRAME_NUMBER)
 			display_pvr(line)
+			w_1_entry4_15_2.delete(0, END)
+			w_1_entry4_15_2.insert(END, line)
+			w_1_entry3_14_2.delete(0, END)
+			w_1_entry3_14_2.insert(END, LAST_FRAME_NUM)
 			cv2.imshow('frame', frame)
 
 		gui = np.zeros((150,512,1), np.uint8)
@@ -502,22 +507,17 @@ class Auditor:
 
 			if stop == True:
 				global last_line_number
-#				LAST_FRAME_NUM, BANNER = Auditor.get_pvr_frame(line)
-				line = line
+				FRAME_OUTPUT = line
 
 				break
 				cap.release()
 				cv2.destroyAllWindows()
 				
 			if pause == False:
-#				LAST_FRAME_NUM, BANNER = Auditor.get_pvr_frame(line)
-				line = line
+				FRAME_OUTPUT = line
 				break
 				cap.release()
 				cv2.destroyAllWindows()
-			
-
-
 
 			# get current positions of four trackbars
 			FRAME_NUMBER1 = cv2.getTrackbarPos('Tracking','avc_audit')
@@ -950,11 +950,12 @@ def display_pvr(line):
 
 window = Tk()
 window.title("Lyttle Systems")
-window.geometry('800x800')
+window.geometry('400x400')
 #window.rowconfigure(0, minsize=200, weight=200)
 #window.columnconfigure(0, minsize=200, weight=200)
 #window.geometry('600x800')
 #w_1_my_img1 = ImageTk.PhotoImage(Image.open('/DATA/camera_1/2020_12_06/test.png'))
+#w_1_my_img2 = ImageTk.PhotoImage(Image.open(r'C:\Users\user\Downloads\logger_1-main\logger_1-main\my_logo.png')) # windows
 w_1_my_img2 = ImageTk.PhotoImage(Image.open('my_logo.png'))
 w_1_my_logo = Label(image = w_1_my_img2)
 
