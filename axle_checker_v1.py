@@ -1,6 +1,5 @@
 import time
 from datetime import datetime
-from tkinter import mainloop
 
 class presentsChecker:
     def __init__(self, start_entry,stop_entry,start_exit,stop_exit):
@@ -39,8 +38,7 @@ class presentsChecker:
         #stop_exit
         if entries == [0,0,0,1]:
             stop_exit = 'stop_exit_{}'.format(get_time())
-            print(start_entry,stop_entry,start_exit,stop_exit)
-            return start_entry,stop_entry,start_exit,stop_exit
+            print(stop_exit)
 
 
 
