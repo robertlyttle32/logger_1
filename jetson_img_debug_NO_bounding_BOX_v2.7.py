@@ -82,6 +82,11 @@ EXIT_MESS1 = 900
 EXIT_MESS2 = 1000
 EXIT_COUNT = 0
 
+MESSAGE1 = 0
+MESSAGE2 = 0
+MESSAGE3 = 0
+MESSAGE4 = 0
+
 distance = 0
 center_l = 0
 center_r = 0
@@ -327,16 +332,16 @@ def collectData():
 
             #Set trigger x or y trigger position here
             if 100 < x < 300:
-               MESSAGE1 = 1
+               MESSAGE1 = 1 # start_entry
 
             if 350 < x < 550:
-                MESSAGE2 = 1
+                MESSAGE2 = 1 # stop_entry
 
             if 550 < x < 750:
-                MESSAGE3 = 1
+                MESSAGE3 = 1 # start_exit
                     
             if 850 < x < 1000:
-                MESSAGE4 = 1
+                MESSAGE4 = 1 # stop_exit
 
             test = presentsChecker(MESSAGE1,MESSAGE2,MESSAGE3,MESSAGE4)
             #print(test.presents_checker())
