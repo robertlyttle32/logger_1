@@ -365,7 +365,7 @@ def collectData():
                 y_4 = 0
 
             test = presentsChecker(x_1,x_2,x_3,x_4,y_1,y_2,y_3,y_4)
-            print('Trigger Message: ',x_1,x_2,x_3,x_4,y_1,y_2,y_3,y_4)
+            #print('Trigger Message: ',x_1,x_2,x_3,x_4,y_1,y_2,y_3,y_4)
             test1 = test.presents_checker()
             test1 = str(test1)
             if test1 == 'send_trigger':
@@ -412,7 +412,7 @@ def collectData():
                     #print('Object name: ',object_name)
 
                     location = 'TP2' #GPS
-                    description =  class_desc
+                    description =  class_id_detectNet
                     description_id = object_name
                     #confidence = int(confidence * 100)
                     color = 0          #vehicle color
