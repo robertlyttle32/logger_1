@@ -20,6 +20,13 @@
 # FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 # DEALINGS IN THE SOFTWARE.
 #
+#
+#
+# Object Counter
+# Author: Robert Lyttle
+# Date: 6/10/20
+# Description:
+# 
 import sqlite3
 import jetson.inference
 import jetson.utils
