@@ -217,7 +217,7 @@ def getVideo():
 
 #net = jetson.inference.imageNet('alexnet')
 net = jetson.inference.imageNet('googlenet-12')
-net_detect = jetson.inference.detectNet("ssd-mobilenet-v2", threshold=0.1) ## default is 0.5 higher number less sensitive
+net_detect = jetson.inference.detectNet("ssd-mobilenet-v2", threshold=0.4) ## default is 0.5 higher number less sensitive
 #net_detect = jetson.inference.detectNet('ssd-mobilenet-v2',['--model=/jetson-inference/python/training/detection/ssd/models/{}/ssd-mobilenet.onnx'.format(MODEL),'--labels=/jetson-inference/python/training/detection/ssd/models/{}/labels.txt'.format(MODEL),'--input-blob=input_0','--output-cvg=scores','--output-bbox=boxes'])
 #LABELS_FILE = '/jetson-inference/python/training/detection/ssd/models/{}/labels.txt'.format(MODEL)
 #LABELS_FILE = '/ssd500/jetson-inference/data/networks/SSD-Mobilenet-v2/ssd_coco_labels.txt'
@@ -385,7 +385,7 @@ def collectData():
             test1 = test.presents_checker()
             test1 = str(test1)
             if test1 == 'send_trigger':
-                distance = 12
+                distance = 2
                 t1 = float(SPEED_TIME1)
                 t2 = float(SPEED_TIME2)
                 t_delta = t2 - t1
