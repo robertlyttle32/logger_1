@@ -192,6 +192,20 @@ print('STORAGE_DIRECTORY IS: ', STORAGE_DIRECTORY)
 image_sub_directory = imageDirectory(camera_4_folder, image_folder_name())
 image_sub_directory.getImageDirectory()
 
+
+#logger
+LOG_FORMAT = '%(levelname)s %(asctime)s - %(message)s'
+logging.basicConfig(filename ='/media/bob/ssd128/event.log',level=logging.DEBUG,format=LOG_FORMAT) #Append mode
+#logging.basicConfig(filename ='/XAVIER_RELEASE/test.log',level=logging.DEBUG,format=LOG_FORMAT,filemode='w') #Overwrite mode
+logger = logging.getLogger()
+#logger.info('This is a test log')
+#logger.debug('test debug log')
+#logger.warning('test warning log')
+#logger.error('test error log')
+#logger.critical('test critical log')
+
+
+
 boxes = []
 confidence = []
 class_id = []
@@ -329,7 +343,9 @@ def collectData():
             #Set trigger x or y trigger position here
             if 800 < x < 1000 and Bottom >= 500:
                 x_1 = 1 # start_entry
+                logger.info('Start_Entry')
                 SPEED_TIME1 = get_speed_time()
+                logger.debug('SPEED_TIME1:',SPEED_TIME1)
                 #print('Speed1: ', SPEED_TIME1)
             else:
                 x_1 = 0
@@ -341,7 +357,9 @@ def collectData():
 
             if 550 < x < 750 and Bottom >= 500:
                 x_2 = 1 # stop_entry
+                logger.info('Stop_Entry')
                 SPEED_TIME2 = get_speed_time()
+                logger.debug('SPEED_TIME1:',SPEED_TIME2)
                 #print('Speed: ', SPEED_TIME2)
                 #time.sleep(0.0050)
 
@@ -355,6 +373,7 @@ def collectData():
 
             if 300 < x < 500 and Bottom >= 500:
                 x_3 = 1 # start_exit
+                logger.info('Stsrt_Exit')
                 #SPEED_TIME2 = get_speed_time()
                 #print('Speed: ', SPEED_TIME2)
                 #time.sleep(0.0050)
@@ -364,6 +383,7 @@ def collectData():
 
             if y >= 50:
                 y_3 = 1 # start_entry
+                logger.info('Stop_Exit')
             else:
                 y_3 = 0
 
@@ -385,6 +405,7 @@ def collectData():
             test1 = test.presents_checker()
             test1 = str(test1)
             if test1 == 'send_trigger':
+                logger.debug('Send_Trigger')
                 distance = 2
                 t1 = float(SPEED_TIME1)
                 t2 = float(SPEED_TIME2)
@@ -441,6 +462,7 @@ def collectData():
                     speed = SPEED
                     #INSERT INTO DATABASE
                     data =  (time_stamp, location, description, description_id, Confidence, color, axle_count, license_plate, rfid, speed, lane_id, image_path)
+                    logger.info(data)
                     conn.execute('INSERT INTO DATA_AQUISITION2 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', data)
                     conn.commit()
                     #class_id_detectNet = 0
