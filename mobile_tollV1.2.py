@@ -345,13 +345,17 @@ def collectData():
             #Set trigger x or y trigger position here
             if 800 < x < 1000 and Bottom >= 500:
                 x_1 = 1 # start_entry
-                logger.info('Start_Entry')
                 SPEED_TIME1 = get_speed_time()
-                logger.debug('SPEED_TIME1:',SPEED_TIME1)
-                logger.debug('Bottom: ',Bottom)
-                logger.debug('x: ',x)
-                logger.debug('y: ',y)
-                #print('Speed1: ', SPEED_TIME1)
+                logger.info('Start_Entry')
+                message_bottom = 'Bottom {}'.format(Bottom)
+                message_speed_time1 = 'speed_time_1 {}'.format(SPEED_TIME1)
+                message_x = 'Bottom {}'.format(x)
+                message_y = 'Bottom {}'.format(y)
+                logger.debug(message_speed_time1)
+                logger.debug(message_bottom)
+                logger.debug(message_x)
+                logger.debug(message_y)
+
             else:
                 x_1 = 0
 
@@ -362,12 +366,16 @@ def collectData():
 
             if 550 < x < 750 and Bottom >= 500:
                 x_2 = 1 # stop_entry
-                logger.info('Stop_Entry')
                 SPEED_TIME2 = get_speed_time()
-                logger.debug('SPEED_TIME1:',SPEED_TIME2)
-                logger.debug('Bottom: ',Bottom)
-                logger.debug('x: ',x)
-                logger.debug('y: ',y)
+                logger.info('Stop_Entry')
+                message_bottom = 'Bottom {}'.format(Bottom)
+                message_x = 'center_x {}'.format(x)
+                message_y = 'center_y {}'.format(y)
+                message_speed_time2 = 'speed_time_2 {}'.format(SPEED_TIME2)
+                logger.debug(message_speed_time2)
+                logger.debug(message_bottom)
+                logger.debug(message_x)
+                logger.debug(message_y)
                 #print('Speed: ', SPEED_TIME2)
                 #time.sleep(0.0050)
 
@@ -385,9 +393,12 @@ def collectData():
                 #SPEED_TIME2 = get_speed_time()
                 #print('Speed: ', SPEED_TIME2)
                 #time.sleep(0.0050)
-                logger.debug('Bottom: ',Bottom)
-                logger.debug('x: ',x)
-                logger.debug('y: ',y)
+                message_bottom = 'Bottom {}'.format(Bottom)
+                message_x = 'center_x {}'.format(x)
+                message_y = 'center_y {}'.format(y)
+                logger.debug(message_bottom)
+                logger.debug(message_x)
+                logger.debug(message_y)
 
             else:
                 x_3 = 0
@@ -402,9 +413,12 @@ def collectData():
                 logger.debug('Stop_Exit')
                 #SPEED_TIME1 = get_speed_time()
                 #print('Speed1: ', SPEED_TIME1)
-                logger.debug('Bottom: ',Bottom)
-                logger.debug('x: ',x)
-                logger.debug('y: ',y)
+                message_bottom = 'Bottom {}'.format(Bottom)
+                message_x = 'center_x {}'.format(x)
+                message_y = 'center_y {}'.format(y)
+                logger.debug(message_bottom)
+                logger.debug(message_x)
+                logger.debug(message_y)
 
             else:
                 x_4 = 0
@@ -420,6 +434,8 @@ def collectData():
             test1 = str(test1)
             if test1 == 'send_trigger':
                 logger.debug(test1)
+                message_bottom = 'Bottom {}'.format(Bottom)
+                logger.debug(message_bottom)
                 distance = 2
                 t1 = float(SPEED_TIME1)
                 t2 = float(SPEED_TIME2)
@@ -476,7 +492,8 @@ def collectData():
                     speed = SPEED
                     #INSERT INTO DATABASE
                     data =  (time_stamp, location, description, description_id, Confidence, color, axle_count, license_plate, rfid, speed, lane_id, image_path)
-                    logger.info(data)
+                    tcp_data = 'VCS {}'.format(data)
+                    logger.info(tcp_data)
                     conn.execute('INSERT INTO DATA_AQUISITION2 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', data)
                     conn.commit()
                     #class_id_detectNet = 0
