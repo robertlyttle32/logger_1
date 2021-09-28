@@ -343,18 +343,18 @@ def collectData():
             y = int(center_y - h/2)
             #print ('x_position:{} y_position:{}'.format(x, y))
             #Set trigger x or y trigger position here
-            if 800 < x < 1000 and Bottom >= 500:
+            if 800 < x < 1000 and Bottom >= 490:
                 x_1 = 1 # start_entry
                 SPEED_TIME1 = get_speed_time()
                 logger.info('Start_Entry')
-                message_bottom = 'Bottom {}'.format(Bottom)
-                message_speed_time1 = 'speed_time_1 {}'.format(SPEED_TIME1)
-                message_x = 'Bottom {}'.format(x)
-                message_y = 'Bottom {}'.format(y)
-                logger.debug(message_speed_time1)
-                logger.debug(message_bottom)
-                logger.debug(message_x)
-                logger.debug(message_y)
+                #message_bottom = 'Bottom {}'.format(Bottom)
+                #message_speed_time1 = 'speed_time_1 {}'.format(SPEED_TIME1)
+                #message_x = 'center_x {}'.format(x)
+                #message_y = 'center_y {}'.format(y)
+                #logger.debug(message_speed_time1)
+                #logger.debug(message_bottom)
+                #logger.debug(message_x)
+                #logger.debug(message_y)
 
             else:
                 x_1 = 0
@@ -364,18 +364,18 @@ def collectData():
             else:
                 y_1 = 0
 
-            if 550 < x < 750 and Bottom >= 500:
+            if 550 < x < 750 and Bottom >= 490:
                 x_2 = 1 # stop_entry
                 SPEED_TIME2 = get_speed_time()
                 logger.info('Stop_Entry')
-                message_bottom = 'Bottom {}'.format(Bottom)
-                message_x = 'center_x {}'.format(x)
-                message_y = 'center_y {}'.format(y)
-                message_speed_time2 = 'speed_time_2 {}'.format(SPEED_TIME2)
-                logger.debug(message_speed_time2)
-                logger.debug(message_bottom)
-                logger.debug(message_x)
-                logger.debug(message_y)
+                #message_bottom = 'Bottom {}'.format(Bottom)
+                #message_x = 'center_x {}'.format(x)
+                #message_y = 'center_y {}'.format(y)
+                #message_speed_time2 = 'speed_time_2 {}'.format(SPEED_TIME2)
+                #logger.debug(message_speed_time2)
+                #logger.debug(message_bottom)
+                #logger.debug(message_x)
+                #logger.debug(message_y)
                 #print('Speed: ', SPEED_TIME2)
                 #time.sleep(0.0050)
 
@@ -387,18 +387,18 @@ def collectData():
             else:
                 y_2 = 0
 
-            if 300 < x < 500 and Bottom >= 500:
+            if 300 < x < 500 and Bottom >= 490:
                 x_3 = 1 # start_exit
                 logger.info('Start_Exit')
                 #SPEED_TIME2 = get_speed_time()
                 #print('Speed: ', SPEED_TIME2)
                 #time.sleep(0.0050)
-                message_bottom = 'Bottom {}'.format(Bottom)
-                message_x = 'center_x {}'.format(x)
-                message_y = 'center_y {}'.format(y)
-                logger.debug(message_bottom)
-                logger.debug(message_x)
-                logger.debug(message_y)
+                #message_bottom = 'Bottom {}'.format(Bottom)
+                #message_x = 'center_x {}'.format(x)
+                #message_y = 'center_y {}'.format(y)
+                #logger.debug(message_bottom)
+                #logger.debug(message_x)
+                #logger.debug(message_y)
 
             else:
                 x_3 = 0
@@ -408,17 +408,17 @@ def collectData():
             else:
                 y_3 = 0
 
-            if 5 < x < 250 and Bottom >= 500:
+            if 5 < x < 250 and Bottom >= 490:
                 x_4 = 1 # stop_exit
                 logger.debug('Stop_Exit')
                 #SPEED_TIME1 = get_speed_time()
                 #print('Speed1: ', SPEED_TIME1)
-                message_bottom = 'Bottom {}'.format(Bottom)
-                message_x = 'center_x {}'.format(x)
-                message_y = 'center_y {}'.format(y)
-                logger.debug(message_bottom)
-                logger.debug(message_x)
-                logger.debug(message_y)
+                #message_bottom = 'Bottom {}'.format(Bottom)
+                #message_x = 'center_x {}'.format(x)
+                #message_y = 'center_y {}'.format(y)
+                #logger.debug(message_bottom)
+                #logger.debug(message_x)
+                #logger.debug(message_y)
 
             else:
                 x_4 = 0
@@ -435,11 +435,18 @@ def collectData():
             if test1 == 'send_trigger':
                 logger.debug(test1)
                 message_bottom = 'Bottom {}'.format(Bottom)
+                message_x = 'center_x {}'.format(x)
+                message_y = 'center_y {}'.format(y)
                 logger.debug(message_bottom)
+                logger.debug(message_x)
+                logger.debug(message_y)
                 distance = 2
                 t1 = float(SPEED_TIME1)
                 t2 = float(SPEED_TIME2)
                 t_delta = t2 - t1
+                if t_delta == 0:
+                    t_delta = get_speed_time()
+                    t_delta = t_delta - 0.8
                 SPEED = ((distance/t_delta)*0.681818)
                 if y_3 == 1: #class_desc == FILTER1:
                     object_names = open(LABELS_FILE)
