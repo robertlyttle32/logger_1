@@ -36,6 +36,8 @@ from datetime import datetime
 from datetime import timedelta
 import time
 import logging
+import socket
+import make_directory as make_dir
 
 video_output = ''
 image_output = ''
@@ -93,6 +95,7 @@ SPEED_TIME1 = 0
 SPEED_TIME2 = 0
 width = 1280 ## rtsp stream camera
 height = 720 ## rtsp stream camera
+
 
 MODEL = 'vehicleModel'
 STORAGE_DIRECTORY = '/home/jjm/Documents/results' # Storage database, images
@@ -440,7 +443,7 @@ def collectData():
                 logger.debug(message_bottom)
                 logger.debug(message_x)
                 logger.debug(message_y)
-                distance = 2
+                distance = 5
                 t1 = float(SPEED_TIME1)
                 t2 = float(SPEED_TIME2)
                 t_delta = t2 - t1
@@ -580,8 +583,16 @@ def selectData():
 def runInference():
     collectData()
 
+
+schedule.every().day.at('00:00').do(make_dir.make_directories)
+#schedule.every().day.at('00:00').do(do_something)
+
 while True:
+    schedule.run_pending()
     runInference()
     #time.sleep(2)
- 
+
+while True:
+    schedule.run_pending()
+    time.sleep(1)
 
