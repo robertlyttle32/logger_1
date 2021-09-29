@@ -1,0 +1,12 @@
+Connected to 172.105.186.216.
+sftp> lpwd
+Local working directory: /Users/kovid
+sftp> lcd /Users/kovid/Projects/ServerMania
+sftp> lpwd
+Local working directory: /Users/kovid/Projects/ServerMania
+sftp> lls
+netflix_titles.csv.zip
+sftp> put netflix_titles.csv.zip
+Uploading netflix_titles.csv.zip to /root/netflix_titles.csv.zip
+netflix_titles.csv.zip                                                               100% 1207KB   1.5MB/s   00:00
+sftp>                                                                                                         #  $
