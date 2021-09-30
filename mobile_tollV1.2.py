@@ -451,6 +451,7 @@ def collectData():
                     t_delta = get_speed_time()
                     t_delta = t_delta - 0.8
                 SPEED = ((distance/t_delta)*0.681818)
+                SPEED = int(SPEED)
                 y_3 = 1
                 if y_3 == 1: #class_desc == FILTER1:
                     object_names = open(LABELS_FILE)
@@ -504,8 +505,8 @@ def collectData():
                     lane_id = 0
                     speed = SPEED
                     #INSERT INTO DATABASE
+                    tcp_data = 'VCS {},{},{},{},{},{},{},{},{},{},{},{}'.format(time_stamp, location, description, description_id, Confidence, color, axle_count, license_plate,rfid,speed,lane_id,image_path)
                     data =  (time_stamp, location, description, description_id, Confidence, color, axle_count, license_plate, rfid, speed, lane_id, image_path)
-                    tcp_data = 'VCS {}'.format(data)
                     logger.info(tcp_data)
                     conn.execute('INSERT INTO DATA_AQUISITION2 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', data)
                     conn.commit()
