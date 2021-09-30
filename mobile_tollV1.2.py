@@ -458,7 +458,7 @@ def collectData():
                     #for line in enumerate(pvr):
                     object_name = object_names.readlines()
                     object_name = object_name[class_id_detectNet]
-
+                    object_name = object_name.rstrip()
                     if confidence > 0:
                         v_out, time_stamp = getVideo()
                         font.OverlayText(img, img.width, img.height, "Time:{} |{:05.2f}% {:s}".format(time_stamp, confidence, class_desc, net.GetNetworkFPS()), 5, 5, font.White, font.Gray40)
@@ -479,10 +479,11 @@ def collectData():
                     os.chdir(STORAGE_DIRECTORY)
                     path = (os.getcwd())
 
-                    object_names = open(LABELS_FILE)
+                    #object_names = open(LABELS_FILE)
                     #for line in enumerate(pvr):
-                    object_name = object_names.readlines()
-                    object_name = object_name[class_id_detectNet]
+                    #object_name = object_names.readlines()
+                    #object_name = object_name.rstrip()
+                    #object_name = object_name[class_id_detectNet]
 
                     location = 'TP2' #GPS
                     description =  class_id_detectNet
@@ -549,7 +550,7 @@ class presentsChecker:
             send_trigger = 'send_trigger'
             return send_trigger
 
-#        stop_exit
+        #stop_exit
         if entries == [0,0,0,1,1,1,1,1]:
             stop_exit = 'stop_exit_{}'.format(get_time())
             print(stop_exit)
