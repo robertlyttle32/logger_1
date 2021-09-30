@@ -1,3 +1,9 @@
+#Title: Make Directory
+#Purpose: To be able to create directories when needed with a scheduler
+#Discription: When Run it creates four folders using the date as part of it naming
+#Date: 6/7/2020
+#Author: Robert Lyttle
+
 import time
 import datetime
 import os
