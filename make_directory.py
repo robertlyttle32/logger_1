@@ -11,9 +11,9 @@ camera_3_folder = 'camera_3'
 camera_4_folder = 'camera_4'
 
 
-STORAGE_DIRECTORY = r'C:\Users\rlyttle\Downloads\MAKE_DIRECTORY'
+STORAGE_DIRECTORY = '/home/jjm/Documents/results'
 
-def make_directory():
+def make_directories():
     def image_folder_name():
         get_image_time = datetime.now()
         camera_sub_dir = get_image_time.strftime("%Y_%m_%d")
@@ -74,4 +74,4 @@ def make_directory():
     image_sub_directory = imageDirectory(camera_4_folder, image_folder_name())
     image_sub_directory.getImageDirectory()
 
-make_directory()
+#make_directories()
