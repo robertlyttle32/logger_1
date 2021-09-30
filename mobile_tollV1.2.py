@@ -346,7 +346,7 @@ def collectData():
             y = int(center_y - h/2)
             #print ('x_position:{} y_position:{}'.format(x, y))
             #Set trigger x or y trigger position here
-            if 800 < x < 1000 and Bottom >= 490:
+            if 1080 < x < 1280 and Bottom >= 450:
                 x_1 = 1 # start_entry
                 SPEED_TIME1 = get_speed_time()
                 logger.info('Start_Entry')
@@ -367,7 +367,7 @@ def collectData():
             else:
                 y_1 = 0
 
-            if 550 < x < 750 and Bottom >= 490:
+            if 880 < x < 1080 and Bottom >= 450:
                 x_2 = 1 # stop_entry
                 SPEED_TIME2 = get_speed_time()
                 logger.info('Stop_Entry')
@@ -386,11 +386,11 @@ def collectData():
                 x_2 = 0
 
             if y >= 50:
-                y_2 = 1 # start_entry
+                y_2 = 1 # stop_entry
             else:
                 y_2 = 0
 
-            if 300 < x < 500 and Bottom >= 490:
+            if 400 < x < 800 and Bottom >= 450:
                 x_3 = 1 # start_exit
                 logger.info('Start_Exit')
                 #SPEED_TIME2 = get_speed_time()
@@ -407,11 +407,11 @@ def collectData():
                 x_3 = 0
 
             if y >= 50:
-                y_3 = 1 # start_entry
+                y_3 = 1 # start_exit
             else:
                 y_3 = 0
 
-            if 5 < x < 250 and Bottom >= 490:
+            if 200 < x < 400 and Bottom >= 450:
                 x_4 = 1 # stop_exit
                 logger.debug('Stop_Exit')
                 #SPEED_TIME1 = get_speed_time()
@@ -427,7 +427,7 @@ def collectData():
                 x_4 = 0
 
             if y >= 50:
-                y_4 = 1 # start_entry
+                y_4 = 1 # stop_exit
             else:
                 y_4 = 0
 
@@ -451,6 +451,7 @@ def collectData():
                     t_delta = get_speed_time()
                     t_delta = t_delta - 0.8
                 SPEED = ((distance/t_delta)*0.681818)
+                y_3 = 1
                 if y_3 == 1: #class_desc == FILTER1:
                     object_names = open(LABELS_FILE)
                     #for line in enumerate(pvr):
@@ -491,6 +492,8 @@ def collectData():
                         axle_count = 2
                     if description == 'Van':
                         axle_count = 3
+                    if description == 'Truck':
+                        axle_count = 'twin'
                     else:
                         axle_count = 2
 
@@ -539,7 +542,7 @@ class presentsChecker:
             print(stop_entry)
 
         #start_exit
-        if entries == [0,0,1,0,1,1,1,1]:
+        if entries == [0,0,1,0,1,1,1,1]: #or [0,1,0,0,1,1,1,1]:
             start_exit = 'start_exit_{}'.format(get_time())
             print(start_exit)
             send_trigger = 'send_trigger'
