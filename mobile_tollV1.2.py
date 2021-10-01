@@ -98,7 +98,7 @@ height = 720 ## rtsp stream camera
 
 
 MODEL = 'vehicleModel'
-STORAGE_DIRECTORY = '/home/jjm/Documents/results' # Storage database, images
+STORAGE_DIRECTORY = '~/Documents/results' # Storage database, images
 if os.path.exists(STORAGE_DIRECTORY):
     pass
 else:
