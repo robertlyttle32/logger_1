@@ -33,6 +33,7 @@ import csv
 import numpy as np
 from datetime import datetime
 import logging
+import threading
 
 video_output = ''
 image_output = ''
@@ -209,7 +210,7 @@ confidence = []
 class_id = []
 classes = []
 
-def getVideo():
+async def getVideo():
     get_image_time = datetime.now()
     get_image_time = get_image_time.strftime("%Y-%m-%d-%H%M%S%f")
     #image_date, image_time = get_image_time.split('_')
@@ -394,6 +395,8 @@ def collectData():
             # Left,Top,Right,Bottom,Width,Height,Area,center_x,center_y)
             # logger.info(data)
 
+ 
+            
 
 def get_time():
     timer = datetime.now()
@@ -405,80 +408,13 @@ def get_speed_time():
 
 
 def runInference():
-    collectData()
+    while True:
+        collectData()
 
-while True:
-    runInference()
-    #time.sleep(2)
- 
-
-            # test = presentsChecker(x_1,x_2,x_3,x_4,y_1,y_2,y_3,y_4)
-            # #print('Trigger Message: ',x_1,x_2,x_3,x_4,y_1,y_2,y_3,y_4)
-            # test1 = test.presents_checker()
-            # test1 = str(test1)
-            # if test1 == 'send_trigger':
-            #     if y_4 == 1: #class_desc == FILTER1:
-            #         if confidence > 0:
-            #             v_out, time_stamp = getVideo()
-            #             font.OverlayText(img, img.width, img.height, "Time:{} |{:05.2f}% {:s}".format(time_stamp, confidence, class_desc, net.GetNetworkFPS()), 5, 5, font.White, font.Gray40)
-            #             font.OverlayText(img, img.width, img.height, "Top:{}".format(Top), 5, 45, font.White, font.Gray40)
-            #             font.OverlayText(img, img.width, img.height, "Left:{}".format(Left), 5, 85, font.White, font.Gray40)
-            #             font.OverlayText(img, img.width, img.height, "Right:{}".format(Right), 5, 120, font.White, font.Gray40)
-            #             font.OverlayText(img, img.width, img.height, "Bottom:{}".format(Bottom), 5, 160, font.White, font.Gray40)
-            #             font.OverlayText(img, img.width, img.height, "Height:{}".format(Height), 5, 195, font.White, font.Gray40)
-            #             font.OverlayText(img, img.width, img.height, "Width:{}".format(Width), 5, 235, font.White, font.Gray40)
-            #             font.OverlayText(img, img.width, img.height, "Area:{}".format(Area), 5, 270, font.White, font.Gray40)
-            #             font.OverlayText(img, img.width, img.height, "Center_X:{}".format(x), 5, 305, font.White, font.Gray40)
-            #             font.OverlayText(img, img.width, img.height, "Center_Y:{}".format(y), 5, 345, font.White, font.Gray40)
-            #             jetson.utils.saveImageRGBA(v_out, img, width, height)
-
-            #             t1 = float(SPEED_TIME1)
-            #             t2 = float(SPEED_TIME2)
-            #             t_delta = t2 - t1
-            #             #print('time delta: ', t_delta)
-            #             #CALCULATE SPEED
-            #             #SPEED = D/T
-            #             distance = 30
-            #             #speed = int(distance/t_delta) #meters per second
-            #             SPEED = ((distance/t_delta)*0.681818) ##mph
-            #             SPEED = int(SPEED)
-            #             info_speed = 'Speed: {}'.format(SPEED)
-            #             #print('speed-time delta: ', t_delta)
-            #             logger.info(info_speed)
-            #         else:
-            #             speed = 'UNKOWN'
-            #         os.chdir(STORAGE_DIRECTORY)
-            #         path = (os.getcwd())
-
-            #         object_names = open(LABELS_FILE)
-            #         #for line in enumerate(pvr):
-            #         object_name = object_names.readlines()
-            #         object_name = object_name[class_id_detectNet]
-            #         #print('Object name: ',object_name)
-
-            #         location = 'TP2' #GPS
-            #         description =  class_id_detectNet
-            #         description_id = object_name
-            #         #confidence = int(confidence * 100)
-            #         color = 0          #vehicle color
-            #         if description == 'Car':
-            #             axle_count = 2
-            #         if description == 'Van':
-            #             axle_count = 3
-            #         else:
-            #             axle_count = 2
-
-            #         #axle_count = x_4 #objects ##
-            #         license_plate = 0 #######
-            #         rfid = 0 ################
-            #         image_path = v_out
-            #         lane_id = 0
-            #         speed = SPEED
-            #         #INSERT INTO DATABASE
-            #         data =  (time_stamp, location, description, description_id, Confidence, color, axle_count, license_plate, rfid, speed, lane_id, image_path)
-            #         logger.info(data)
-            #         #conn.execute('INSERT INTO DATA_AQUISITION2 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', data)
-            #         #conn.commit()
-            #         #class_id_detectNet = 0
-            #         #return description  #testing only
+def run_program():
+    def run1():
+        runInference()
+    thread = threading.Thread(target=run1)
+    thread.start()
+run_program()
 
