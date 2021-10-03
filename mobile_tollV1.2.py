@@ -95,10 +95,11 @@ SPEED_TIME1 = 0
 SPEED_TIME2 = 0
 width = 1280 ## rtsp stream camera
 height = 720 ## rtsp stream camera
+DIRECTION_OF_TRAVEL = 'F'
 
 
 MODEL = 'vehicleModel'
-STORAGE_DIRECTORY = '~/Documents/results' # Storage database, images
+STORAGE_DIRECTORY = '/media/bob/ssd128/' # Storage database, images
 if os.path.exists(STORAGE_DIRECTORY):
     pass
 else:
@@ -199,7 +200,7 @@ image_sub_directory.getImageDirectory()
 
 #logger
 LOG_FORMAT = '%(levelname)s %(asctime)s - %(message)s'
-logging.basicConfig(filename ='/home/jjm/Documents/results/vehicle_event.log',level=logging.DEBUG,format=LOG_FORMAT) #Append mode
+logging.basicConfig(filename ='/media/bob/ssd128/vehicle_event.log',level=logging.DEBUG,format=LOG_FORMAT) #Append mode
 #logging.basicConfig(filename ='/XAVIER_RELEASE/test.log',level=logging.DEBUG,format=LOG_FORMAT,filemode='w') #Overwrite mode
 logger = logging.getLogger()
 #logger.info('This is a test log')
@@ -239,7 +240,7 @@ net_detect = jetson.inference.detectNet("ssd-mobilenet-v2", threshold=0.4) ## de
 #net_detect = jetson.inference.detectNet('ssd-mobilenet-v2',['--model=/jetson-inference/python/training/detection/ssd/models/{}/ssd-mobilenet.onnx'.format(MODEL),'--labels=/jetson-inference/python/training/detection/ssd/models/{}/labels.txt'.format(MODEL),'--input-blob=input_0','--output-cvg=scores','--output-bbox=boxes'])
 #LABELS_FILE = '/jetson-inference/python/training/detection/ssd/models/{}/labels.txt'.format(MODEL)
 #LABELS_FILE = '/ssd500/jetson-inference/data/networks/SSD-Mobilenet-v2/ssd_coco_labels.txt'
-LABELS_FILE = '/home/jjm/jetson-inference/build/aarch64/bin/networks/SSD-Mobilenet-v2/ssd_coco_labels.txt'
+LABELS_FILE = '/jetson-inference/build/aarch64/bin/networks/SSD-Mobilenet-v2/ssd_coco_labels.txt'
 #net_detect = jetson.inference.detectNet("ssd-inception-v2", threshold=0.5)
 #net = jetson.inference.imageNet('resnet-152',['--model=/home/rdl-xavier/jetson-inference/python/training/classification/MyTrainedCars/resnet18.onnx','--input_blob=input_0','--output_blob=output_0','--labels=/home/rdl-xavier/jetson-inference/my_models/MyTrainedCars/labels.txt'])
 #net = jetson.inference.imageNet('googlenet',['--model=~/jetson-inference/python/training/classification/people/resnet18.onnx','--input_blob=input_0','--output_blob=output_0','--lables=~/jetson-inference/people/labels.txt'])
@@ -250,7 +251,7 @@ LABELS_FILE = '/home/jjm/jetson-inference/build/aarch64/bin/networks/SSD-Mobilen
 
 
 #VIDEO_DIRECTORY = '/media/bob/1213-2122/Export_2021-08-26_11_31_44_487/' #'/'
-VIDEO_DIRECTORY = '/home/jjm/' #'/'
+VIDEO_DIRECTORY = '/media/bob/ssd128/' #'/'
 
 #DIR_LIST = os.listdir(VIDEO_DIRECTORY)
 os.system('clear')
@@ -271,7 +272,8 @@ print()
 #VIDEO_FILE = '{}/{}'.format(VIDEO_DIRECTORY, DIR_LIST[VIDEO_FILE])
 #print('video file: ', VIDEO_FILE)
 
-VIDEO_FILE = 'rtsp://root:AVCaudit1@10.4.0.187:554/axis-media/media.amp?videocodec=h264'
+#VIDEO_FILE = 'rtsp://root:AVCaudit1@10.4.0.187:554/axis-media/media.amp?videocodec=h264'
+VIDEO_FILE = '/media/bob/ssd128/Recordings/pvr-21-03-09_10:19:38.639.mp4'
 #v_out = getVideo()
 #input = jetson.utils.videoSource('csi://0')
 #input = jetson.utils.videoSource('rtsp://root:TTItest1@10.4.0.190:554/axis-media/media.amp?videocodec=h264')
@@ -346,7 +348,30 @@ def collectData():
             y = int(center_y - h/2)
             #print ('x_position:{} y_position:{}'.format(x, y))
             #Set trigger x or y trigger position here
-            if 1080 < x < 1280 and Bottom >= 450:
+
+            if DIRECTION_OF_TRAVEL == 'F': # Forward
+                x_4_lower_limit = 1080
+                x_4_upper_limit = 1280
+                x_3_lower_limit = 880
+                x_3_upper_limit = 1080
+                x_2_lower_limit = 400
+                x_2_upper_limit = 800
+                x_1_lower_limit = 200
+                x_1_upper_limit = 400
+
+
+            if DIRECTION_OF_TRAVEL == 'R': # Reveses
+                x_1_lower_limit = 1080
+                x_1_upper_limit = 1280
+                x_2_lower_limit = 880
+                x_2_upper_limit = 1080
+                x_3_lower_limit = 400
+                x_3_upper_limit = 800
+                x_4_lower_limit = 200
+                x_4_upper_limit = 400
+
+
+            if x_1_lower_limit < x < x_1_upper_limit and Bottom >= 450:
                 x_1 = 1 # start_entry
                 SPEED_TIME1 = get_speed_time()
                 logger.info('Start_Entry')
@@ -367,7 +392,7 @@ def collectData():
             else:
                 y_1 = 0
 
-            if 880 < x < 1080 and Bottom >= 450:
+            if x_2_lower_limit < x < x_2_upper_limit and Bottom >= 450:
                 x_2 = 1 # stop_entry
                 SPEED_TIME2 = get_speed_time()
                 logger.info('Stop_Entry')
@@ -390,7 +415,7 @@ def collectData():
             else:
                 y_2 = 0
 
-            if 400 < x < 800 and Bottom >= 450:
+            if x_3_lower_limit < x < x_3_upper_limit and Bottom >= 450:
                 x_3 = 1 # start_exit
                 logger.info('Start_Exit')
                 #SPEED_TIME2 = get_speed_time()
@@ -411,7 +436,7 @@ def collectData():
             else:
                 y_3 = 0
 
-            if 200 < x < 400 and Bottom >= 450:
+            if x_4_lower_limit < x < x_4_upper_limit and Bottom >= 450:
                 x_4 = 1 # stop_exit
                 logger.debug('Stop_Exit')
                 #SPEED_TIME1 = get_speed_time()
