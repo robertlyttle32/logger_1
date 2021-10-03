@@ -135,8 +135,6 @@ else:
 print ("Opened database successfully")
 print ('data acqusition started....')
 
-
-
 def image_folder_name():
     get_image_time = datetime.now()
     camera_sub_dir = get_image_time.strftime("%Y_%m_%d")
@@ -155,7 +153,6 @@ class cameraDirectory: #camera_root_dir, camera_sub_dir
         else:
             os.mkdir(os.path.join(path, self.y))
             return
-
 
 class imageDirectory: #STORAGE_DIRECTORY, camera_sub_dir
     def __init__(self, x, y):
@@ -182,7 +179,6 @@ image_directory.getCameraDirectory()
 image_directory = cameraDirectory(STORAGE_DIRECTORY, camera_4_folder)
 image_directory.getCameraDirectory()
 
-
 #test image sub-directory
 image_sub_directory = imageDirectory(camera_1_folder, image_folder_name())
 image_sub_directory.getImageDirectory()
@@ -197,7 +193,6 @@ print('STORAGE_DIRECTORY IS: ', STORAGE_DIRECTORY)
 image_sub_directory = imageDirectory(camera_4_folder, image_folder_name())
 image_sub_directory.getImageDirectory()
 
-
 #logger
 LOG_FORMAT = '%(levelname)s %(asctime)s - %(message)s'
 logging.basicConfig(filename ='/media/bob/ssd128/vehicle_event.log',level=logging.DEBUG,format=LOG_FORMAT) #Append mode
@@ -208,8 +203,6 @@ logger = logging.getLogger()
 #logger.warning('test warning log')
 #logger.error('test error log')
 #logger.critical('test critical log')
-
-
 
 boxes = []
 confidence = []
@@ -249,7 +242,6 @@ LABELS_FILE = '/jetson-inference/build/aarch64/bin/networks/SSD-Mobilenet-v2/ssd
 #net = jetson.inference.imageNet('vgg-19')  ## 16, 19
 #net = jetson.inference.imageNet('inception-v4')
 
-
 #VIDEO_DIRECTORY = '/media/bob/1213-2122/Export_2021-08-26_11_31_44_487/' #'/'
 VIDEO_DIRECTORY = '/media/bob/ssd128/' #'/'
 
@@ -288,7 +280,6 @@ def speedTime():
     #speed_time = speed_time.strftime("%f")
     #print('speed time: ', speed_time)
     return milliseconds
-
 
 def newVideo():
     v_out = getVideo()
@@ -369,7 +360,6 @@ def collectData():
                 x_3_upper_limit = 800
                 x_4_lower_limit = 200
                 x_4_upper_limit = 400
-
 
             if x_1_lower_limit < x < x_1_upper_limit and Bottom >= 450:
                 x_1 = 1 # start_entry
@@ -539,7 +529,6 @@ def collectData():
                     #class_id_detectNet = 0
                     #return description  #testing only
 
-
 class presentsChecker:
     def __init__(self, start_entry,stop_entry,start_exit,stop_exit,start_entry_y,stop_entry_y,start_exit_y,stop_exit_y):
         self.start_entry = start_entry
@@ -590,8 +579,6 @@ def get_speed_time():
     timer = time.time() 
     return timer
 
-
-
 #SELECT DATA
 def selectData():
     #SELECT Operation
@@ -609,14 +596,11 @@ def selectData():
         print ("Description_ID: ", row[2])
         print ("Confidence: ", row[3], "\n")
 
-
 def runInference():
     collectData()
 
-
 schedule.every().day.at('00:00').do(make_dir.make_directories)
 #schedule.every().day.at('00:00').do(do_something)
-
 while True:
     schedule.run_pending()
     runInference()
