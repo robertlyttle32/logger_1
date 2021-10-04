@@ -342,7 +342,7 @@ def collectData():
             #print ('x_position:{} y_position:{}'.format(x, y))
             #Set trigger x or y trigger position here
 
-            if CAMERA_POSITION == 'RIGHT': # Forward
+            if CAMERA_POSITION == 'RIGHT': # Camera mounted RIGHT side of road
                 x_4_lower_limit = 1080
                 x_4_upper_limit = 1280
                 x_3_lower_limit = 880
@@ -353,7 +353,7 @@ def collectData():
                 x_1_upper_limit = 400
 
 
-            if CAMERA_POSITION == 'LEFT': # Reveses
+            if CAMERA_POSITION == 'LEFT': # Camera mounted LEFT side of road
                 x_1_lower_limit = 1080
                 x_1_upper_limit = 1280
                 x_2_lower_limit = 880
