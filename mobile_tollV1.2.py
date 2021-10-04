@@ -95,7 +95,7 @@ SPEED_TIME1 = 0
 SPEED_TIME2 = 0
 width = 1280 ## rtsp stream camera
 height = 720 ## rtsp stream camera
-DIRECTION_OF_TRAVEL = 'F'
+CAMERA_POSITION = 'RIGHT'
 
 
 MODEL = 'vehicleModel'
@@ -264,8 +264,10 @@ print()
 #VIDEO_FILE = '{}/{}'.format(VIDEO_DIRECTORY, DIR_LIST[VIDEO_FILE])
 #print('video file: ', VIDEO_FILE)
 
+#VIDEO_FILE = '/dev/video0'
 #VIDEO_FILE = 'rtsp://root:AVCaudit1@10.4.0.187:554/axis-media/media.amp?videocodec=h264'
 VIDEO_FILE = '/media/bob/ssd128/Recordings/pvr-21-03-09_10:19:38.639.mp4'
+#VIDEO_FILE = '/media/bob/ssd128/Recordings/pvr-21-03-05_08:11:34.024.mp4'
 #v_out = getVideo()
 #input = jetson.utils.videoSource('csi://0')
 #input = jetson.utils.videoSource('rtsp://root:TTItest1@10.4.0.190:554/axis-media/media.amp?videocodec=h264')
@@ -340,7 +342,7 @@ def collectData():
             #print ('x_position:{} y_position:{}'.format(x, y))
             #Set trigger x or y trigger position here
 
-            if DIRECTION_OF_TRAVEL == 'F': # Forward
+            if CAMERA_POSITION == 'RIGHT': # Forward
                 x_4_lower_limit = 1080
                 x_4_upper_limit = 1280
                 x_3_lower_limit = 880
@@ -351,7 +353,7 @@ def collectData():
                 x_1_upper_limit = 400
 
 
-            if DIRECTION_OF_TRAVEL == 'R': # Reveses
+            if CAMERA_POSITION == 'LEFT': # Reveses
                 x_1_lower_limit = 1080
                 x_1_upper_limit = 1280
                 x_2_lower_limit = 880
@@ -363,7 +365,8 @@ def collectData():
 
             if x_1_lower_limit < x < x_1_upper_limit and Bottom >= 450:
                 x_1 = 1 # start_entry
-                SPEED_TIME1 = get_speed_time()
+                #SPEED_TIME1 = get_speed_time()
+                SPEED_TIME1 = time.perf_counter()
                 logger.info('Start_Entry')
                 #message_bottom = 'Bottom {}'.format(Bottom)
                 #message_speed_time1 = 'speed_time_1 {}'.format(SPEED_TIME1)
@@ -384,7 +387,8 @@ def collectData():
 
             if x_2_lower_limit < x < x_2_upper_limit and Bottom >= 450:
                 x_2 = 1 # stop_entry
-                SPEED_TIME2 = get_speed_time()
+                SPEED_TIME2 = time.perf_counter()
+                #SPEED_TIME2 = get_speed_time()
                 logger.info('Stop_Entry')
                 #message_bottom = 'Bottom {}'.format(Bottom)
                 #message_x = 'center_x {}'.format(x)
@@ -509,7 +513,7 @@ def collectData():
                         axle_count = 2
                     if description == 'Van':
                         axle_count = 3
-                    if description == 'Truck':
+                    if description == 'truck':
                         axle_count = 'twin'
                     else:
                         axle_count = 2
