@@ -33,6 +33,7 @@ import csv
 import numpy as np
 from datetime import datetime
 import logging
+import concurrent.futures
 import threading
 
 video_output = ''
@@ -90,6 +91,16 @@ count = 0
 counter = 0
 SPEED_TIME1 = 0
 SPEED_TIME2 = 0
+thread_collect_data = 0
+
+x_1=0
+x_2=0
+x_3=0
+x_4=0
+y_1=0
+y_2=0
+y_3=0
+y_4=0
 
 width = 1280 ## rtsp stream camera
 height = 720 ## rtsp stream camera
@@ -210,7 +221,7 @@ confidence = []
 class_id = []
 classes = []
 
-async def getVideo():
+def getVideo():
     get_image_time = datetime.now()
     get_image_time = get_image_time.strftime("%Y-%m-%d-%H%M%S%f")
     #image_date, image_time = get_image_time.split('_')
@@ -266,8 +277,9 @@ print()
 # VIDEO_FILE = '{}/{}'.format(VIDEO_DIRECTORY, DIR_LIST[VIDEO_FILE])
 # print('video file: ', VIDEO_FILE)
 
-
-VIDEO_FILE = '/media/bob/ssd128/Recordings/pvr-21-03-09_10:19:38.639.mp4'
+VIDEO_FILE = '/dev/video0'
+#VIDEO_FILE = '/media/bob/ssd128/Recordings/pvr-21-03-09_10:19:38.639.mp4'
+#VIDEO_FILE = '/media/bob/ssd128/Recordings/pvr-21-03-05_08:11:34.024.mp4'
 #v_out = getVideo()
 #input = jetson.utils.videoSource('csi://0')
 #input = jetson.utils.videoSource('rtsp://root:TTItest1@10.4.0.190:554/axis-media/media.amp?videocodec=h264')
@@ -297,6 +309,16 @@ def collectData():
     global SPEED_TIME1
     global SPEED_TIME2
     global SPEED
+    global x_1
+    global x_2
+    global x_3
+    global x_4
+    global y_1
+    global y_2
+    global y_3
+    global y_4
+    #global thread_collect_data
+
     #capture the next image
     img = input.Capture()
     #detections = net.Detect(img, overlay=opt.overlay) overlay options (--overlay=box,labels,conf, and overlay=none)
@@ -346,56 +368,90 @@ def collectData():
             #print ('x_position:{} y_position:{}'.format(x, y))
         
             #Set trigger x or y trigger position here
-            if 0 < x < 100:
+            if 0 < x < 200:
                 x_1 = 1 # start_entry
                 logger.info('start_entry')
-                #SPEED_TIME1 = get_speed_time()
+                #SPEED_TIME1 = get_speed_time()              
+               
             else:
                 x_1 = 0
 
-            if 200 < y < 600:
+            if 10 < y < 600:
                 y_1 = 1 # start_entry
                 #SPEED_TIME2 = get_speed_time()
             else:
                 y_1 = 0
 
-            if 150 < x < 250:
+            if 250 < x < 450:
                 x_2 = 1 # stop_entry
                 logger.info('stop_entry')
+              
             else:
                 x_2 = 0
 
-            if 200 < y < 600:
+            if 10 < y < 600:
                 y_2 = 1 # start_entry
             else:
                 y_2 = 0
 
-            if 300 < x < 350:
+            if 500 < x < 700:
                 x_3 = 1 # start_exit
                 logger.info('start_exit')
+
             else:
                 x_3 = 0
 
-            if 200 < y < 600:
+            if 10 < y < 600:
                 y_3 = 1 # start_entry
             else:
                 y_3 = 0
                     
-            if 500 < x < 650:
+            if 750 < x < 950:
                 x_4 = 1 # stop_exit
                 logger.info('stop_exit')
+        
             else:
                 x_4 = 0
 
-            if 200 < y < 600:
+            if 10 < y < 600:
                 y_4 = 1 # start_entry
             else:
                 y_4 = 0
             # data = (class_id_detectNet,object_name, Confidence,
             # Left,Top,Right,Bottom,Width,Height,Area,center_x,center_y)
             # logger.info(data)
+            value = '{}{}{}{}{}{}{}{}'.format(x_1,x_2,x_3,x_4,y_1,y_2,y_3,y_4)
+            #thread_collect_data = value
+            return value
 
  
+def presentsChecker(entries):
+    entries = ''
+    print(entries)
+    #start_entry
+    if entries == '10001111':
+        start_entry = 'start_entry_{}'.format(get_time())
+        print(start_entry)
+
+    #stop_entry
+    if entries == '01001111':
+        stop_entry = 'stop_entry_{}'.format(get_time())
+        print(stop_entry)
+
+    #start_exit
+    if entries == '00101111': #or [0,1,0,0,1,1,1,1]:
+        start_exit = 'start_exit_{}'.format(get_time())
+        print(start_exit)
+        send_trigger = 'send_trigger'
+        return send_trigger
+
+    #stop_exit
+    if entries == '00011111':
+        stop_exit = 'stop_exit_{}'.format(get_time())
+        print(stop_exit)
+        #send_transaction = stop_exit
+        #return send_transaction
+
             
 
 def get_time():
@@ -406,15 +462,116 @@ def get_speed_time():
     timer = time.time()
     return timer
 
+# def presents_checks():
+#     while True:
+#         test_output = presentsChecker(x_1,x_2,x_3,x_4,y_1,y_2,y_3,y_4)
+#         print('Presence check: ', test_output)
 
-def runInference():
+
+# def runInference():
+#     while True:
+#         collectData()
+
+# def thread_presents_check():
+#     thread1 = threading.Thread(target=presents_checks)
+#     thread1.start()
+#     thread1.join()
+
+
+# def thread_collectData():
+#     def run2():
+#         runInference()
+#     thread2 = threading.Thread(target=run2)
+#     thread2.start()
+#     thread2.join()
+
+# thread_collectData()
+# thread_presents_check()
+
+
+start = time.perf_counter()
+thread_collect_data
+# def test_threading(seconds):
+#         print(f'Sleeping {seconds} second(s).....')
+#         time.sleep(seconds)
+#         print('Done Sleeping...')
+#         return 'Done Sleeping...'
+
+
+with concurrent.futures.ThreadPoolExecutor() as executor:
+    #to execute the function once at a time using the submit method
     while True:
-        collectData()
+        start = time.perf_counter()
+        thread_collect_data = [executor.submit(collectData)]# for _ in range(4)]
+        for f in concurrent.futures.as_completed(thread_collect_data):
+            print(f.result())
+            logger.debug(f.result())
 
-def run_program():
-    def run1():
-        runInference()
-    thread = threading.Thread(target=run1)
-    thread.start()
-run_program()
+            results = [executor.submit(presentsChecker,args=[f.result()])]
+            for f1 in concurrent.futures.as_completed(results):
+                f1 = executor.submit(presentsChecker,[results])
+                print(f1.result())
+                logger.debug(f1.result())
+
+
+        #results = [executor.submit(presentsChecker,args=[thread_collect_data])]# for _ in range(100000)]
+        #f#or f2 in concurrent.futures.as_completed(results):
+            #print(f2.result())
+        #for f1 in concurrent.futures.as_completed(results):
+            #print(f1.result())
+            #f3 = executor.submit(f3)
+            #f3.result()
+            #results = [executor.submit(presentsChecker,args=[f_collect_data.result()])] # for _ in range(4)]
+
+        #results = [executor.submit(presentsChecker,args=[thread_collect_data])]# for _ in range(100000)]
+        #To get results as they're completed
+        #for f in concurrent.futures.as_completed(f_collect_data.result()):
+        #    f = executor.submit(f)
+            #results = [executor.submit(presentsChecker,args=[f_collect_data.result()])] # for _ in range(4)]
+ #           f1 = concurrent.futures.as_completed(results)
+ #           f1 = executor.submit(f1)
+ #           print(f_collect_data.result())
+
+            #f2 = concurrent.futures.as_completed(thread_collect_data)
+            #f2 = executor.submit(f2)
+        # #f2 = executor.submit(presentsChecker,args=[thread_collect_data])
+        # #f2 = executor.submit(test_threading,1)
+        # #print(f1)
+        #     results = [executor.submit(presentsChecker,args=[f2.result()])] # for _ in range(4)]
+        # for f in concurrent.futures.as_completed(thread_collect_data):
+        #     f1 = concurrent.futures.as_completed(results)
+        #     f1 = executor.submit(f1)
+
+
+            
+        #print(f2.result())
+
+        finish = time.perf_counter()
+        #print(f'Finished in {round(finish-start,2)} seconds(s)....')
+
+#Example
+# start = time.perf_counter()
+
+# def test_threading(seconds):
+#         print(f'Sleeping {seconds} second(s).....')
+#         time.sleep(seconds)
+#         print('Done Sleeping...')
+#         return 'Done Sleeping...'
+
+
+# with concurrent.futures.ThreadPoolExecutor() as executor:
+#     #to execute the function once at a time using the submit method
+#     results = [executor.submit(test_threading,1) for _ in range(10)]
+#     #To get results as they're completed
+#     for f in concurrent.futures.as_completed(results):
+#         print(f.result())
+#     f1 = executor.submit(test_threading,1)
+#     f2 = executor.submit(test_threading,1)
+#     print(f1.result())
+#     print(f2.result())
+
+# finish = time.perf_counter()
+# print(f'Finished in {round(finish-start,2)} seconds(s)....')
+
+
 
