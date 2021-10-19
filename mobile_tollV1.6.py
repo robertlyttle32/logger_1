@@ -100,9 +100,8 @@ BOTTOM_TRIGGER = 450
 NEW_DIRECTORY = 'MOBILE_TOLL'
 
 MODEL = 'vehicleModel'
-path = (os.getcwd())
-storage_path = f'{path}/{NEW_DIRECTORY}'
-STORAGE_DIRECTORY = storage_path # Storage database, images
+path = f'{os.getcwd()}/{NEW_DIRECTORY}'
+STORAGE_DIRECTORY = path # Storage for database, images
 if os.path.exists(STORAGE_DIRECTORY):
     pass
 else:
