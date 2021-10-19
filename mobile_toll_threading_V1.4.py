@@ -94,6 +94,7 @@ counter = 0
 SPEED_TIME1 = 0
 SPEED_TIME2 = 0
 thread_collect_data = 0
+NEW_DIRECTORY = 'my_storage_dir'
 
 x_1=0
 x_2=0
@@ -120,7 +121,8 @@ logger = logging.getLogger()
 
 
 MODEL = 'vehicleModel'
-STORAGE_DIRECTORY = '/media/bob/ssd128/' # Storage database, images
+path = f'{os.getcwd()}/{NEW_DIRECTORY}'
+STORAGE_DIRECTORY = path # Storage database, images
 if os.path.exists(STORAGE_DIRECTORY):
     pass
 else:
