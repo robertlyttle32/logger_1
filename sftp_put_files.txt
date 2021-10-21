@@ -1,7 +1,7 @@
 
 #Author: Robert Lyttle
 #Date: 10/20/21
-#Description: upload files matching extenstion
+#Description: upload files matching extension
 
 import pysftp
 import os
@@ -13,8 +13,6 @@ import shutil
 import glob
 import fnmatch
 import re
-
-#download all files matching extenstion
 
 myHostname = "hostname/ip"
 myUsername = "Username"
