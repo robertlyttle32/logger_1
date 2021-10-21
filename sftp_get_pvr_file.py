@@ -1,3 +1,6 @@
+#Author: Robert Lyttle
+#Date: 10/20/21
+#Description: download files matching extenstion
 import pysftp
 import os
 import time
