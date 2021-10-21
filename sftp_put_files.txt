@@ -1,0 +1,37 @@
+
+#Author: Robert Lyttle
+#Date: 10/20/21
+#Description: upload files matching extenstion
+
+import pysftp
+import os
+import time
+import ftplib
+import gzip
+import shutil
+#import pathlib
+import glob
+import fnmatch
+import re
+
+#download all files matching extenstion
+
+myHostname = "hostname/ip"
+myUsername = "Username"
+myPassword = "Password"
+
+with pysftp.Connection(host=myHostname, username=myUsername, password=myPassword) as sftp:
+    print("Connection succesfully stablished ... ")
+
+    # Define the remote path file path
+    remoteFilePath = r'C:\Users\rlyttle\Downloads\MOBILE_TOLL_FILES'
+    localFilePath = '/home/rdl-nano2/XAVIER_RELEASE/XAVIER_RELEASE_UPDATES'
+
+
+    for filename in os.listdir(localFilePath):
+        if fnmatch.fnmatch(filename, '*.py'):
+            print(filename)
+            filename = filename.rstrip()
+            sftp.put(localFilePath + "/" + filename, remoteFilePath + "/" + filename)
+
+
