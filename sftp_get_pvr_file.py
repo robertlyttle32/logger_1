@@ -11,9 +11,9 @@ import re
 
 
 
-myHostname = "10.4.1.30"
-myUsername = "fst"
-myPassword = "lion1999"
+myHostname = "hostname/ip"
+myUsername = "Username"
+myPassword = "Password"
 
 with pysftp.Connection(host=myHostname, username=myUsername, password=myPassword) as sftp:
     print("Connection succesfully stablished ... ")
