@@ -17,15 +17,15 @@ from pathlib import Path
 from datetime import datetime
 
 
-myHostname = "hostname/IP"
-myUsername = "Username"
-myPassword = "Password"
+myHostname = "10.4.0.231"
+myUsername = "pi"
+myPassword = "NanoJJM"
 
 
 #myHostname = input('Enter IP address for avc: ')
 #print('Enter file name or file extension you would like to download.')
 #print('If file extion is used all file matching will be downloaded.')
-FILE_NAME = '*.log' #input('Enter file name or file extension: ')
+FILE_NAME = '*.csv' #input('Enter file name or file extension: ')
 #print('Enter name for directory you want to create. files will be downloaded this directory')
 #tollPointDrectory = 'images' #input('Enter name: ')
 
