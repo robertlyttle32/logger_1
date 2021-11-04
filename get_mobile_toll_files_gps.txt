@@ -17,9 +17,9 @@ from pathlib import Path
 from datetime import datetime
 
 
-myHostname = "10.4.0.231"
-myUsername = "pi"
-myPassword = "NanoJJM"
+myHostname = "hostname/IP"
+myUsername = "Username"
+myPassword = "Password"
 
 
 #myHostname = input('Enter IP address for avc: ')
