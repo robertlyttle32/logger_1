@@ -2,10 +2,10 @@ import socket
 import sys
 import time
 
-#serverIP = '10.4.0.30'
+#serverIP = 'hostname/IP'
 #serverPort = 5103
 
-TCP_IP = '10.4.0.212'
+TCP_IP = 'hostname/IP'
 TCP_PORT = 50008
 TCP_PORT2 = 50007
 BUFFER_SIZE = 400
