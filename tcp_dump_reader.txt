@@ -1,0 +1,55 @@
+import socket
+import sys
+import time
+
+#serverIP = '10.4.0.30'
+#serverPort = 5103
+
+TCP_IP = '10.4.0.212'
+TCP_PORT = 50008
+TCP_PORT2 = 50007
+BUFFER_SIZE = 400
+MESSAGE = '' #'reader.events.register(24, event.tag.arrive)'
+data = ''
+
+
+s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+s1 = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+s.connect((TCP_IP, TCP_PORT))
+s1.connect((TCP_IP, TCP_PORT2))
+#s.bind(TCP_PORT)
+#s.close()
+def read_reader():
+        #bytes(string, 'utf-8')
+        #s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        #s.connect((TCP_IP, TCP_PORT))
+        data = s.recv(BUFFER_SIZE)
+        print('received: ',data)
+
+
+def register_reader():
+        data = s.recv(BUFFER_SIZE)
+        data = data.rstrip()
+        data = str(data.split()[3])
+        data = data.strip('b')
+        data = data.strip("'")
+        print('received: ',data)
+        MESSAGE = f'reader.events.register({data}, event.tag.arrive)\r\n'
+        #print(MESSAGE)
+        s1.send(bytes(MESSAGE, 'ascii')) #, 'utf-8'
+        print(MESSAGE)
+
+try:
+        register_reader()
+        time.sleep(4)
+        while True:
+                read_reader()
+                print('running......')
+                time.sleep(1)
+
+
+except KeyboardInterrupt:
+        s1.close()
+        s.close()
+        print("connection broken")
+        pass
