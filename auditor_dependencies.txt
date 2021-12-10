@@ -2,6 +2,7 @@
 
 sudo apt-get update
 apt-get install python-pip3
+pip3 install numpy
 pip3 install opencv-python
 pip3 install rq
 pip3 install tkcalendar
