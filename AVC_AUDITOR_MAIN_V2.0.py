@@ -273,72 +273,26 @@ class Auditor:
 		w_1_entry11_22_2.insert(END, BANNER[12])
 		return banner_date,banner_time,banner_lane,banner_dir,banner_length,banner_speed,banner_class,banner_axle,banner_note
 
-	def play_video(tracker_line,frame_number):
+	def play_video(tracker_line,frame_number,i,pvr_line_number):
 		global frame_num
 		global line
-		pvr_line_number = 0
-
-		#sync_data()
 		record_bkmark == True
 		i = 0
-		#tracker_line = count
-		line = tracker_line
-		#line = count+line #pvr_count - pvr_count
 		fps = cap.get(cv2.CAP_PROP_FPS)
 		fps = int(fps)
-		#frame_number = TRACKER_FRAME
-		#PLAY_BANNER = Auditor.get_pvr_frame(line)[1]
 		cap.set(cv2.CAP_PROP_POS_FRAMES, frame_number)
 		fourcc = cv2.VideoWriter_fourcc(*'MP4V')
-
-		#while (cap.isOpened()):
-			# if pause == True:
-			# 	line = count + count1
-			# if pause != True:
-			# 	pass
-			# 	#line = w_1_entry4_15_2.get()
- 		
-		#if line != None:
-		frame_num = Auditor.get_pvr_frame(line)[0]
-		banner_date,banner_time,banner_lane,banner_dir,banner_length,banner_speed,banner_class,banner_axle,banner_note = Auditor.banner_info(line)
+		banner_date,banner_time,banner_lane,banner_dir,banner_length,banner_speed,banner_class,banner_axle,banner_note = Auditor.banner_info(tracker_line)
 		ret, frame = cap.read()
 		frame = cv2.resize(frame, (width, height))
 		cv2.rectangle(frame, (x, y), (x + w, y + h), (0,0,0), -1)
 		font = cv2.FONT_HERSHEY_SIMPLEX
-
-		
-		if frame_num - (fps*2) < frame_number:
-			pvr_line_number = pvr_count + line
-
-			#global DISPLAY_BANNER1
-			if banner_lane == '1':
-				i = 0 #180
-
-			if banner_lane == '2':
-				i = 0
-				
-			next_line = int(line + 1)
-			frame_num = Auditor.get_pvr_frame(next_line)[0]
-   
-		if frame_num >= frame_number - (fps):
-			if banner_lane == '1':
-				i = 0 #180
-
-			if banner_lane == '2':
-				i = 0
-
-			if frame_number > frame_num + (fps):
-				line = int(line + 1)
-
-		if frame_number > frame_num + (fps):
-			line = int(line + 1)
-
 		DISPLAY_BANNER1 = Auditor.banner_label2(banner_date,banner_time,banner_lane,banner_dir,banner_length,banner_speed,banner_class,banner_axle,banner_note,pvr_line_number,frame,font,i)
 		DISPLAY_BANNER2 = Auditor.banner_label2(banner_date,banner_time,banner_lane,banner_dir,banner_length,banner_speed,banner_class,banner_axle,banner_note,pvr_line_number,frame,font,i)
 		cv2.putText(frame,DISPLAY_BANNER1,(100,680),font,0.4,(BLUE,GREEN,RED),1) #BGR
 		cv2.putText(frame,DISPLAY_BANNER2,(100,680),font,0.4,(BLUE,GREEN,RED),1) #BGR
 		if record_bkmark == True:
-			PVR_LINE = line
+			PVR_LINE = tracker_line
 			if frame_number == frame_num:
 				cv2.imwrite(record_directory+'bookmark_'+str(PVR_LINE)+EXT1, frame)
 
@@ -348,36 +302,21 @@ class Auditor:
 		get_frame = frame
 
 		w_1_entry4_15_2.delete(0, END)
-		w_1_entry4_15_2.insert(END, line)
+		w_1_entry4_15_2.insert(END, tracker_line+count)
 		w_1_entry3_14_2.delete(0, END)
 		w_1_entry3_14_2.insert(END, frame_number)
-
-		# if pause == True:
-    	# 		line = count1
-		# 	frame_number = count1
-		# if pause != True:
-		# 	frame_number = frame_number + 1
-			#pass
-			#line = w_1_entry4_15_2.get()
-   
-		#frame_number = frame_number + 1
-		if cv2.waitKey(1) & 0xFF == ord('q'):
-			#break
+  
+		if cv2.waitKey(30) & 0xFF == ord('q'):
 			pass
 
 		if stop == True:
-#			break
 			cap.release()
 			cv2.destroyAllWindows()
     
 		if play == False:
-#			break
 			cap.release()
 			cv2.destroyAllWindows()
-
-
-#		cap.release()
-#		cv2.destroyAllWindows()
+   
 
 	def record_live_video():
 		record_directory = filedialog.askdirectory()
@@ -457,42 +396,11 @@ class Auditor:
 		cv2.createTrackbar('Tracking','avc_audit',count1,totalframecount,nothing)
 		cv2.imshow('avc_audit', gui)
 		FRAME_NUMBER1 = cv2.getTrackbarPos('Tracking','avc_audit')
-		
-#		while(1):
-#			cv2.imshow('avc_audit', gui)
-#			k = cv2.waitKey(1) & 0xFF
    
 		if cv2.waitKey(1) & 0xFF == ord('q'):
 			#break
 			pass
 
-
-   
-			#if k == 27:
-				#break
-
-			#if stop == True:
-				#break
-				#cap.release()
-				#cv2.destroyAllWindows()
-
-			#if pause == False:
-				#pvr_line_number = w_1_entry4_15_2.get()
-				#break
-				#cap.release()
-				#cv2.destroyAllWindows()
-
-
-			#if play == False:
-				#break
-				#cap.release()
-				#cv2.destroyAllWindows()
-			# get current positions of four trackbars
-			#FRAME_NUMBER1 = cv2.getTrackbarPos('Tracking','avc_audit')
-
-		#cv2.destroyAllWindows()
-
-#def start_audit():
 #get files
 def pvr_file():
 	"""Open a file for editing."""
@@ -559,21 +467,77 @@ def play():
 	#play = not play
 	play = True
 	cap = cv2.VideoCapture(video_file)
+	fps = cap.get(cv2.CAP_PROP_FPS)
 	print(play)
 	Auditor.sync_data()
 	def run1():
 		frame_number = 0
 		tracker_line = 0
+		pvr_line_number = 0
 		Button(window, text="Play", state=DISABLED)
 		#Auditor.sync_data()
+  
 		while True:
 			if pause == True:
 				tracker_line = count1
-				frame_number = Auditor.get_pvr_frame(tracker_line)[0]
-			if pause == False:
+				frame_number = Auditor.get_pvr_frame(tracker_line)[0]    
+				#banner_date,banner_time,banner_lane,banner_dir,banner_length,banner_speed,banner_class,banner_axle,banner_note = Auditor.banner_info(tracker_line)[2]
+				banner_lane = Auditor.banner_info(tracker_line)[2]
+				pvr_line_number = count + tracker_line
+				if frame_num - (fps*2) < frame_number:
+					#global DISPLAY_BANNER1
+					if banner_lane == '1':
+						i = 0 #180
+					if banner_lane == '2':
+						i = 0
+					next_line = int(tracker_line + 1)
+					frame_num = Auditor.get_pvr_frame(next_line)[0]
+				if frame_num >= frame_number - (fps):
+					if banner_lane == '1':
+						i = 0 #180
+					if banner_lane == '2':
+						i = 0
+					if frame_number > frame_num + (fps):
+						line = int(line + 1)
+				if frame_number > frame_num + (fps):
+					tracker_line = int(tracker_line + 1)
+     
+     
+			if pause == False:       
+				frame_num = Auditor.get_pvr_frame(tracker_line)[0]
+				#banner_date,banner_time,banner_lane,banner_dir,banner_length,banner_speed,banner_class,banner_axle,banner_note = Auditor.banner_info(tracker_line)[2]
+				banner_lane = Auditor.banner_info(tracker_line)[2]
+				pvr_line_number = count + tracker_line	
+				if frame_num - (fps*2) < frame_number:
+
+					#global DISPLAY_BANNER1
+					if banner_lane == '1':
+						i = 0 #180
+
+					if banner_lane == '2':
+						i = 0
+				
+					next_line = int(tracker_line + 1)
+					frame_num = Auditor.get_pvr_frame(next_line)[0]
+     
+				if frame_num >= frame_number - (fps):
+					if banner_lane == '1':
+						i = 0 #180
+
+					if banner_lane == '2':
+						i = 0
+
+					if frame_number > frame_num + (fps):
+						line = int(line + 1)
+
+				if frame_number > frame_num + (fps):
+					tracker_line = int(tracker_line + 1)
+
+              
+       
 				frame_number = frame_number +1
 				print('frame number: ', frame_number)
-			Auditor.play_video(tracker_line,frame_number)
+			Auditor.play_video(tracker_line,frame_number,i,pvr_line_number)
 	thread = threading.Thread(target=run1)
 	thread.start()
 	print(play)
