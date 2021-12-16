@@ -440,13 +440,6 @@ def pvr_video():
 	print('total_num_frames: ', totalframecount)
 
 os.system('clear')
-def open_file():
-	"""Open a file for editing."""
-	filepath = askopenfilename(filetypes=[("Files", "*.mp4"), ("All Files", "*.*")])
-	audit.file_select(filepath)
-	print('Selected file: ', filepath)
-	audit.file_select(filepath)
-
 def play():
 	global play
 	global cap
