@@ -417,29 +417,20 @@ def play():
 		file_read_dir = 1 # switches the pvr count to + or -
 		player_control = 0
 		player_speed = 0
-		#count1 = 0
-		#count = 0
-		#frame_number = 0
-		#frame_number1 = 0
-		#next_frame_number = 0
-		#start_frame_number = 0
 		i = 0
 		pvr_line_number = 0
 		count = Auditor.sync_data()
 		start_frame_number = Auditor.get_pvr_frame(count)[0]
 		frame_number = start_frame_number
-		#count1 = start_frame_number
 		next_frame_number = Auditor.get_pvr_frame(count+1)[0]
 		banner_lane = Auditor.banner_info(count)[2]
 		while True:
 
 			test_test = 1
-			#while test_test == 1:
 			if test_test == 1: #start_frame_number < frame_number < totalframecount:
 				#tracker_line = int((count1/totalframecount)*100)
 
 				next_frame_number = Auditor.get_pvr_frame(count+1)[0]
-				#frame_number = Auditor.get_pvr_frame(count)[0]
 				banner_lane = Auditor.banner_info(count)[2]
 				pvr_line_number = count
 				if next_frame_number - (fps) < frame_number and back == False: # forward
@@ -449,11 +440,7 @@ def play():
 					if banner_lane == '2':
 						i = 0
 					next_frame_number = Auditor.get_pvr_frame(count+1)[0]
-
-					#if back == True:
-					
 				if frame_number < next_frame_number-(fps) and back == True: # back
-					#if pvr_line_number > 18:
 						#global DISPLAY_BANNER1
 					if banner_lane == '1':
 						i = 0 #180
