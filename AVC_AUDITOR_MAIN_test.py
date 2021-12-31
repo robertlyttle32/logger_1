@@ -414,88 +414,92 @@ def play():
 	print(play)
 	def run1():
 		frame_num = 0
-		count1 = 0
-		count = 0
-		frame_number = 0
-		frame_number1 = 0
-		next_frame_number = 0
-		start_frame_number = 0
+		file_read_dir = 1 # switches the pvr count to + or -
+		player_control = 0
+		player_speed = 0
+		#count1 = 0
+		#count = 0
+		#frame_number = 0
+		#frame_number1 = 0
+		#next_frame_number = 0
+		#start_frame_number = 0
 		i = 0
 		pvr_line_number = 0
 		count = Auditor.sync_data()
 		start_frame_number = Auditor.get_pvr_frame(count)[0]
 		frame_number = start_frame_number
-		count1 = start_frame_number
+		#count1 = start_frame_number
 		next_frame_number = Auditor.get_pvr_frame(count+1)[0]
 		banner_lane = Auditor.banner_info(count)[2]
 		while True:
-			#tracker_line = int(frame_number/1788)
-			while pause == True:
-				if start_frame_number < frame_number < totalframecount:
+
+			test_test = 1
+			#while test_test == 1:
+			if test_test == 1: #start_frame_number < frame_number < totalframecount:
+				#tracker_line = int((count1/totalframecount)*100)
+
+				next_frame_number = Auditor.get_pvr_frame(count+1)[0]
+				#frame_number = Auditor.get_pvr_frame(count)[0]
+				banner_lane = Auditor.banner_info(count)[2]
+				pvr_line_number = count
+				if next_frame_number - (fps) < frame_number and back == False: # forward
+					#global DISPLAY_BANNER1
+					if banner_lane == '1':
+						i = 0 #180
+					if banner_lane == '2':
+						i = 0
 					next_frame_number = Auditor.get_pvr_frame(count+1)[0]
-					banner_lane = Auditor.banner_info(count)[2]
-					pvr_line_number = count
-     
-					if frame_number > next_frame_number:
-						banner_lane = Auditor.banner_info(count)[2]
-						pvr_line_number = count
-					if next_frame_number - (fps*2) < frame_number: #changed < to =<
+
+					#if back == True:
+					
+				if frame_number < next_frame_number-(fps) and back == True: # back
+					#if pvr_line_number > 18:
 						#global DISPLAY_BANNER1
-						if banner_lane == '1':
-							i = 0 #180
-						if banner_lane == '2':
-							i = 0
-						next_frame_number = Auditor.get_pvr_frame(count+1)[0]
-					if next_frame_number >= frame_number - (fps):
-						if banner_lane == '1':
-							i = 0 #180
-						if banner_lane == '2':
-							i = 0
-					if frame_number > next_frame_number + (fps):
+					if banner_lane == '1':
+						i = 0 #180
+					if banner_lane == '2':
+						i = 0
+					next_frame_number = Auditor.get_pvr_frame(count-1)[0]
+      
+				if next_frame_number >= frame_number - (fps):
+					if banner_lane == '1':
+						i = 0 #180
+					if banner_lane == '2':
+						i = 0
+				if frame_number > next_frame_number + (fps) and back == False: # forward
+					if forward == True:
 						count = int(count + 1)
-
-					#print('frame number: ', frame_number)
-					print('frame number player pause: ', frame_number)
-					Auditor.play_video(count,frame_number,i,pvr_line_number)
-	
-				if pause != True:
-					break
-
- 
-			while pause == False:
-				if start_frame_number < frame_number < totalframecount:
-					#tracker_line = int((count1/totalframecount)*100)
-
-					next_frame_number = Auditor.get_pvr_frame(count+1)[0]
-					#frame_number = Auditor.get_pvr_frame(count)[0]
-					banner_lane = Auditor.banner_info(count)[2]
-					pvr_line_number = count
-					if next_frame_number - (fps*2) < frame_number:
-						#global DISPLAY_BANNER1
-						if banner_lane == '1':
-							i = 0 #180
-						if banner_lane == '2':
-							i = 0
-				
-						next_frame_number = Auditor.get_pvr_frame(count+1)[0]
-					if next_frame_number >= frame_number - (fps):
-						if banner_lane == '1':
-							i = 0 #180
-						if banner_lane == '2':
-							i = 0
-					if frame_number > next_frame_number + (fps):
-						count = int(count + 1)
-     
-
+					if back == True:
+						count = int(count - 1)
 					else:
-						#count1 = frame_number
-						print('frame number player: ', frame_number)
-						print('Count1: ',frame_number)
-				Auditor.play_video(count,frame_number,i,pvr_line_number)
-				frame_number = frame_number+5
-				
-				if pause != True:
-					break
+						count = int(count + 1)
+      
+				if frame_number < next_frame_number + (fps) and back == True: # back
+					if forward == True:
+						count = int(count + 1)
+					if back == True:
+						count = int(count - 1)
+					else:
+						count = int(count + 1)
+     
+
+			Auditor.play_video(count,frame_number,i,pvr_line_number)
+			if forward == True:
+				player_speed=fps
+				frame_number = frame_number+player_speed
+			if back == True:
+				player_speed=fps
+				frame_number = frame_number-player_speed
+			if pause == True:
+				player_speed=0
+				frame_number = frame_number+player_speed
+			if pause != True:
+				player_speed=5
+				frame_number = frame_number+player_speed
+			print(f'Button pause: {pause} | Button back: {back} | Button forward: {forward}')
+       				    
+			if stop == True:
+				break
     
 	thread = threading.Thread(target=run1)
 	thread.start()
@@ -503,6 +507,10 @@ def play():
     
 def pause():
 	global pause
+	global back
+	global forward
+	forward = False
+	back = False
 	pause = not pause
 	print('Pause again: ', pause)
 
@@ -535,16 +543,24 @@ def skip():
 
 def back():
 	global back
+	global pause
 	global count1
-	back = True
-	count1 = -1
+	global forward
+	forward = False
+	pause = False
+	back = not back
+	count1 = count1-12
 	print('Back: ', count1)
 
 def forward():
 	global forward
 	global count1
-	forward = True
-	count1 = +1
+	global pause
+	global back
+	back = False
+	pause = False
+	forward = not forward
+	count1 = count1+12
 	print('Forward: ' , count1)
 
 def record():
