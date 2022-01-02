@@ -501,7 +501,10 @@ def play():
 				w_1_btn_play_24_0['bg'] = 'green'
 				w_1_btn_play_24_0['fg'] = 'white'
 				w_1_btn_play_24_0['text'] = 'Running...'
-				w_1_btn_play_24_0['state'] = 'disable'		
+				w_1_btn_play_24_0['state'] = 'disable'
+				w_1_btn_open_23_0['state'] = 'disable'
+				w_1_btn_pvrfile_32_0['state'] = 'disable'
+				w_1_btn_set_date_31_0['state'] = 'disable'
 
 			else:
 				w_1_btn_play_24_0['bg'] = 'red'
@@ -622,6 +625,9 @@ def stop():
 	w_1_entry11_22_2.delete(0, END)
 	w_1_btn_play_24_0['text'] = 'START Audit'
 	w_1_btn_play_24_0['state'] = 'normal'
+	w_1_btn_open_23_0['state'] = 'normal'
+	w_1_btn_pvrfile_32_0['state'] = 'normal'
+	w_1_btn_set_date_31_0['state'] = 'normal'
 	print(stop)
 
 def exit():
@@ -777,7 +783,7 @@ w_1_entry12_12_2 = Entry(window, width=100) #PVR_FILE
 #buttons
 #button = Button(tkWindow, text = 'Submit', bg='blue', fg='white')
 #button['state'] = tk.DISABLED
-w_1_btn_open_23_0 = Button(window, text="Import video", command=pvr_video)
+w_1_btn_open_23_0 = Button(window, text="Import video", state='normal', command=pvr_video)
 w_1_btn_play_24_0 = Button(window, text="START Audit",bg="red",fg="white", state='normal',command=play) # Start Audit
 w_1_btn_pause_25_0 = Button(window, text="PLAY", command=pause)
 w_1_btn_tracker_28_0 = Button(window, text="Skip") # command=skip)
@@ -787,8 +793,8 @@ w_1_btn_bkdir_34_0 = Button(window, text="Add Bookmark Dir", command=add_bkdir)
 w_1_btn_bookmark_35_0 = Button(window, text="Record", command=record)
 w_1_btn_record_36_0 = Button(window, text="Record Bookmark", command=record_bookmark)
 w_1_btn_stop_30_0 = Button(window, text="Stop", command=stop)
-w_1_btn_set_date_31_0 = Button(window, text = "Select Date", command = set_date) #.pack(pady = 20)
-w_1_btn_pvrfile_32_0 = Button(window, text="Import PVR file", command=pvr_file)
+w_1_btn_set_date_31_0 = Button(window, text = "Select Date", state='normal', command = set_date) #.pack(pady = 20)
+w_1_btn_pvrfile_32_0 = Button(window, text="Import PVR file", state='normal', command=pvr_file)
 w_1_btn_add_camera_33_0 = Button(window, text="Add Camera", command=add_camera)
 w_1_btn_exit_37_0 = Button(window, text="Exit", command=exit)
 
