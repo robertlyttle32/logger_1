@@ -15,7 +15,8 @@ import glob
 #import avc_audit_v9 as audit
 from tkinter import *
 from tkinter import filedialog
-from tkinter import messagebox
+#from tkinter import messagebox
+import tkinter.messagebox
 #from tkcalendar import Calendar
 from tkinter.filedialog import askopenfilename, asksaveasfilename
 import datetime
@@ -495,8 +496,8 @@ def play():
 			# 	player_speed=5
 			# 	frame_number = frame_number+player_speed
 
-			print(f'Button pause: {pause} | Button back: {back} | Button forward: {forward}')
-			print(f'Player Button status: {play_button_status}')
+			#print(f'Button pause: {pause} | Button back: {back} | Button forward: {forward}')
+			#print(f'Player Button status: {play_button_status}')
 			if stop == False:
 				w_1_btn_play_24_0['bg'] = 'green'
 				w_1_btn_play_24_0['fg'] = 'white'
@@ -714,6 +715,7 @@ window.title("AVC Audit")
 window.geometry('800x1080')
 #window.rowconfigure(0, minsize=110, weight=1)
 #window.columnconfigure(0, minsize=110, weight=1)
+#tkinter.messagebox.showinfo("Enter: PVR_file, Set_date, PVR_Video, then press START Audit")
 w_1_my_img = ImageTk.PhotoImage(Image.open(r'/home/bob/my_virt_env/neology_logo.PNG'))
 w_1_my_logo = Label(image = w_1_my_img)
 
@@ -785,7 +787,7 @@ w_1_entry12_12_2 = Entry(window, width=100) #PVR_FILE
 #button['state'] = tk.DISABLED
 w_1_btn_open_23_0 = Button(window, text="Import video", state='normal', command=pvr_video)
 w_1_btn_play_24_0 = Button(window, text="START Audit",bg="red",fg="white", state='normal',command=play) # Start Audit
-w_1_btn_pause_25_0 = Button(window, text="PLAY", command=pause)
+w_1_btn_pause_25_0 = Button(window, text="PLAY/PAUSE", command=pause)
 w_1_btn_tracker_28_0 = Button(window, text="Skip") # command=skip)
 w_1_btn_back_26_0 = Button(window, text="<<", command=back)
 w_1_btn_forward_27_0 = Button(window, text=">>", command=forward)
