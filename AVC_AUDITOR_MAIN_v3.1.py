@@ -280,7 +280,7 @@ class Auditor:
 		w_1_entry11_22_2.insert(END, BANNER[12])
 		return banner_date,banner_time,banner_lane,banner_dir,banner_length,banner_speed,banner_class,banner_axle,banner_note
 
-	def play_video(tracker_line,frame_number,i,pvr_line_number):
+	def play_video(tracker_line,frame_number,next_frame_number,i,pvr_line_number):
 		global frame_num
 		global frame
 		record_bkmark == True
@@ -302,7 +302,7 @@ class Auditor:
 		cv2.putText(frame,DISPLAY_BANNER2,(100,int(680*.89)),font,0.4,(BLUE,GREEN,RED),1) #BGR
 		if record_bkmark == True:
 			PVR_LINE = tracker_line
-			if frame_number == frame_num:
+			if frame_number == next_frame_number:
 				cv2.imwrite(record_directory+'bookmark_'+str(PVR_LINE)+EXT1, frame)
 		cv2.imshow('frame', frame)
 
@@ -476,7 +476,7 @@ def play():
 						count = int(count + 1)
      
 
-			Auditor.play_video(count,frame_number,i,pvr_line_number)
+			Auditor.play_video(count,frame_number,next_frame_number,i,pvr_line_number)
 			if forward == True:
 				w_1_btn_pause_25_0['text'] = 'PAUSE'
 				player_speed=fps
