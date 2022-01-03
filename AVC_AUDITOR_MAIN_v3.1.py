@@ -787,7 +787,7 @@ w_1_entry12_12_2 = Entry(window, width=100) #PVR_FILE
 #button['state'] = tk.DISABLED
 w_1_btn_open_23_0 = Button(window, text="Import video", state='normal', command=pvr_video)
 w_1_btn_play_24_0 = Button(window, text="START Audit",bg="red",fg="white", state='normal',command=play) # Start Audit
-w_1_btn_pause_25_0 = Button(window, text="PLAY/PAUSE", command=pause)
+w_1_btn_pause_25_0 = Button(window, text="PLAY / PAUSE", command=pause)
 w_1_btn_tracker_28_0 = Button(window, text="Skip") # command=skip)
 w_1_btn_back_26_0 = Button(window, text="<<", command=back)
 w_1_btn_forward_27_0 = Button(window, text=">>", command=forward)
