@@ -510,6 +510,7 @@ def play():
 			else:
 				w_1_btn_play_24_0['bg'] = 'red'
 				w_1_btn_play_24_0['fg'] = 'white'
+				w_1_btn_pause_25_0['text'] = 'PLAY / PAUSE'
 				
        				    
 			if exit_program == True:
