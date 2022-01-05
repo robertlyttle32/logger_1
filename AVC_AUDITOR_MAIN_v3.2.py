@@ -488,14 +488,18 @@ def play():
 				w_1_btn_pause_25_0['text'] = 'PAUSE'
 				player_speed=fps
 				frame_number = frame_number+player_speed
+			else:
+				w_1_btn_forward_27_0['fg'] = 'black'
     
 			if back == True:
 				w_1_btn_pause_25_0['fg'] = 'black'
-				w_1_btn_forward_27_0['fg'] = 'black'
 				#w_1_btn_tracker_28_0['fg'] = 'red'
 				w_1_btn_back_26_0['fg'] = 'green'
+    
 				player_speed=fps
 				frame_number = frame_number-player_speed
+			else:
+				w_1_btn_back_26_0['fg'] = 'black'
     
 			if pause == True:
 				#w_1_btn_pause_25_0['fg'] = 'green'
