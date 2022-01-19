@@ -54,7 +54,7 @@ frame_num = 0
 start_banner =  ''
 play_button_status = 'Play'
 offset = 0
-trim = 1.05
+trim = 0 #1.05
 test_value = 'test'
 line_num = 0
 line_filler = '_'*40
@@ -183,7 +183,7 @@ class Auditor:
 			pvr_data = pvr.readlines()
 			PVR_DATA = pvr_data[line]
 			if line > start_line:
-				PVR_DATA1 = pvr_data[line-1]
+				PVR_DATA1 = pvr_data[line] #[line-1]
 				PVR_DATA1 = PVR_DATA1.rstrip()
 				PVR_DATA1 = PVR_DATA1.split(',')
 				TIME = PVR_DATA1[1]
@@ -429,10 +429,8 @@ def play():
 	cap = cv2.VideoCapture(video_file)
 	fps = cap.get(cv2.CAP_PROP_FPS)
 	print(play)
+
 	def run1():
-		frame_num = 0
-		file_read_dir = 1 # switches the pvr count to + or -
-		player_control = 0
 		player_speed = 0
 		i = 0
 		pvr_line_number = 0
@@ -485,10 +483,11 @@ def play():
 						count = int(count - 1)
 					else:
 						count = int(count + 1)
-			t = (frame_number/fps)+pvr_time
+			t = (frame_number/fps)+pvr_time - offset
 			rt = relativedelta(seconds=t)
-			time_laps = ('{:02d}:{:02d}:{:02d}'.format(int(rt.hours), int(rt.minutes-20), int(rt.seconds)))
-			#time_laps = (f"{int(t/3600)}H {int((t/60)%60) if t/3600>0 else int(t/60)}M {int(t%60)}S")
+			time_laps = ('{:02d}:{:02d}:{:02d}'.format(int(rt.hours), int(rt.minutes), int(rt.seconds)))
+			print(f'time laps: {time_laps} | Minute: {rt.minutes}')
+			#time_laps = (f"{int(t/3600)}H {int((t/60)%60) if t/3600>0 else int((t/60))}M {int(t%60)}S")
 			Auditor.play_video(count,frame_number,time_laps,next_frame_number,i,pvr_line_number)
    
 			count1 = 0
@@ -525,6 +524,10 @@ def play():
 				#w_1_btn_pause_25_0['fg'] = 'green'
 				w_1_btn_pause_25_0['text'] = 'PAUSE'
 				player_speed=2
+				if frame_number == next_frame_number-fps-5:
+					player_speed = 0
+				else:
+					player_speed = 2
 				frame_number = frame_number+player_speed
 			# if play2 == True:
 			# 	player_speed=5
