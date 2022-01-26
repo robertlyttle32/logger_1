@@ -24,6 +24,7 @@ from tkcalendar import *
 from PIL import ImageTk,Image
 import threading
 from dateutil.relativedelta import relativedelta
+import audit_log
 
 OPTIONS = 0
 METADATA = 5
@@ -292,7 +293,6 @@ class Auditor:
 		global frame_num
 		global frame
 		font_size = 0.4
-		save_audit == True
 		i = 0
 		fps = cap.get(cv2.CAP_PROP_FPS)
 		fps = int(fps)
@@ -314,6 +314,14 @@ class Auditor:
 			PVR_LINE = tracker_line
 			#if frame_number == next_frame_number:
 			cv2.imwrite(record_directory+'audit_'+str(PVR_LINE)+EXT1, frame)
+			comments = 'No issues found'
+			audit_status = 'Pass'
+			audit_user = 'Robert Lyttle'
+			audit_log.file_format(record_directory+'audit.csv',banner_date,banner_time,banner_lane,banner_dir,banner_length,banner_speed,banner_class,banner_axle,banner_note,pvr_line_number,audit_status,audit_user,comments)
+			record_audit(False)
+			w_1_btn_record_36_0['text'] = 'Saved'
+			time.sleep(1)
+			w_1_btn_record_36_0['text'] = 'Save Audit'
 		cv2.imshow('frame', frame)
 
 		#global get_frame
@@ -617,9 +625,9 @@ def add_bkdir():
 	record_directory = filedialog.askdirectory()
 	record_directory = '{}/'.format(record_directory)
 
-def record_audit():
+def record_audit(object):
 	global save_audit
-	save_audit = not save_audit
+	save_audit = object #not save_audit
 	print('save_audit')
 
 def add_camera():
@@ -824,13 +832,13 @@ w_1_btn_back_26_0 = Button(window, text="<<", fg='black', command=back)
 w_1_btn_forward_27_0 = Button(window, text=">>", fg='black', command=forward)
 w_1_btn_bkdir_34_0 = Button(window, text="Audit Dir", command=add_bkdir)
 w_1_btn_bookmark_35_0 = Button(window, text="Record", command=record)
-w_1_btn_record_36_0 = Button(window, text="Save Audit", command=record_audit)
+w_1_btn_record_36_0 = Button(window, text="Save Audit", command=lambda: record_audit(True))
 w_1_btn_stop_30_0 = Button(window, text="Stop", command=stop)
 w_1_btn_set_date_31_0 = Button(window, text = "Select Date", state='normal', command = set_date) #.pack(pady = 20)
 w_1_btn_pvrfile_32_0 = Button(window, text="Import PVR file", state='normal', command=pvr_file)
 w_1_btn_add_camera_33_0 = Button(window, text="Add Camera", command=add_camera)
 w_1_btn_exit_37_0 = Button(window, text="Exit", command=exit)
-
+#command=lambda: button_click(1)
 #buttons
 #btn_play.grid(row=0, column=0, sticky="ew", padx=5, pady=5)
 w_1_btn_open_23_0.grid(row=23, column=0, sticky="wse", padx=5) #row 23 column 0
