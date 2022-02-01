@@ -315,9 +315,13 @@ class Auditor:
 			#if frame_number == next_frame_number:
 			cv2.imwrite(record_directory+'audit_'+str(PVR_LINE)+EXT1, frame)
 			comments = 'No issues found'
-			audit_status = 'Pass'
 			audit_user = 'Robert Lyttle'
-			audit_log.file_format(record_directory+'audit.csv',banner_date,banner_time,banner_lane,banner_dir,banner_length,banner_speed,banner_class,banner_axle,banner_note,pvr_line_number,audit_status,audit_user,comments)
+			if pass_fail1 == 'Pass':
+				audit_status = pass_fail1
+				audit_log.file_format(record_directory+'audit.csv',banner_date,banner_time,banner_lane,banner_dir,banner_length,banner_speed,banner_class,banner_axle,banner_note,pvr_line_number,audit_status,audit_user,comments)
+			if pass_fail1 == 'Fail':
+				audit_status = pass_fail1
+				audit_log.file_format(record_directory+'audit.csv',banner_date,banner_time,lane_number1,direction1,banner_length,banner_speed,banner_class,axle_count1,banner_note,pvr_line_number,audit_status,audit_user,comments)		
 			record_audit(False)
 			w_1_btn_record_36_0['text'] = 'Saved'
 			time.sleep(1)
@@ -819,28 +823,36 @@ pass_fail = ['Pass','Fail']
 variable1 = StringVar(window)
 variable1.set(pass_fail[0]) # default value
 def option_pass_fail():
+	global pass_fail1
 	print ("value is:" + variable1.get())
+	pass_fail1 = variable1.get()
 	w_1_btn_pass_fail_35_2['bg'] ='green'
 
 direction = ['F','R']
 variable2 = StringVar(window)
 variable2.set(direction[0]) # default value
 def direction_f_r():
+	global direction1
 	print ("value is:" + variable2.get())
+	direction1 = variable2.get()
 	w_1_btn_direction_35_3['bg'] = 'green'
 
 axle_count = ['1','2','3','4','5','6','7','8','9','10']
 variable3 = StringVar(window)
 variable3.set(axle_count[1]) # default value
 def axle_count_btn():
+	global axle_count1
 	print ("value is:" + variable3.get())
+	axle_count1 = variable3.get()
 	w_1_btn_axle_count_35_4['bg'] = 'green'
 
 lane_number_opt = ['1','2','3','4','5','6','7','8','9','10']
 variable4 = StringVar(window)
 variable4.set(lane_number_opt[0]) # default value
 def lane_number_btn():
+	global lane_number1
 	print ("value is:" + variable4.get())
+	lane_number1 = variable4.get()
 	w_1_btn_lane_number_opt_35_5['bg'] = 'green'
 
 
