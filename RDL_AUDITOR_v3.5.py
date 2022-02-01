@@ -313,15 +313,16 @@ class Auditor:
 		if save_audit and pause == True:
 			PVR_LINE = tracker_line
 			#if frame_number == next_frame_number:
-			cv2.imwrite(record_directory+'audit_'+str(PVR_LINE)+EXT1, frame)
 			comments = 'No issues found'
 			audit_user = 'Robert Lyttle'
 			if pass_fail1 == 'Pass':
 				audit_status = pass_fail1
 				audit_log.file_format(record_directory+'audit.csv',banner_date,banner_time,banner_lane,banner_dir,banner_length,banner_speed,banner_class,banner_axle,banner_note,pvr_line_number,audit_status,audit_user,comments)
+				cv2.imwrite(record_directory+'audit_'+banner_time+str(PVR_LINE)+EXT1, frame)
 			if pass_fail1 == 'Fail':
 				audit_status = pass_fail1
-				audit_log.file_format(record_directory+'audit.csv',banner_date,banner_time,lane_number1,direction1,banner_length,banner_speed,banner_class,axle_count1,banner_note,pvr_line_number,audit_status,audit_user,comments)		
+				audit_log.file_format(record_directory+'audit.csv',banner_date,time_laps,lane_number1,direction1,banner_length,banner_speed,banner_class,axle_count1,banner_note,pvr_line_number,audit_status,audit_user,comments)		
+				cv2.imwrite(record_directory+'audit_'+time_laps+str(PVR_LINE)+EXT1, frame)
 			record_audit(False)
 			w_1_btn_record_36_0['text'] = 'Saved'
 			time.sleep(1)
