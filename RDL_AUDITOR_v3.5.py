@@ -334,6 +334,9 @@ class Auditor:
 			variable2.set(axle_count[0])
 			variable3.set(axle_count[0])
 			variable4.set(axle_count[0])
+			w_1_btn_direction_35_3['state'] = 'normal'
+			w_1_btn_axle_count_35_4['state'] = 'normal'
+			w_1_btn_lane_number_opt_35_5['state'] = 'normal'
 
 		cv2.imshow('frame', frame)
 
@@ -677,6 +680,9 @@ def stop():
 	w_1_btn_open_23_0['state'] = 'normal'
 	w_1_btn_pvrfile_32_0['state'] = 'normal'
 	w_1_btn_set_date_31_0['state'] = 'normal'
+	w_1_btn_direction_35_3['state'] = 'normal'
+	w_1_btn_axle_count_35_4['state'] = 'normal'
+	w_1_btn_lane_number_opt_35_5['state'] = 'normal'
 	w_1_btn_tracker_28_0['fg'] = 'black'
 	w_1_btn_forward_27_0['fg'] = 'black'
 	w_1_btn_back_26_0['fg'] = 'black'
@@ -835,6 +841,14 @@ def option_pass_fail():
 	print ("value is:" + variable1.get())
 	pass_fail1 = variable1.get()
 	w_1_btn_pass_fail_35_2['bg'] ='green'
+	if pass_fail1 == 'Pass':
+		w_1_btn_direction_35_3['state'] = 'disable'
+		w_1_btn_axle_count_35_4['state'] = 'disable'
+		w_1_btn_lane_number_opt_35_5['state'] = 'disable'
+	else:
+		w_1_btn_direction_35_3['state'] = 'normal'
+		w_1_btn_axle_count_35_4['state'] = 'normal'
+		w_1_btn_lane_number_opt_35_5['state'] = 'normal'
 
 direction = ['Select Option','F','R']
 variable2 = StringVar(window)
