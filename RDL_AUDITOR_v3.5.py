@@ -819,7 +819,7 @@ def direction_f_r():
 
 axle_count = ['1','2','3','4','5','6','7','8','9','10']
 variable3 = StringVar(window)
-variable3.set(axle_count[0]) # default value
+variable3.set(axle_count[1]) # default value
 def axle_count_btn():
 	print ("value is:" + variable3.get())
 
@@ -871,17 +871,21 @@ w_1_btn_add_camera_33_0 = Button(window, text="Add Camera", command=add_camera)
 w_1_btn_exit_37_0 = Button(window, text="Exit", command=exit)
 
 #options button
+w_1_pass_fail_label15_33_2 = Label(window, text="Pass/Fail")
 w_1_btn_pass_fail_34_2 = OptionMenu(window, variable1, *pass_fail)
-w_1_btn_pass_fail_35_2 = Button(window, text="Set", command=option_pass_fail)
+w_1_btn_pass_fail_35_2 = Button(window, text="Set", bg='white', state='normal', command=option_pass_fail)
 
+w_1_direction_label16_33_3 = Label(window, text="Direction")
 w_1_btn_direction_34_3 = OptionMenu(window, variable2, *direction)
-w_1_btn_direction_35_3 = Button(window, text="Set", command=direction_f_r)
+w_1_btn_direction_35_3 = Button(window, text="Set", bg='white', state='normal', command=direction_f_r)
 
+w_1_axle_count_label17_33_4 = Label(window, text="Axle Count")
 w_1_btn_axle_count_34_4 = OptionMenu(window, variable3, *axle_count)
-w_1_btn_axle_count_35_4 = Button(window, text="Set", command=axle_count_btn)
+w_1_btn_axle_count_35_4 = Button(window, text="Set", bg='white', state='normal', command=axle_count_btn)
 
+w_1_lane_number_label18_33_5 = Label(window, text="Lane Number")
 w_1_btn_lane_number_opt_34_5 = OptionMenu(window, variable4, *lane_number_opt)
-w_1_btn_lane_number_opt_35_5 = Button(window, text="Set", command=lane_number_btn)
+w_1_btn_lane_number_opt_35_5 = Button(window, text="Set", bg='white', state='normal', command=lane_number_btn)
 
 
 
@@ -955,6 +959,10 @@ w_1_my_label13_21_0.grid(row=21, column=0, sticky='wn', padx=5)     #Length
 w_1_my_label14_22_0.grid(row=22, column=0, sticky='wn', padx=5)     #Note
 w_1_my_logo.grid(row=0, column=0)                       #Logo sticky='w'
 #w_1_my_frame_logo.grid(row=24, column=4, sticky='w')
+w_1_pass_fail_label15_33_2.grid(row=33, column=2, sticky='wn', padx=5)
+w_1_direction_label16_33_3.grid(row=33, column=3, sticky='wn', padx=5)
+w_1_axle_count_label17_33_4.grid(row=33, column=4, sticky='wn', padx=5)
+w_1_lane_number_label18_33_5.grid(row=33, column=5, sticky='wn', padx=5)
 
 
 #create window
