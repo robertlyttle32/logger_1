@@ -330,6 +330,10 @@ class Auditor:
 			w_1_btn_direction_35_3['bg'] = 'white'
 			w_1_btn_axle_count_35_4['bg'] = 'white'
 			w_1_btn_lane_number_opt_35_5['bg'] = 'white'
+			variable1.set(axle_count[0])
+			variable2.set(axle_count[0])
+			variable3.set(axle_count[0])
+			variable4.set(axle_count[0])
 
 		cv2.imshow('frame', frame)
 
@@ -681,6 +685,10 @@ def stop():
 	w_1_btn_direction_35_3['bg'] = 'white'
 	w_1_btn_axle_count_35_4['bg'] = 'white'
 	w_1_btn_lane_number_opt_35_5['bg'] = 'white'
+	variable1.set(axle_count[0])
+	variable2.set(axle_count[0])
+	variable3.set(axle_count[0])
+	variable4.set(axle_count[0])
 
 	print(stop)
 
@@ -819,7 +827,7 @@ for x_offset in range(1):
 offset_btn = Button(window, text='Set offset trim', command=offset_trim)
 offset_btn.grid(row=4, column=0, sticky='wn', pady=20)
 
-pass_fail = ['Pass','Fail']
+pass_fail = ['Select Option','Pass','Fail']
 variable1 = StringVar(window)
 variable1.set(pass_fail[0]) # default value
 def option_pass_fail():
@@ -828,7 +836,7 @@ def option_pass_fail():
 	pass_fail1 = variable1.get()
 	w_1_btn_pass_fail_35_2['bg'] ='green'
 
-direction = ['F','R']
+direction = ['Select Option','F','R']
 variable2 = StringVar(window)
 variable2.set(direction[0]) # default value
 def direction_f_r():
@@ -837,16 +845,16 @@ def direction_f_r():
 	direction1 = variable2.get()
 	w_1_btn_direction_35_3['bg'] = 'green'
 
-axle_count = ['1','2','3','4','5','6','7','8','9','10']
+axle_count = ['Select Option','1','2','3','4','5','6','7','8','9','10']
 variable3 = StringVar(window)
-variable3.set(axle_count[1]) # default value
+variable3.set(axle_count[0]) # default value
 def axle_count_btn():
 	global axle_count1
 	print ("value is:" + variable3.get())
 	axle_count1 = variable3.get()
 	w_1_btn_axle_count_35_4['bg'] = 'green'
 
-lane_number_opt = ['1','2','3','4','5','6','7','8','9','10']
+lane_number_opt = ['Select Option','1','2','3','4','5','6','7','8','9','10']
 variable4 = StringVar(window)
 variable4.set(lane_number_opt[0]) # default value
 def lane_number_btn():
