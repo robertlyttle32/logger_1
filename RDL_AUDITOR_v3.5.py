@@ -322,6 +322,11 @@ class Auditor:
 			w_1_btn_record_36_0['text'] = 'Saved'
 			time.sleep(1)
 			w_1_btn_record_36_0['text'] = 'Save Audit'
+			w_1_btn_pass_fail_35_2['bg'] ='white'
+			w_1_btn_direction_35_3['bg'] = 'white'
+			w_1_btn_axle_count_35_4['bg'] = 'white'
+			w_1_btn_lane_number_opt_35_5['bg'] = 'white'
+
 		cv2.imshow('frame', frame)
 
 		#global get_frame
@@ -668,6 +673,11 @@ def stop():
 	w_1_btn_forward_27_0['fg'] = 'black'
 	w_1_btn_back_26_0['fg'] = 'black'
 	w_1_btn_pause_25_0['fg'] = 'black'
+	w_1_btn_pass_fail_35_2['bg'] ='white'
+	w_1_btn_direction_35_3['bg'] = 'white'
+	w_1_btn_axle_count_35_4['bg'] = 'white'
+	w_1_btn_lane_number_opt_35_5['bg'] = 'white'
+
 	print(stop)
 
 def exit():
@@ -810,24 +820,28 @@ variable1 = StringVar(window)
 variable1.set(pass_fail[0]) # default value
 def option_pass_fail():
 	print ("value is:" + variable1.get())
+	w_1_btn_pass_fail_35_2['bg'] ='green'
 
 direction = ['F','R']
 variable2 = StringVar(window)
 variable2.set(direction[0]) # default value
 def direction_f_r():
 	print ("value is:" + variable2.get())
+	w_1_btn_direction_35_3['bg'] = 'green'
 
 axle_count = ['1','2','3','4','5','6','7','8','9','10']
 variable3 = StringVar(window)
 variable3.set(axle_count[1]) # default value
 def axle_count_btn():
 	print ("value is:" + variable3.get())
+	w_1_btn_axle_count_35_4['bg'] = 'green'
 
 lane_number_opt = ['1','2','3','4','5','6','7','8','9','10']
 variable4 = StringVar(window)
 variable4.set(lane_number_opt[0]) # default value
 def lane_number_btn():
 	print ("value is:" + variable4.get())
+	w_1_btn_lane_number_opt_35_5['bg'] = 'green'
 
 
 #entry box
