@@ -321,23 +321,32 @@ class Auditor:
 				cv2.imwrite(record_directory+'audit_'+banner_time+str(PVR_LINE)+EXT1, frame)
 			if pass_fail1 == 'Fail':
 				audit_status = pass_fail1
+				banner_speed = 'N/A'
+				banner_class = class1
+				comments = w_1_entry16_36_2.get(1.0,'end-1c')
+				#inp = inputtxt.get(1.0, "end-1c")
+    			#lbl.config(text = "Provided Input: "+inp)
 				audit_log.file_format(record_directory+'audit.csv',banner_date,time_laps,lane_number1,direction1,banner_length,banner_speed,banner_class,axle_count1,banner_note,pvr_line_number,audit_status,audit_user,comments)		
 				cv2.imwrite(record_directory+'audit_'+time_laps+str(PVR_LINE)+EXT1, frame)
 			record_audit(False)
-			w_1_btn_record_36_0['text'] = 'Saved'
+			w_1_btn_save_audit_24_3['text'] = 'Saved'
 			time.sleep(1)
-			w_1_btn_record_36_0['text'] = 'Save Audit'
-			w_1_btn_pass_fail_35_2['bg'] ='white'
-			w_1_btn_direction_35_3['bg'] = 'white'
-			w_1_btn_axle_count_35_4['bg'] = 'white'
-			w_1_btn_lane_number_opt_35_5['bg'] = 'white'
+			w_1_btn_save_audit_24_3['text'] = 'Save Audit'
+			w_1_btn_pass_fail_35_0['bg'] ='white'
+			w_1_btn_direction_35_1['bg'] = 'white'
+			w_1_btn_axle_count_35_2['bg'] = 'white'
+			w_1_btn_lane_number_opt_35_3['bg'] = 'white'
+			w_1_btn_class_opt_35_4['bg'] = 'white'
 			variable1.set(axle_count[0])
 			variable2.set(axle_count[0])
 			variable3.set(axle_count[0])
 			variable4.set(axle_count[0])
-			w_1_btn_direction_35_3['state'] = 'normal'
-			w_1_btn_axle_count_35_4['state'] = 'normal'
-			w_1_btn_lane_number_opt_35_5['state'] = 'normal'
+			variable5.set(axle_count[0])
+			w_1_btn_direction_35_1['state'] = 'normal'
+			w_1_btn_axle_count_35_2['state'] = 'normal'
+			w_1_btn_lane_number_opt_35_3['state'] = 'normal'
+			w_1_btn_class_opt_35_4['state'] = 'normal'
+			w_1_entry16_36_2.delete(1.0, 'end-1c')
 
 		cv2.imshow('frame', frame)
 
@@ -518,37 +527,37 @@ def play():
    
 			count1 = 0
 			if forward == True:
-				w_1_btn_forward_27_0['fg'] = 'green'
-				w_1_btn_pause_25_0['fg'] = 'black'
-				#w_1_btn_tracker_28_0['fg'] = 'red'
-				w_1_btn_back_26_0['fg'] = 'black'
-				w_1_btn_pause_25_0['text'] = 'PAUSE'
+				w_1_btn_forward_24_2['fg'] = 'green'
+				w_1_btn_pause_24_1['fg'] = 'black'
+				#w_1_btn_tracker_25_0['fg'] = 'red'
+				w_1_btn_back_24_0['fg'] = 'black'
+				w_1_btn_pause_24_1['text'] = 'PAUSE'
 				player_speed=fps
 				frame_number = frame_number+player_speed
 			else:
-				w_1_btn_forward_27_0['fg'] = 'black'
+				w_1_btn_forward_24_2['fg'] = 'black'
     
 			if back == True:
-				w_1_btn_pause_25_0['fg'] = 'black'
-				#w_1_btn_tracker_28_0['fg'] = 'red'
-				w_1_btn_back_26_0['fg'] = 'green'
+				w_1_btn_pause_24_1['fg'] = 'black'
+				#w_1_btn_tracker_25_0['fg'] = 'red'
+				w_1_btn_back_24_0['fg'] = 'green'
     
 				player_speed=fps
 				frame_number = frame_number-player_speed
 			else:
-				w_1_btn_back_26_0['fg'] = 'black'
+				w_1_btn_back_24_0['fg'] = 'black'
     
 			if pause == True:
-				#w_1_btn_pause_25_0['fg'] = 'green'
-				w_1_btn_forward_27_0['fg'] = 'black'
-				w_1_btn_back_26_0['fg'] = 'black'
-				w_1_btn_pause_25_0['text'] = 'PLAY'
+				#w_1_btn_pause_24_1['fg'] = 'green'
+				w_1_btn_forward_24_2['fg'] = 'black'
+				w_1_btn_back_24_0['fg'] = 'black'
+				w_1_btn_pause_24_1['text'] = 'PLAY'
 				player_speed=0
 				frame_number = frame_number+player_speed
     
 			if pause != True:
-				#w_1_btn_pause_25_0['fg'] = 'green'
-				w_1_btn_pause_25_0['text'] = 'PAUSE'
+				#w_1_btn_pause_24_1['fg'] = 'green'
+				w_1_btn_pause_24_1['text'] = 'PAUSE'
 				player_speed=2
 				frame_number = frame_number+player_speed
 			
@@ -556,20 +565,20 @@ def play():
 			#print(f'Button pause: {pause} | Button back: {back} | Button forward: {forward}')
 			#print(f'Player Button status: {play_button_status}')
 			if stop != True:
-				w_1_btn_pause_25_0['fg'] = 'green'
-				w_1_btn_play_24_0['fg'] = 'white'
-				w_1_btn_play_24_0['bg'] = 'green'
-				w_1_btn_play_24_0['text'] = 'Running...'
-				w_1_btn_play_24_0['state'] = 'disable'
+				w_1_btn_pause_24_1['fg'] = 'green'
+				w_1_btn_play_23_4['fg'] = 'white'
+				w_1_btn_play_23_4['bg'] = 'green'
+				w_1_btn_play_23_4['text'] = 'Running...'
+				w_1_btn_play_23_4['state'] = 'disable'
 				w_1_btn_open_23_0['state'] = 'disable'
-				w_1_btn_pvrfile_32_0['state'] = 'disable'
-				w_1_btn_set_date_31_0['state'] = 'disable'
+				w_1_btn_pvrfile_23_1['state'] = 'disable'
+				w_1_btn_set_date_23_2['state'] = 'disable'
 
 			else:
-				w_1_btn_play_24_0['bg'] = 'red'
-				w_1_btn_play_24_0['fg'] = 'white'
-				w_1_btn_pause_25_0['fg'] = 'black' 
-				w_1_btn_pause_25_0['text'] = 'PLAY / PAUSE'
+				w_1_btn_play_23_4['bg'] = 'red'
+				w_1_btn_play_23_4['fg'] = 'white'
+				w_1_btn_pause_24_1['fg'] = 'black' 
+				w_1_btn_pause_24_1['text'] = 'PLAY / PAUSE'
 				
        				    
 			if exit_program == True:
@@ -591,9 +600,9 @@ def skip():
 	global skip0
 	skip0 = not skip0
 	#if skip0 == True:
-		#w_1_btn_tracker_28_0['fg'] = 'green'
+		#w_1_btn_tracker_25_0['fg'] = 'green'
 	#else:
-		#w_1_btn_tracker_28_0['fg'] = 'red'
+		#w_1_btn_tracker_25_0['fg'] = 'red'
 	print ('Skip', skip0)
 
 def back():
@@ -676,26 +685,29 @@ def stop():
 	w_1_entry9_20_2.delete(0, END)
 	w_1_entry10_21_2.delete(0, END)
 	w_1_entry11_22_2.delete(0, END)
-	w_1_btn_play_24_0['text'] = 'START Audit'
-	w_1_btn_play_24_0['state'] = 'normal'
+	w_1_btn_play_23_4['text'] = 'START Audit'
+	w_1_btn_play_23_4['state'] = 'normal'
 	w_1_btn_open_23_0['state'] = 'normal'
-	w_1_btn_pvrfile_32_0['state'] = 'normal'
-	w_1_btn_set_date_31_0['state'] = 'normal'
-	w_1_btn_direction_35_3['state'] = 'normal'
-	w_1_btn_axle_count_35_4['state'] = 'normal'
-	w_1_btn_lane_number_opt_35_5['state'] = 'normal'
-	w_1_btn_tracker_28_0['fg'] = 'black'
-	w_1_btn_forward_27_0['fg'] = 'black'
-	w_1_btn_back_26_0['fg'] = 'black'
-	w_1_btn_pause_25_0['fg'] = 'black'
-	w_1_btn_pass_fail_35_2['bg'] ='white'
-	w_1_btn_direction_35_3['bg'] = 'white'
-	w_1_btn_axle_count_35_4['bg'] = 'white'
-	w_1_btn_lane_number_opt_35_5['bg'] = 'white'
+	w_1_btn_pvrfile_23_1['state'] = 'normal'
+	w_1_btn_set_date_23_2['state'] = 'normal'
+	w_1_btn_direction_35_1['state'] = 'normal'
+	w_1_btn_axle_count_35_2['state'] = 'normal'
+	w_1_btn_lane_number_opt_35_3['state'] = 'normal'
+	w_1_btn_class_opt_35_4['state'] = 'normal'
+	w_1_btn_tracker_25_0['fg'] = 'black'
+	w_1_btn_forward_24_2['fg'] = 'black'
+	w_1_btn_back_24_0['fg'] = 'black'
+	w_1_btn_pause_24_1['fg'] = 'black'
+	w_1_btn_pass_fail_35_0['bg'] ='white'
+	w_1_btn_direction_35_1['bg'] = 'white'
+	w_1_btn_axle_count_35_2['bg'] = 'white'
+	w_1_btn_lane_number_opt_35_3['bg'] = 'white'
+	w_1_btn_class_opt_35_4['bg'] = 'white'
 	variable1.set(axle_count[0])
 	variable2.set(axle_count[0])
 	variable3.set(axle_count[0])
 	variable4.set(axle_count[0])
+	variable5.set(axle_count[0])
 
 	print(stop)
 
@@ -784,7 +796,7 @@ window.geometry('800x1080')
 #window.rowconfigure(0, minsize=110, weight=1)
 #window.columnconfigure(0, minsize=110, weight=1)
 #tkinter.messagebox.showinfo("Enter: PVR_file, Set_date, PVR_Video, then press START Audit")
-w_1_my_img = ImageTk.PhotoImage(Image.open(r'/home/bob/my_virt_env/neology_logo.PNG'))
+w_1_my_img = ImageTk.PhotoImage(Image.open(r'/home/bob/my_virt_env/my_logo1.png'))
 w_1_my_logo = Label(image = w_1_my_img)
 
 #w_1_my_frame = ImageTk.PhotoImage(Image.open('test_image.png'))
@@ -841,15 +853,17 @@ def option_pass_fail():
 	global pass_fail1
 	print ("value is:" + variable1.get())
 	pass_fail1 = variable1.get()
-	w_1_btn_pass_fail_35_2['bg'] ='green'
+	w_1_btn_pass_fail_35_0['bg'] ='green'
 	if pass_fail1 == 'Pass':
-		w_1_btn_direction_35_3['state'] = 'disable'
-		w_1_btn_axle_count_35_4['state'] = 'disable'
-		w_1_btn_lane_number_opt_35_5['state'] = 'disable'
+		w_1_btn_direction_35_1['state'] = 'disable'
+		w_1_btn_axle_count_35_2['state'] = 'disable'
+		w_1_btn_lane_number_opt_35_3['state'] = 'disable'
+		w_1_btn_class_opt_35_4['state'] = 'disable'
 	else:
-		w_1_btn_direction_35_3['state'] = 'normal'
-		w_1_btn_axle_count_35_4['state'] = 'normal'
-		w_1_btn_lane_number_opt_35_5['state'] = 'normal'
+		w_1_btn_direction_35_1['state'] = 'normal'
+		w_1_btn_axle_count_35_2['state'] = 'normal'
+		w_1_btn_lane_number_opt_35_3['state'] = 'normal'
+		w_1_btn_class_opt_35_4['state'] = 'normal'
 
 direction = ['Select Option','F','R']
 variable2 = StringVar(window)
@@ -858,7 +872,7 @@ def direction_f_r():
 	global direction1
 	print ("value is:" + variable2.get())
 	direction1 = variable2.get()
-	w_1_btn_direction_35_3['bg'] = 'green'
+	w_1_btn_direction_35_1['bg'] = 'green'
 
 axle_count = ['Select Option','1','2','3','4','5','6','7','8','9','10']
 variable3 = StringVar(window)
@@ -867,7 +881,7 @@ def axle_count_btn():
 	global axle_count1
 	print ("value is:" + variable3.get())
 	axle_count1 = variable3.get()
-	w_1_btn_axle_count_35_4['bg'] = 'green'
+	w_1_btn_axle_count_35_2['bg'] = 'green'
 
 lane_number_opt = ['Select Option','1','2','3','4','5','6','7','8','9','10']
 variable4 = StringVar(window)
@@ -876,7 +890,16 @@ def lane_number_btn():
 	global lane_number1
 	print ("value is:" + variable4.get())
 	lane_number1 = variable4.get()
-	w_1_btn_lane_number_opt_35_5['bg'] = 'green'
+	w_1_btn_lane_number_opt_35_3['bg'] = 'green'
+
+class_opt = ['Select Option','1','2','3','4','5','6','7','8','9','10']
+variable5 = StringVar(window)
+variable5.set(class_opt[0]) # default value
+def class_btn():
+	global class1
+	print ("value is:" + variable5.get())
+	class1 = variable5.get()
+	w_1_btn_class_opt_35_4['bg'] = 'green'
 
 
 #entry box
@@ -894,101 +917,101 @@ w_1_entry9_20_2 = Entry(window, width=10)
 w_1_entry10_21_2 = Entry(window, width=10)
 w_1_entry11_22_2 = Entry(window, width=10)
 w_1_entry12_12_2 = Entry(window, width=10) #PVR_FILE 100
-#w_1_entry13_34_2 = Entry(window, width=5) #audit axle count
-#w_1_entry14_34_3 = Entry(window, width=5) #audit lane number
-#w_1_entry15_34_4 = Entry(window, width=5) #audit axle class
-w_1_entry16_34_6 = Entry(window, width=5) #audit comments
-
-
+w_1_entry16_36_2 = Text(window, height=10, width=10) #audit comments
 
 #buttons
 #button = Button(tkWindow, text = 'Submit', bg='blue', fg='white')
 #button['state'] = tk.DISABLED
-w_1_btn_open_23_0 = Button(window, text="Import video", state='normal', command=pvr_video)
-w_1_btn_play_24_0 = Button(window, text="START Audit",bg="red",fg="white", state='normal',command=play) # Start Audit
-w_1_btn_pause_25_0 = Button(window, text="PLAY / PAUSE", command=pause)
-w_1_btn_tracker_28_0 = Button(window, text="Skip", fg='black', command=skip)
-w_1_btn_back_26_0 = Button(window, text="<<", fg='black', command=back)
-w_1_btn_forward_27_0 = Button(window, text=">>", fg='black', command=forward)
-w_1_btn_audit_dir_34_0 = Button(window, text="Audit Dir", command=add_bkdir)
-w_1_btn_bookmark_35_0 = Button(window, text="Record", command=record)
-w_1_btn_record_36_0 = Button(window, text="Save Audit", command=lambda: record_audit(True))
-w_1_btn_stop_30_0 = Button(window, text="Stop", command=stop)
-w_1_btn_set_date_31_0 = Button(window, text = "Select Date", state='normal', command = set_date) #.pack(pady = 20)
-w_1_btn_pvrfile_32_0 = Button(window, text="Import PVR file", state='normal', command=pvr_file)
-w_1_btn_add_camera_33_0 = Button(window, text="Add Camera", command=add_camera)
-w_1_btn_exit_37_0 = Button(window, text="Exit", command=exit)
+w_1_btn_open_23_0 = Button(window, text="Import video", state='normal', command=pvr_video) 
+w_1_btn_play_23_4 = Button(window, text="START Audit",bg="red",fg="white", state='normal',command=play) # Start Audit
+w_1_btn_pause_24_1 = Button(window, text="PLAY / PAUSE", command=pause)
+w_1_btn_tracker_25_0 = Button(window, text="Skip", fg='black', command=skip)
+w_1_btn_back_24_0 = Button(window, text="<<", fg='black', command=back)
+w_1_btn_forward_24_2 = Button(window, text=">>", fg='black', command=forward)
+w_1_btn_audit_dir_23_3 = Button(window, text="Audit Dir", command=add_bkdir)
+w_1_btn_record_24_3 = Button(window, text="Record", command=record)
+w_1_btn_save_audit_24_3 = Button(window, text="Save Audit", command=lambda: record_audit(True))
+w_1_btn_stop_24_4 = Button(window, text="Stop", command=stop)
+w_1_btn_set_date_23_2 = Button(window, text = "Select Date", state='normal', command = set_date)
+w_1_btn_pvrfile_23_1 = Button(window, text="Import PVR file", state='normal', command=pvr_file)
+w_1_btn_add_camera_25_1 = Button(window, text="Add Camera", command=add_camera)
+w_1_btn_exit_25_3 = Button(window, text="Exit", command=exit)
 
 #options button
-w_1_pass_fail_label15_33_2 = Label(window, text="Pass/Fail")
-w_1_btn_pass_fail_34_2 = OptionMenu(window, variable1, *pass_fail)
-w_1_btn_pass_fail_35_2 = Button(window, text="Set", bg='white', state='normal', command=option_pass_fail)
+w_1_pass_fail_label15_33_0 = Label(window, text="Pass/Fail")
+w_1_btn_pass_fail_34_0 = OptionMenu(window, variable1, *pass_fail)
+w_1_btn_pass_fail_35_0 = Button(window, text="Set", bg='white', state='normal', command=option_pass_fail)
 
-w_1_direction_label16_33_3 = Label(window, text="Direction")
-w_1_btn_direction_34_3 = OptionMenu(window, variable2, *direction)
-w_1_btn_direction_35_3 = Button(window, text="Set", bg='white', state='normal', command=direction_f_r)
+w_1_direction_label16_33_1 = Label(window, text="Direction")
+w_1_btn_direction_34_1 = OptionMenu(window, variable2, *direction)
+w_1_btn_direction_35_1 = Button(window, text="Set", bg='white', state='normal', command=direction_f_r)
 
-w_1_axle_count_label17_33_4 = Label(window, text="Axle Count")
-w_1_btn_axle_count_34_4 = OptionMenu(window, variable3, *axle_count)
-w_1_btn_axle_count_35_4 = Button(window, text="Set", bg='white', state='normal', command=axle_count_btn)
+w_1_axle_count_label17_33_2 = Label(window, text="Axle Count")
+w_1_btn_axle_count_34_2 = OptionMenu(window, variable3, *axle_count)
+w_1_btn_axle_count_35_2 = Button(window, text="Set", bg='white', state='normal', command=axle_count_btn)
 
-w_1_lane_number_label18_33_5 = Label(window, text="Lane Number")
-w_1_btn_lane_number_opt_34_5 = OptionMenu(window, variable4, *lane_number_opt)
-w_1_btn_lane_number_opt_35_5 = Button(window, text="Set", bg='white', state='normal', command=lane_number_btn)
+w_1_lane_number_label18_33_3 = Label(window, text="Lane Number")
+w_1_btn_lane_number_opt_34_3 = OptionMenu(window, variable4, *lane_number_opt)
+w_1_btn_lane_number_opt_35_3 = Button(window, text="Set", bg='white', state='normal', command=lane_number_btn)
+
+w_1_btn_class_opt_label19_33_4 = Label(window, text="Class")
+w_1_btn_class_opt_34_4 = OptionMenu(window, variable5, *class_opt)
+w_1_btn_class_opt_35_4 = Button(window, text="Set", bg='white', state='normal', command=class_btn)
+
 
 
 
 #command=lambda: button_click(1)
 #buttons
 #btn_play.grid(row=0, column=0, sticky="ew", padx=5, pady=5)
-w_1_btn_open_23_0.grid(row=23, column=0, sticky="wse", padx=5) #row 23 column 0
-w_1_btn_play_24_0.grid(row=24, column=0, sticky="wse", padx=5)
-w_1_btn_pause_25_0.grid(row=25, column=0, sticky="wse", padx=5)
-w_1_btn_back_26_0.grid(row=26, column=0, sticky="wse", padx=5)
-w_1_btn_forward_27_0.grid(row=27, column=0, sticky="wse", padx=5)
-w_1_btn_tracker_28_0.grid(row=28, column=0, sticky="wse", padx=5)
-w_1_btn_bookmark_35_0.grid(row=29, column=0, sticky="wse", padx=5)
-w_1_btn_stop_30_0.grid(row=30, column=0, sticky="wse", padx=5)
-w_1_btn_set_date_31_0.grid(row=31, column=0, sticky="wse", padx=5)
-w_1_btn_pvrfile_32_0.grid(row=32, column=0, sticky="wse", padx=5)
-w_1_btn_add_camera_33_0.grid(row=33, column=0, sticky="wse", padx=5)
-w_1_btn_audit_dir_34_0.grid(row=34, column=0, sticky="wse", padx=5)
-w_1_btn_bookmark_35_0.grid(row=35, column=0, sticky='wse', padx=5)
-w_1_btn_record_36_0.grid(row=36, column=0, sticky='wse', padx=5)
-w_1_btn_exit_37_0.grid(row=37, column=0, sticky="wse", padx=5)
+w_1_btn_open_23_0.grid(row=23, column=0, sticky="wse", padx=5) #Import Video "wse"
+w_1_btn_play_23_4.grid(row=23, column=4, sticky="wse", padx=5)
+w_1_btn_pause_24_1.grid(row=24, column=1, sticky="wse", padx=5)
+w_1_btn_back_24_0.grid(row=24, column=0, sticky="wse", padx=5)
+w_1_btn_forward_24_2.grid(row=24, column=2, sticky="wse", padx=5)
+w_1_btn_tracker_25_0.grid(row=25, column=0, sticky="wse", padx=5)
+w_1_btn_stop_24_4.grid(row=24, column=4, sticky="wse", padx=5)
+w_1_btn_set_date_23_2.grid(row=23, column=2, sticky="wse", padx=5)
+w_1_btn_pvrfile_23_1.grid(row=23, column=1, sticky="wse", padx=5)
+w_1_btn_add_camera_25_1.grid(row=25, column=1, sticky="wse", padx=5)
+w_1_btn_audit_dir_23_3.grid(row=23, column=3, sticky="wse", padx=5)
+w_1_btn_record_24_3.grid(row=24, column=3, sticky='wse', padx=5)
+w_1_btn_save_audit_24_3.grid(row=25, column=2, sticky='wse', padx=5)
+w_1_btn_exit_25_3.grid(row=25, column=3, sticky="wse", padx=5)
 
 #options button
-w_1_btn_pass_fail_34_2.grid(row=34, column=2, sticky="w", padx=5) #pass fail option display
-w_1_btn_pass_fail_35_2.grid(row=35, column=2, sticky="w", padx=5) #Pass/Fail
+w_1_btn_pass_fail_34_0.grid(row=34, column=0, sticky="wse", padx=5) #pass fail option display
+w_1_btn_pass_fail_35_0.grid(row=35, column=0, sticky="wse", padx=5) #Pass/Fail
 
-w_1_btn_direction_34_3.grid(row=34, column=3, sticky="w", padx=5) #direction option display
-w_1_btn_direction_35_3.grid(row=35, column=3, sticky="w", padx=5) #direction set button
+w_1_btn_direction_34_1.grid(row=34, column=1, sticky="wse", padx=5) #direction option display
+w_1_btn_direction_35_1.grid(row=35, column=1, sticky="wse", padx=5) #direction set button
 
-w_1_btn_axle_count_34_4.grid(row=34, column=4, sticky="w", padx=5) #axle_count option display
-w_1_btn_axle_count_35_4.grid(row=35, column=4, sticky="w", padx=5) #axle count button
+w_1_btn_axle_count_34_2.grid(row=34, column=2, sticky="wse", padx=5) #axle_count option display
+w_1_btn_axle_count_35_2.grid(row=35, column=2, sticky="wse", padx=5) #axle count button
 
-w_1_btn_lane_number_opt_34_5.grid(row=34, column=5, sticky="w", padx=5) #lane number option display
-w_1_btn_lane_number_opt_35_5.grid(row=35, column=5, sticky="w", padx=5) #lane number set button
+w_1_btn_lane_number_opt_34_3.grid(row=34, column=3, sticky="wse", padx=5) #lane number option display
+w_1_btn_lane_number_opt_35_3.grid(row=35, column=3, sticky="wse", padx=5) #lane number set button
+
+w_1_btn_class_opt_34_4.grid(row=34, column=4, sticky="wse", padx=5) #class option display
+w_1_btn_class_opt_35_4.grid(row=35, column=4, sticky="wse", padx=5) #class set button
+
 
 
 #entry box
-w_1_entry0_10_2.grid(row=1, column=2, sticky="wn", padx=5)  #Date row 10, column 2
-w_1_entry1_11_2.grid(row=2, column=2, sticky="wn", padx=5)  #Camera Path row 11 column 2
-w_1_entry12_12_2.grid(row=3, column=2, sticky="wn", padx=5) #PVR File row 12 column 2
-w_1_entry2_13_2.grid(row=13, column=2, sticky="wn", padx=5)  #Next Frame
-w_1_entry3_14_2.grid(row=14, column=2, sticky="wn", padx=5)  #Current Frame
-w_1_entry4_15_2.grid(row=15, column=2, sticky="wn", padx=5)  #PVR Line Number
-w_1_entry5_16_2.grid(row=16, column=2, sticky="wn", padx=5)  #lane Number
-w_1_entry6_17_2.grid(row=17, column=2, sticky="wn", padx=5)  #Speed
-w_1_entry7_18_2.grid(row=18, column=2, sticky="wn", padx=5)  #Direction
-w_1_entry8_19_2.grid(row=19, column=2, sticky="wn", padx=5)  #
-w_1_entry9_20_2.grid(row=20, column=2, sticky="wn", padx=5)
-w_1_entry10_21_2.grid(row=21, column=2, sticky="wn", padx=5)
-w_1_entry11_22_2.grid(row=22, column=2, sticky="wn", padx=5)
-#w_1_entry13_34_2.grid(row=34, column=2, sticky="w", padx=5) #audit axle count
-#w_1_entry14_34_3.grid(row=34, column=3, sticky="w", padx=5) #audit lane number
-#w_1_entry15_34_4.grid(row=34, column=4, sticky="w", padx=5) #audit axle class
-w_1_entry16_34_6.grid(row=34, column=6, sticky="w", padx=5) #audit comments 
+w_1_entry0_10_2.grid(row=1, column=2, sticky="wse", padx=5)  #Date row 10, column 2 "wn"
+w_1_entry1_11_2.grid(row=2, column=2, sticky="wse", padx=5)  #Camera Path row 11 column 2
+w_1_entry12_12_2.grid(row=3, column=2, sticky="wse", padx=5) #PVR File row 12 column 2
+w_1_entry2_13_2.grid(row=13, column=2, sticky="wse", padx=5)  #Next Frame
+w_1_entry3_14_2.grid(row=14, column=2, sticky="wse", padx=5)  #Current Frame
+w_1_entry4_15_2.grid(row=15, column=2, sticky="wse", padx=5)  #PVR Line Number
+w_1_entry5_16_2.grid(row=16, column=2, sticky="wse", padx=5)  #lane Number
+w_1_entry6_17_2.grid(row=17, column=2, sticky="wse", padx=5)  #Speed
+w_1_entry7_18_2.grid(row=18, column=2, sticky="wse", padx=5)  #Direction
+w_1_entry8_19_2.grid(row=19, column=2, sticky="wse", padx=5)  #
+w_1_entry9_20_2.grid(row=20, column=2, sticky="wse", padx=5)
+w_1_entry10_21_2.grid(row=21, column=2, sticky="wse", padx=5)
+w_1_entry11_22_2.grid(row=22, column=2, sticky="wse", padx=5)
+w_1_entry16_36_2.grid(row=36, column=2, sticky="wse", padx=5) #audit comments 
 
 #labels
 w_1_my_label_header_1_0.grid(row=1, column=0, sticky='wn', padx=5)  #Header
@@ -1008,10 +1031,11 @@ w_1_my_label13_21_0.grid(row=21, column=0, sticky='wn', padx=5)     #Length
 w_1_my_label14_22_0.grid(row=22, column=0, sticky='wn', padx=5)     #Note
 w_1_my_logo.grid(row=0, column=0)                       #Logo sticky='w'
 #w_1_my_frame_logo.grid(row=24, column=4, sticky='w')
-w_1_pass_fail_label15_33_2.grid(row=33, column=2, sticky='wn', padx=5)
-w_1_direction_label16_33_3.grid(row=33, column=3, sticky='wn', padx=5)
-w_1_axle_count_label17_33_4.grid(row=33, column=4, sticky='wn', padx=5)
-w_1_lane_number_label18_33_5.grid(row=33, column=5, sticky='wn', padx=5)
+w_1_pass_fail_label15_33_0.grid(row=33, column=0, sticky='wse', padx=5)
+w_1_direction_label16_33_1.grid(row=33, column=1, sticky='wse', padx=5)
+w_1_axle_count_label17_33_2.grid(row=33, column=2, sticky='wse', padx=5)
+w_1_lane_number_label18_33_3.grid(row=33, column=3, sticky='wse', padx=5)
+w_1_btn_class_opt_label19_33_4.grid(row=33, column=4, sticky='wse', padx=5)
 
 
 #create window
