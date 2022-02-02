@@ -917,7 +917,7 @@ w_1_entry9_20_2 = Entry(window, width=10)
 w_1_entry10_21_2 = Entry(window, width=10)
 w_1_entry11_22_2 = Entry(window, width=10)
 w_1_entry12_12_2 = Entry(window, width=10) #PVR_FILE 100
-w_1_entry16_36_2 = Text(window, height=10, width=10) #audit comments
+w_1_entry16_37_0 = Text(window, height=10, width=10) #audit comments
 
 #buttons
 #button = Button(tkWindow, text = 'Submit', bg='blue', fg='white')
@@ -954,6 +954,7 @@ w_1_lane_number_label18_33_3 = Label(window, text="Lane Number")
 w_1_btn_lane_number_opt_34_3 = OptionMenu(window, variable4, *lane_number_opt)
 w_1_btn_lane_number_opt_35_3 = Button(window, text="Set", bg='white', state='normal', command=lane_number_btn)
 
+w_1_btn_comments_label20_36_0 = Label(window, text="Comments")
 w_1_btn_class_opt_label19_33_4 = Label(window, text="Class")
 w_1_btn_class_opt_34_4 = OptionMenu(window, variable5, *class_opt)
 w_1_btn_class_opt_35_4 = Button(window, text="Set", bg='white', state='normal', command=class_btn)
@@ -995,8 +996,6 @@ w_1_btn_lane_number_opt_35_3.grid(row=35, column=3, sticky="wse", padx=5) #lane 
 w_1_btn_class_opt_34_4.grid(row=34, column=4, sticky="wse", padx=5) #class option display
 w_1_btn_class_opt_35_4.grid(row=35, column=4, sticky="wse", padx=5) #class set button
 
-
-
 #entry box
 w_1_entry0_10_2.grid(row=1, column=2, sticky="wse", padx=5)  #Date row 10, column 2 "wn"
 w_1_entry1_11_2.grid(row=2, column=2, sticky="wse", padx=5)  #Camera Path row 11 column 2
@@ -1011,7 +1010,7 @@ w_1_entry8_19_2.grid(row=19, column=2, sticky="wse", padx=5)  #
 w_1_entry9_20_2.grid(row=20, column=2, sticky="wse", padx=5)
 w_1_entry10_21_2.grid(row=21, column=2, sticky="wse", padx=5)
 w_1_entry11_22_2.grid(row=22, column=2, sticky="wse", padx=5)
-w_1_entry16_36_2.grid(row=36, column=2, sticky="wse", padx=5) #audit comments 
+w_1_entry16_37_0.grid(row=37, column=0, sticky="wse", padx=5) #audit comments 
 
 #labels
 w_1_my_label_header_1_0.grid(row=1, column=0, sticky='wn', padx=5)  #Header
@@ -1036,7 +1035,7 @@ w_1_direction_label16_33_1.grid(row=33, column=1, sticky='wse', padx=5)
 w_1_axle_count_label17_33_2.grid(row=33, column=2, sticky='wse', padx=5)
 w_1_lane_number_label18_33_3.grid(row=33, column=3, sticky='wse', padx=5)
 w_1_btn_class_opt_label19_33_4.grid(row=33, column=4, sticky='wse', padx=5)
-
+w_1_btn_comments_label20_36_0.grid(row=36, column=0, sticky='wse', padx=5)
 
 #create window
 window.mainloop()
