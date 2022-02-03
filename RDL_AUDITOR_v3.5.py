@@ -323,7 +323,7 @@ class Auditor:
 				audit_status = pass_fail1
 				banner_speed = 'N/A'
 				banner_class = class1
-				comments = w_1_entry16_36_2.get(1.0,'end-1c')
+				comments = w_1_entry16_37_0.get(1.0,'end-1c')
 				#inp = inputtxt.get(1.0, "end-1c")
     			#lbl.config(text = "Provided Input: "+inp)
 				audit_log.file_format(record_directory+'audit.csv',banner_date,time_laps,lane_number1,direction1,banner_length,banner_speed,banner_class,axle_count1,banner_note,pvr_line_number,audit_status,audit_user,comments)		
@@ -346,7 +346,7 @@ class Auditor:
 			w_1_btn_axle_count_35_2['state'] = 'normal'
 			w_1_btn_lane_number_opt_35_3['state'] = 'normal'
 			w_1_btn_class_opt_35_4['state'] = 'normal'
-			w_1_entry16_36_2.delete(1.0, 'end-1c')
+			w_1_entry16_37_0.delete(1.0, 'end-1c')
 
 		cv2.imshow('frame', frame)
 
