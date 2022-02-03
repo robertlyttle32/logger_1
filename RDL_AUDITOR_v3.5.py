@@ -703,6 +703,7 @@ def stop():
 	w_1_btn_axle_count_35_2['bg'] = 'white'
 	w_1_btn_lane_number_opt_35_3['bg'] = 'white'
 	w_1_btn_class_opt_35_4['bg'] = 'white'
+	w_1_entry16_37_0.delete(1.0, 'end-1c')
 	variable1.set(axle_count[0])
 	variable2.set(axle_count[0])
 	variable3.set(axle_count[0])
