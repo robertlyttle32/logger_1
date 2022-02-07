@@ -323,15 +323,16 @@ class Auditor:
 				audit_status = pass_fail1
 				banner_speed = 'N/A'
 				banner_class = class1
+				banner_length = 'N/A'
 				comments = w_1_entry16_37_0.get(1.0,'end-1c')
 				#inp = inputtxt.get(1.0, "end-1c")
     			#lbl.config(text = "Provided Input: "+inp)
 				audit_log.file_format(record_directory+'audit.csv',banner_date,time_laps,lane_number1,direction1,banner_length,banner_speed,banner_class,axle_count1,banner_note,pvr_line_number,audit_status,audit_user,comments)		
 				cv2.imwrite(record_directory+'audit_'+time_laps+str(PVR_LINE)+EXT1, frame)
 			record_audit(False)
-			w_1_btn_save_audit_24_3['text'] = 'Saved'
+			w_1_btn_save_audit_37_1['text'] = 'Saved'
 			time.sleep(1)
-			w_1_btn_save_audit_24_3['text'] = 'Save Audit'
+			w_1_btn_save_audit_37_1['text'] = 'Save Audit'
 			w_1_btn_pass_fail_35_0['bg'] ='white'
 			w_1_btn_direction_35_1['bg'] = 'white'
 			w_1_btn_axle_count_35_2['bg'] = 'white'
@@ -931,12 +932,12 @@ w_1_btn_back_24_0 = Button(window, text="<<", fg='black', command=back)
 w_1_btn_forward_24_2 = Button(window, text=">>", fg='black', command=forward)
 w_1_btn_audit_dir_23_3 = Button(window, text="Audit Dir", command=add_bkdir)
 w_1_btn_record_24_3 = Button(window, text="Record", command=record)
-w_1_btn_save_audit_24_3 = Button(window, text="Save Audit", command=lambda: record_audit(True))
+w_1_btn_save_audit_37_1 = Button(window, text="Save Audit", command=lambda: record_audit(True))
 w_1_btn_stop_24_4 = Button(window, text="Stop", command=stop)
 w_1_btn_set_date_23_2 = Button(window, text = "Select Date", state='normal', command = set_date)
 w_1_btn_pvrfile_23_1 = Button(window, text="Import PVR file", state='normal', command=pvr_file)
-w_1_btn_add_camera_25_1 = Button(window, text="Add Camera", command=add_camera)
-w_1_btn_exit_25_3 = Button(window, text="Exit", command=exit)
+w_1_btn_add_camera_25_3 = Button(window, text="Add Camera", command=add_camera)
+w_1_btn_exit_25_4 = Button(window, text="Exit", command=exit)
 
 #options button
 w_1_pass_fail_label15_33_0 = Label(window, text="Pass/Fail")
@@ -975,11 +976,11 @@ w_1_btn_tracker_25_0.grid(row=25, column=0, sticky="wse", padx=5)
 w_1_btn_stop_24_4.grid(row=24, column=4, sticky="wse", padx=5)
 w_1_btn_set_date_23_2.grid(row=23, column=2, sticky="wse", padx=5)
 w_1_btn_pvrfile_23_1.grid(row=23, column=1, sticky="wse", padx=5)
-w_1_btn_add_camera_25_1.grid(row=25, column=1, sticky="wse", padx=5)
+w_1_btn_add_camera_25_3.grid(row=25, column=3, sticky="wse", padx=5)
 w_1_btn_audit_dir_23_3.grid(row=23, column=3, sticky="wse", padx=5)
-w_1_btn_record_24_3.grid(row=24, column=3, sticky='wse', padx=5)
-w_1_btn_save_audit_24_3.grid(row=25, column=2, sticky='wse', padx=5)
-w_1_btn_exit_25_3.grid(row=25, column=3, sticky="wse", padx=5)
+w_1_btn_record_24_3.grid(row=24, column=3, sticky='wse', padx=5) 
+w_1_btn_save_audit_37_1.grid(row=37, column=1, sticky='wse', padx=5)
+w_1_btn_exit_25_4.grid(row=25, column=4, sticky="wse", padx=5)
 
 #options button
 w_1_btn_pass_fail_34_0.grid(row=34, column=0, sticky="wse", padx=5) #pass fail option display
