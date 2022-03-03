@@ -15,8 +15,8 @@ import glob
 #import avc_audit_v9 as audit
 from tkinter import *
 from tkinter import filedialog
-#from tkinter import messagebox
-import tkinter.messagebox
+from tkinter import messagebox
+#import tkinter.messagebox
 #from tkcalendar import Calendar
 from tkinter.filedialog import askopenfilename, asksaveasfilename
 import datetime
@@ -175,6 +175,7 @@ class Auditor:
 		frame_time = 0
 		#pvr_count = 56
 		start_line = count
+		global frame_number
 		next_frame = 0
 		try:
 			fps = cap.get(cv2.CAP_PROP_FPS)
@@ -386,18 +387,18 @@ class Auditor:
 				if cv2.waitKey(1) & 0xFF == ord('q'):
 					break
 				if stop == True:
-					break
 					cap.release()
 					cv2.destroyAllWindows()
+					break
 			else:
+				# Release everything if job is finished
+				cap.release()
+				out.release()
+				cv2.destroyAllWindows()
 				break
-		# Release everything if job is finished
-		cap.release()
-		out.release()
-		cv2.destroyAllWindows()
 
-	def tracker(line):
-		pass
+	#def tracker(line):
+		#pass
 
 #get files
 def pvr_file():
@@ -438,7 +439,7 @@ def pvr_video():
 	print('total_num_frames: ', totalframecount)
 
 os.system('clear')
-def play():
+def play1():
 	global play
 	global cap
 	global back
@@ -460,7 +461,6 @@ def play():
 	play = True
 	button_state = False
 	exit_program = False
-	#play = not play
 	cap = cv2.VideoCapture(video_file)
 	fps = cap.get(cv2.CAP_PROP_FPS)
 	print(play)
@@ -519,6 +519,7 @@ def play():
 						count = int(count - 1)
 					else:
 						count = int(count + 1)
+			
 			t = (frame_number/fps)+pvr_time - offset
 			rt = relativedelta(seconds=t)
 			time_laps = ('{:02d}:{:02d}:{:02d}'.format(int(rt.hours), int(rt.minutes), int(rt.seconds)))
@@ -580,9 +581,10 @@ def play():
 				w_1_btn_play_23_4['fg'] = 'white'
 				w_1_btn_pause_24_1['fg'] = 'black' 
 				w_1_btn_pause_24_1['text'] = 'PLAY / PAUSE'
-				
-       				    
+				   
 			if exit_program == True:
+				break
+			if stop == True:
 				break
     
 	thread = threading.Thread(target=run1)
@@ -672,46 +674,52 @@ def stop():
 	global record
 	record = False
 	forward = False
-	play = False
 	back = False
 	pause = False
-	stop = True
-	w_1_entry2_13_2.delete(0, END)
-	w_1_entry3_14_2.delete(0, END)
-	w_1_entry4_15_2.delete(0, END)
-	w_1_entry5_16_2.delete(0, END)
-	w_1_entry6_17_2.delete(0, END)
-	w_1_entry7_18_2.delete(0, END)
-	w_1_entry8_19_2.delete(0, END)
-	w_1_entry9_20_2.delete(0, END)
-	w_1_entry10_21_2.delete(0, END)
-	w_1_entry11_22_2.delete(0, END)
-	w_1_btn_play_23_4['text'] = 'START Audit'
-	w_1_btn_play_23_4['state'] = 'normal'
-	w_1_btn_open_23_0['state'] = 'normal'
-	w_1_btn_pvrfile_23_1['state'] = 'normal'
-	w_1_btn_set_date_23_2['state'] = 'normal'
-	w_1_btn_direction_35_1['state'] = 'normal'
-	w_1_btn_axle_count_35_2['state'] = 'normal'
-	w_1_btn_lane_number_opt_35_3['state'] = 'normal'
-	w_1_btn_class_opt_35_4['state'] = 'normal'
-	w_1_btn_tracker_25_0['fg'] = 'black'
-	w_1_btn_forward_24_2['fg'] = 'black'
-	w_1_btn_back_24_0['fg'] = 'black'
-	w_1_btn_pause_24_1['fg'] = 'black'
-	w_1_btn_pass_fail_35_0['bg'] ='white'
-	w_1_btn_direction_35_1['bg'] = 'white'
-	w_1_btn_axle_count_35_2['bg'] = 'white'
-	w_1_btn_lane_number_opt_35_3['bg'] = 'white'
-	w_1_btn_class_opt_35_4['bg'] = 'white'
-	w_1_entry16_37_0.delete(1.0, 'end-1c')
-	variable1.set(axle_count[0])
-	variable2.set(axle_count[0])
-	variable3.set(axle_count[0])
-	variable4.set(axle_count[0])
-	variable5.set(axle_count[0])
-
-	print(stop)
+	message = messagebox.askquestion("askquestion", "Are you sure?")
+	print(message)
+	if message == 'no':
+		#messagebox.destroy()
+		pass
+	elif message == 'yes':
+		w_1_entry2_13_2.delete(0, END)
+		w_1_entry3_14_2.delete(0, END)
+		w_1_entry4_15_2.delete(0, END)
+		w_1_entry5_16_2.delete(0, END)
+		w_1_entry6_17_2.delete(0, END)
+		w_1_entry7_18_2.delete(0, END)
+		w_1_entry8_19_2.delete(0, END)
+		w_1_entry9_20_2.delete(0, END)
+		w_1_entry10_21_2.delete(0, END)
+		w_1_entry11_22_2.delete(0, END)
+		w_1_btn_play_23_4['text'] = 'START Audit'
+		w_1_btn_play_23_4['state'] = 'normal'
+		w_1_btn_open_23_0['state'] = 'normal'
+		w_1_btn_pvrfile_23_1['state'] = 'normal'
+		w_1_btn_set_date_23_2['state'] = 'normal'
+		w_1_btn_direction_35_1['state'] = 'normal'
+		w_1_btn_axle_count_35_2['state'] = 'normal'
+		w_1_btn_lane_number_opt_35_3['state'] = 'normal'
+		w_1_btn_class_opt_35_4['state'] = 'normal'
+		w_1_btn_tracker_25_0['fg'] = 'black'
+		w_1_btn_forward_24_2['fg'] = 'black'
+		w_1_btn_back_24_0['fg'] = 'black'
+		w_1_btn_pause_24_1['fg'] = 'black'
+		w_1_btn_pass_fail_35_0['bg'] ='white'
+		w_1_btn_direction_35_1['bg'] = 'white'
+		w_1_btn_axle_count_35_2['bg'] = 'white'
+		w_1_btn_lane_number_opt_35_3['bg'] = 'white'
+		w_1_btn_class_opt_35_4['bg'] = 'white'
+		w_1_entry16_37_0.delete(1.0, 'end-1c')
+		variable1.set(axle_count[0])
+		variable2.set(axle_count[0])
+		variable3.set(axle_count[0])
+		variable4.set(axle_count[0])
+		variable5.set(axle_count[0])
+		play = False
+		stop = True
+		#messagebox.destroy()
+		window.destroy()
 
 def exit():
 	global stop
@@ -721,19 +729,24 @@ def exit():
 	global play
 	global forward
 	global record
-	record = False
-	forward = False
-	play = False
-	back = False
-	pause = False
-	stop = True
-	exit_program = True
-	w_1_entry1_11_2.delete(0, END)
-	w_1_entry2_13_2.delete(0, END)
-	w_1_entry3_14_2.delete(0, END)
-	print(stop)
-	window.destroy()
-
+	message = messagebox.askquestion("askquestion", "Are you sure?")
+	if message == 'no':
+		pass
+	elif message == 'yes':
+		record = False
+		forward = False
+		play = False
+		back = False
+		pause = False
+		stop = True
+		exit_program = True
+		w_1_entry1_11_2.delete(0, END)
+		w_1_entry2_13_2.delete(0, END)
+		w_1_entry3_14_2.delete(0, END)
+		print(stop)
+		cv2.destroyAllWindows()
+		window.destroy()
+	
 def set_date():
 	# Create Object
 	calendar = Tk()
@@ -925,7 +938,7 @@ w_1_entry16_37_0 = Text(window, height=10, width=10) #audit comments
 #button = Button(tkWindow, text = 'Submit', bg='blue', fg='white')
 #button['state'] = tk.DISABLED
 w_1_btn_open_23_0 = Button(window, text="Import video", state='normal', command=pvr_video) 
-w_1_btn_play_23_4 = Button(window, text="START Audit",bg="red",fg="white", state='normal',command=play) # Start Audit
+w_1_btn_play_23_4 = Button(window, text="START Audit",bg="red",fg="white", state='normal',command=play1) # Start Audit
 w_1_btn_pause_24_1 = Button(window, text="PLAY / PAUSE", command=pause)
 w_1_btn_tracker_25_0 = Button(window, text="Skip", fg='black', command=skip)
 w_1_btn_back_24_0 = Button(window, text="<<", fg='black', command=back)
