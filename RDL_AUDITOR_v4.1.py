@@ -326,7 +326,8 @@ class Auditor:
         cv2.putText(frame,'Date/Time: {} {}'.format(banner_date,time_laps),(995,10),font,font_size,(BLUE,GREEN,RED),1)
         cv2.putText(frame,DISPLAY_BANNER1,(100,int(680*.89)),font,0.4,(BLUE,GREEN,RED),1) #BGR
         cv2.putText(frame,DISPLAY_BANNER2,(100,int(680*.89)),font,0.4,(BLUE,GREEN,RED),1) #BGR 
-        my_table.insert(parent='',index=0,text='',values=(pvr_line_number,banner_date,time_laps,banner_lane,banner_dir,banner_speed,banner_length,banner_axle,banner_class,banner_note))
+        if pause != True:
+            my_table.insert(parent='',index=0,text='',values=(pvr_line_number,banner_date,time_laps,banner_lane,banner_dir,banner_speed,banner_length,banner_axle,banner_class,banner_note))
 
         if save_audit and pause == True:
             PVR_LINE = tracker_line
