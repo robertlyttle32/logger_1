@@ -560,26 +560,25 @@ def play1():
                         i = 0
                 if frame_number > next_frame_number and forward == True: # forward
                     count = int(count + 1)
-                    next_frame_number = Auditor.get_pvr_frame(count)[0]
                     if pause != True:
                         banner_date,banner_time,banner_lane,banner_dir,banner_length,banner_speed,banner_class,banner_axle,banner_note = Auditor.banner_info(count)
                         my_table.insert(parent='',index=0,text='',values=(count,banner_date,banner_time,banner_lane,banner_dir,banner_speed,banner_length,banner_axle,banner_class,banner_note))
-      
+                        next_frame_number = Auditor.get_pvr_frame(count)[0]
+
                 if frame_number < next_frame_number and back == True: # back
                     count = int(count - 1)
-                    next_frame_number = Auditor.get_pvr_frame(count)[0]
                     if pause != True:
                         banner_date,banner_time,banner_lane,banner_dir,banner_length,banner_speed,banner_class,banner_axle,banner_note = Auditor.banner_info(count)
                         my_table.insert(parent='',index=0,text='',values=(count,banner_date,banner_time,banner_lane,banner_dir,banner_speed,banner_length,banner_axle,banner_class,banner_note))
- 
+                        next_frame_number = Auditor.get_pvr_frame(count)[0]
 
                 if frame_number > next_frame_number and play == True: # forward
                     count = int(count + 1)
-                    next_frame_number = Auditor.get_pvr_frame(count)[0]
                     if pause != True:
-                        banner_date,banner_time,banner_lane,banner_dir,banner_length,banner_speed,banner_class,banner_axle,banner_note = Auditor.banner_info(count)
+                        banner_date,banner_time,banner_lane,banner_dir,banner_length,banner_speed,banner_class,banner_axle,banner_note = Auditor.banner_info(count-1)
                         my_table.insert(parent='',index=0,text='',values=(count,banner_date,banner_time,banner_lane,banner_dir,banner_speed,banner_length,banner_axle,banner_class,banner_note))
-      
+                        next_frame_number = Auditor.get_pvr_frame(count)[0]
+
             count1 = 0
             if forward == True:
                 w_1_btn_forward_24_2['fg'] = 'green'
@@ -641,7 +640,7 @@ def play1():
 				   
             if exit_program == True:
                 break
-            Auditor.play_video(count,frame_number,time_laps,next_frame_number,i,pvr_line_number,banner_date,banner_time,banner_lane,banner_dir,banner_length,banner_speed,banner_class,banner_axle,banner_note)
+            Auditor.play_video(count,frame_number,time_laps,next_frame_number,i,count,banner_date,banner_time,banner_lane,banner_dir,banner_length,banner_speed,banner_class,banner_axle,banner_note)
 
     
     thread = threading.Thread(target=run1)
