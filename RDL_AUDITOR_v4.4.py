@@ -990,20 +990,24 @@ pass_fail = ['Select Option','Pass','Fail']
 variable1 = StringVar(window)
 variable1.set(pass_fail[0]) # default value
 def option_pass_fail():
-	global pass_fail1
-	print ("value is:" + variable1.get())
-	pass_fail1 = variable1.get()
-	w_1_btn_pass_fail_35_0['bg'] ='green'
-	if pass_fail1 == 'Pass':
-		w_1_btn_direction_35_1['state'] = 'disable'
-		w_1_btn_axle_count_35_2['state'] = 'disable'
-		w_1_btn_lane_number_opt_35_3['state'] = 'disable'
-		w_1_btn_class_opt_35_4['state'] = 'disable'
-	else:
-		w_1_btn_direction_35_1['state'] = 'normal'
-		w_1_btn_axle_count_35_2['state'] = 'normal'
-		w_1_btn_lane_number_opt_35_3['state'] = 'normal'
-		w_1_btn_class_opt_35_4['state'] = 'normal'
+    global pass_fail1
+    print ("value is:" + variable1.get())
+    pass_fail1 = variable1.get()
+    w_1_btn_pass_fail_35_0['bg'] ='green'
+    if pass_fail1 == 'Pass':
+        w_1_btn_direction_35_1['state'] = 'disable'
+        w_1_btn_axle_count_35_2['state'] = 'disable'
+        w_1_btn_lane_number_opt_35_3['state'] = 'disable'
+        w_1_btn_class_opt_35_4['state'] = 'disable'
+        my_table.tag_configure('passrow', background='green')
+        my_table.insert(parent='',index=0,text='',values=(count,banner_date,banner_time,banner_lane,banner_dir,banner_speed,banner_length,banner_axle,banner_class,banner_note), tags=('passrow'))
+    else:
+        w_1_btn_direction_35_1['state'] = 'normal'
+        w_1_btn_axle_count_35_2['state'] = 'normal'
+        w_1_btn_lane_number_opt_35_3['state'] = 'normal'
+        w_1_btn_class_opt_35_4['state'] = 'normal'
+        my_table.tag_configure('failrow', background='red')
+        my_table.insert(parent='',index=0,text='',values=(count,banner_date,banner_time,banner_lane,banner_dir,banner_speed,banner_length,banner_axle,banner_class,banner_note), tags=('failrow'))
 
 direction = ['Select Option','F','R']
 variable2 = StringVar(window)
