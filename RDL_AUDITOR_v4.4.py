@@ -551,7 +551,7 @@ def play1():
                 #'%02d:%02d:%02d'
                 #print(f'time laps: {time_laps} | Minute: {rt.minutes}')
                 #print(f"{int(t/3600)}H {int((t/60)%60) if t/3600>0 else int((t/60))}M {int(t%60)}S {(int(t/60)*(1000))}ms")
-                print('Old time laps: ',time_laps)
+                #print('Old time laps: ',time_laps)
       
                 if next_frame_number >= frame_number - (fps):
                     if banner_lane == '1':
@@ -561,7 +561,7 @@ def play1():
                 if frame_number > next_frame_number and forward == True: # forward
                     count = int(count + 1)
                     if pause != True:
-                        banner_date,banner_time,banner_lane,banner_dir,banner_length,banner_speed,banner_class,banner_axle,banner_note = Auditor.banner_info(count)
+                        banner_date,banner_time,banner_lane,banner_dir,banner_length,banner_speed,banner_class,banner_axle,banner_note = Auditor.banner_info(count-1)
                         my_table.tag_configure('oddrow', background='white')
                         my_table.tag_configure('evenrow', background='lightblue')
                         if count % 2 == 0:
@@ -573,7 +573,7 @@ def play1():
                 if frame_number < next_frame_number and back == True: # back
                     count = int(count - 1)
                     if pause != True:
-                        banner_date,banner_time,banner_lane,banner_dir,banner_length,banner_speed,banner_class,banner_axle,banner_note = Auditor.banner_info(count)
+                        banner_date,banner_time,banner_lane,banner_dir,banner_length,banner_speed,banner_class,banner_axle,banner_note = Auditor.banner_info(count-1)
                         my_table.tag_configure('oddrow', background='white')
                         my_table.tag_configure('evenrow', background='lightblue')
                         if count % 2 == 0:
@@ -999,14 +999,14 @@ def option_pass_fail():
         w_1_btn_axle_count_35_2['state'] = 'disable'
         w_1_btn_lane_number_opt_35_3['state'] = 'disable'
         w_1_btn_class_opt_35_4['state'] = 'disable'
-        my_table.tag_configure('passrow', background='green')
+        my_table.tag_configure('passrow', background='lightgreen')
         my_table.insert(parent='',index=0,text='',values=(count,banner_date,banner_time,banner_lane,banner_dir,banner_speed,banner_length,banner_axle,banner_class,banner_note), tags=('passrow'))
     else:
         w_1_btn_direction_35_1['state'] = 'normal'
         w_1_btn_axle_count_35_2['state'] = 'normal'
         w_1_btn_lane_number_opt_35_3['state'] = 'normal'
         w_1_btn_class_opt_35_4['state'] = 'normal'
-        my_table.tag_configure('failrow', background='red')
+        my_table.tag_configure('failrow', background='#FF4500') #python color constant
         my_table.insert(parent='',index=0,text='',values=(count,banner_date,banner_time,banner_lane,banner_dir,banner_speed,banner_length,banner_axle,banner_class,banner_note), tags=('failrow'))
 
 direction = ['Select Option','F','R']
@@ -1044,6 +1044,19 @@ def class_btn():
 	print ("value is:" + variable5.get())
 	class1 = variable5.get()
 	w_1_btn_class_opt_35_4['bg'] = 'green'
+
+# tkinter.messagebox.showinfo(title=None, message=None, **options)
+# Warning message boxes
+
+# tkinter.messagebox.showwarning(title=None, message=None, **options)
+# tkinter.messagebox.showerror(title=None, message=None, **options)
+# Question message boxes
+
+# tkinter.messagebox.askquestion(title=None, message=None, **options)
+# tkinter.messagebox.askokcancel(title=None, message=None, **options)
+# tkinter.messagebox.askretrycancel(title=None, message=None, **options)
+# tkinter.messagebox.askyesno(title=None, message=None, **options)
+# tkinter.messagebox.askyesnocancel(title=None, message=None, **options)¶
 
 
 #entry box
@@ -1187,5 +1200,6 @@ my_table.grid(row=38, column=0) #pack()
 
 #create window
 window.mainloop()
+
 
 
