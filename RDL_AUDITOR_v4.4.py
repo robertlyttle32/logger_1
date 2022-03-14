@@ -562,21 +562,36 @@ def play1():
                     count = int(count + 1)
                     if pause != True:
                         banner_date,banner_time,banner_lane,banner_dir,banner_length,banner_speed,banner_class,banner_axle,banner_note = Auditor.banner_info(count)
-                        my_table.insert(parent='',index=0,text='',values=(count,banner_date,banner_time,banner_lane,banner_dir,banner_speed,banner_length,banner_axle,banner_class,banner_note))
+                        my_table.tag_configure('oddrow', background='white')
+                        my_table.tag_configure('evenrow', background='lightblue')
+                        if count % 2 == 0:
+                            my_table.insert(parent='',index=0,text='',values=(count,banner_date,banner_time,banner_lane,banner_dir,banner_speed,banner_length,banner_axle,banner_class,banner_note), tags=('evenrow'))
+                        else:
+                            my_table.insert(parent='',index=0,text='',values=(count,banner_date,banner_time,banner_lane,banner_dir,banner_speed,banner_length,banner_axle,banner_class,banner_note),tags=('oddrow',))
                         next_frame_number = Auditor.get_pvr_frame(count)[0]
 
                 if frame_number < next_frame_number and back == True: # back
                     count = int(count - 1)
                     if pause != True:
                         banner_date,banner_time,banner_lane,banner_dir,banner_length,banner_speed,banner_class,banner_axle,banner_note = Auditor.banner_info(count)
-                        my_table.insert(parent='',index=0,text='',values=(count,banner_date,banner_time,banner_lane,banner_dir,banner_speed,banner_length,banner_axle,banner_class,banner_note))
+                        my_table.tag_configure('oddrow', background='white')
+                        my_table.tag_configure('evenrow', background='lightblue')
+                        if count % 2 == 0:
+                            my_table.insert(parent='',index=0,text='',values=(count,banner_date,banner_time,banner_lane,banner_dir,banner_speed,banner_length,banner_axle,banner_class,banner_note),tags=('evenrow',))
+                        else:
+                            my_table.insert(parent='',index=0,text='',values=(count,banner_date,banner_time,banner_lane,banner_dir,banner_speed,banner_length,banner_axle,banner_class,banner_note),tags='oddrow')
                         next_frame_number = Auditor.get_pvr_frame(count)[0]
 
                 if frame_number > next_frame_number and play == True: # forward
                     count = int(count + 1)
                     if pause != True:
                         banner_date,banner_time,banner_lane,banner_dir,banner_length,banner_speed,banner_class,banner_axle,banner_note = Auditor.banner_info(count-1)
-                        my_table.insert(parent='',index=0,text='',values=(count,banner_date,banner_time,banner_lane,banner_dir,banner_speed,banner_length,banner_axle,banner_class,banner_note))
+                        my_table.tag_configure('oddrow', background='white')
+                        my_table.tag_configure('evenrow', background='lightblue')
+                        if count % 2 == 0:
+                            my_table.insert(parent='',index=0,text='',values=(count,banner_date,banner_time,banner_lane,banner_dir,banner_speed,banner_length,banner_axle,banner_class,banner_note),tags=('evenrow',))
+                        else:
+                            my_table.insert(parent='',index=0,text='',values=(count,banner_date,banner_time,banner_lane,banner_dir,banner_speed,banner_length,banner_axle,banner_class,banner_note),tags=('oddrow',))
                         next_frame_number = Auditor.get_pvr_frame(count)[0]
 
             count1 = 0
@@ -641,7 +656,8 @@ def play1():
             if exit_program == True:
                 break
             Auditor.play_video(count,frame_number,time_laps,next_frame_number,i,count,banner_date,banner_time,banner_lane,banner_dir,banner_length,banner_speed,banner_class,banner_axle,banner_note)
-
+            #my_table.tag_configure('row', background='white')
+            
     
     thread = threading.Thread(target=run1)
     thread.start()
