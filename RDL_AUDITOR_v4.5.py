@@ -605,7 +605,8 @@ def play1():
                 #####print(strftime("%H:%M:%S", gmtime(t)))
                 #print(strftime("%H:%M:%S:%f", gmtime(t)))
                 #get_image_time.strftime("%Y-%m-%d-%H%M%S%f")
-                time_laps = ('{:02d}:{:02d}:{:02d}:{:03d}'.format(int(rt.hours), int(rt.minutes), int(rt.seconds), (rt.microseconds)))
+                
+                time_laps = ('{:02d}:{:02d}:{:02d}.{}'.format(int(rt.hours), int(rt.minutes), int(rt.seconds), str('%.03f'%t).split(".")[1]))
                 ######td = timedelta(seconds=t)
                 ######print('Time in Days, hh:mm:ss.ms:', td)
                 ######time_laps = td
