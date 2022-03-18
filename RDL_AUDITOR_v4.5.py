@@ -590,33 +590,11 @@ def play1():
         while True:
 
             test_test = 1
-            if test_test == 1: #start_frame_number < frame_number < totalframecount:
-                #tracker_line = int((count1/totalframecount)*100)
-
-                #next_frame_number = Auditor.get_pvr_frame(count+1)[0]
-                #banner_lane = Auditor.banner_info(count)[2]
+            if test_test == 1:
                 pvr_line_number = count
-                #print('Start frame number: ',start_frame_number)
-
-
                 t = (frame_number/fps)+pvr_time - offset
-                #time_laps = str(datetime.fromtimestamp(t)+timedelta(hours=-1)).split(' ')[1][:12]
-                rt = relativedelta(seconds=t)
-                #####print(strftime("%H:%M:%S", gmtime(t)))
-                #print(strftime("%H:%M:%S:%f", gmtime(t)))
-                #get_image_time.strftime("%Y-%m-%d-%H%M%S%f")
-                
+                rt = relativedelta(seconds=t)                
                 time_laps = ('{:02d}:{:02d}:{:02d}.{}'.format(int(rt.hours), int(rt.minutes), int(rt.seconds), str('%.03f'%t).split(".")[1]))
-                ######td = timedelta(seconds=t)
-                ######print('Time in Days, hh:mm:ss.ms:', td)
-                ######time_laps = td
-                #print(time.strftime("%H:%M:%S:(int(%S/60)*1000)", time.gmtime(t)))
-                #'%02d:%02d:%02d'
-                #print(f'time laps: {time_laps} | Minute: {rt.minutes}')
-                #print(f"{int(t/3600)}H {int((t/60)%60) if t/3600>0 else int((t/60))}M {int(t%60)}S {(int(t/60)*(1000))}ms")
-                #print('Old time laps: ',time_laps)
-                #search_file_for_match(VIDEO_DATE,t)
-      
                 if next_frame_number >= frame_number - (fps):
                     if banner_lane == '1':
                         i = 0 #180
