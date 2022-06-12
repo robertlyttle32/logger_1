@@ -167,12 +167,10 @@ class Auditor:
                 if VIDEO_DATE == DATE and video_start_time == pvr_time:
                     print(row)
                     print('count: ', count)
-                    line = count
                     return count
                 elif VIDEO_DATE == DATE and video_start_time < pvr_time:
                     offset = pvr_time - video_start_time - trim
                     print(row)
-                    line = count
                     return count
                 else:
                     print("File not found", DATE, row_value)
@@ -485,17 +483,20 @@ def search_file_for_match(search_date,present_time):
     for row in csv_file:
         count = count +1
         file_date = row[0]
-        file_time_seconds = convert_time_to_seconds(row[1])
+        #file_time_seconds = convert_time_to_seconds(row[1])
+        file_time_seconds = row[1]
         #time_value_in_seconds = convert_search_time_to_seconds(time_value)
-        present_time = float('%.03f'%present_time)
+        #present_time = float('%.03f'%present_time)
+        #print(f'search date: {search_date} | file time: {file_time_seconds} | present time: {present_time}')
         if search_date == file_date and file_time_seconds == present_time:
             print("CONGRATES IT WORKS", row)
 
         else:
-            print(f'seconds from file: {file_time_seconds} | seconds from frame count: {present_time}')
+            pass
+            #print(f'seconds from file: {file_time_seconds} | seconds from frame count: {present_time}')
                     #print('%.3f'%present_time)
                     #present_time = '%.3f'%present_time
-            print('converted present time: ',present_time)
+            #print('converted present time: ',present_time)
 
                 #print("File found", DATE, file_time_seconds)
                 #banner_on = True
@@ -595,6 +596,7 @@ def play1():
                 t = (frame_number/fps)+pvr_time - offset
                 rt = relativedelta(seconds=t)                
                 time_laps = ('{:02d}:{:02d}:{:02d}.{}'.format(int(rt.hours), int(rt.minutes), int(rt.seconds), str('%.03f'%t).split(".")[1]))
+                #search_file_for_match(VIDEO_DATE,time_laps)
                 if next_frame_number >= frame_number - (fps):
                     if banner_lane == '1':
                         i = 0 #180
@@ -659,7 +661,7 @@ def play1():
             else:
                 w_1_btn_forward_24_2['fg'] = 'black'
     
-            if back == True:
+            if back == True and frame_number >= start_frame_number:
                 w_1_btn_pause_24_1['fg'] = 'black'
                 #w_1_btn_tracker_25_0['fg'] = 'red'
                 w_1_btn_back_24_0['fg'] = 'green'
@@ -676,7 +678,7 @@ def play1():
                 player_speed=0
                 frame_number = frame_number+player_speed
     
-            if pause != True:
+            if pause == False:
                 #w_1_btn_pause_24_1['fg'] = 'green'
                 w_1_btn_pause_24_1['text'] = 'PAUSE'
                 player_speed=2
@@ -724,11 +726,14 @@ def pause():
     global back
     global forward
     global play
+    global save_audit
     forward = False
     back = False
     pause = not pause
     if pause == False:
         play = True
+    if pause == True:
+        save_audit = False
 
 def skip_back():
     global skip_back
